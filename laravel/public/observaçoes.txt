@@ -1,0 +1,32 @@
+Documento criado em: 
+01/08/2016
+
+-Alterar 'garcom' para 'Garçom' em todos os breadcumbs   - ok 
+-Em 'contas encerradas', o preço de venda deve conter o segundo dígito  - ok
+- Adicionado o jQuery UI ao projeto	- ok
+-Em 'contas encerradas', utilizar o 'Accordion' do jQuery UI para criar abas e facilitar para o usuário visualizar cada conta encerrada.  - ok
+Por que utilizar o 'accordion'? O usuário só precisa ficar sabendo dos detalhes de cada conta encerrada que lhe for interessante no momento.
+-Adicionar uma navbar para poder ter acesso à área do administrador - ok
+-Contas encerradas, funcionarios, produtos devem ter suas views extendidas de administrador.
+-Para cada funcionário, mostrar qual o lucro total que ele deu para a empresa (lucro dos produtos vendidos)
+-Em Lista de Produtos, o preço de venda, preço de compra e lucro devem ter o segundo dígito - ok
+-Separar a lista de produtos utilizando o Accordion (separar por categorias) 
+
+-Para cada funcionário, fazer:
+	*Criar um perfil (uma página), contendo:
+		**Nome, foto, salário, cargo, produtos vendidos em um determinado período, lucro total em um determinado período, gráfico do lucro total deste funcionário ao longo de um ano.
+		
+-Em Listar produtos, ao filtrar por nome, colocar um número referente a quantos resultados foram encontrados dentro de cada categoria
+
+
+-Fazer um CRUD de categorias
+
+
+11/1/2017
+-Ao clicar em detalhes, deve passar o nome e o preço do produto para o modal
+
+-Ao clicar em 'detalhes', o software deve verificar qual é a categoria envolvida:
+sanduiches:
+	-> buscar todos os itens como checkbox
+	-> os itens devem ser marcados, 
+	-> deixar uma caixa de observação para o usuário, caso queira colocar alguma observação
