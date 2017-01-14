@@ -4,6 +4,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Produto;
 use App\Funcionario;
+use App\Item;
 use Illuminate\Http\Request;
 use DB;
 
@@ -34,11 +35,15 @@ class HomeController extends Controller {
 		$funcionarios = new Funcionario();
 		$funcionarios = $funcionarios->where('ativo', '=', true)->get();
 
+		$itens = new Item();
+		$itens = $itens->get();
+
 		return view('garcom/home')->
 		with('sanduiches', $sanduiches)->
 		with('porcoes', $porcoes)->
 		with('funcionarios', $funcionarios)->
 		with('bebidas', $bebidas)->
+		with('itens', $itens)->
 		with('pratos', $pratos);
 	}
 

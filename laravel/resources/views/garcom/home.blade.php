@@ -229,36 +229,77 @@ pela view:
       </div>
       <div class="modal-body" style = "height: 195px;">
 
+
       <div class="row">
       		<div class = "col-md-8">
       			{{-- Nome --}}
       			<h1 class = "nome" style = "text-align: left; float: left;">Nome</h1>
       		</div>
-
       		<div class = "col-md-4">
       			{{-- Preço --}}
       			<h2 class = "preco" style = "text-align: right; float: right; padding-top: 8px"></h2>
       		</div>
 	  </div>
-
-	        {{-- Imagem --}}
+	        	{{-- Imagem --}}
 	      	<img class = "imagem" src = "#" height = "110" width = "110">
 	      	<br>
 	        
+
 	        <br><br>
 	        <h3>Deseja adicionar ou retirar alguns itens?</h3>
-	        {{-- Itens --}}
-	        <input type = "checkbox" name = "" value = "bacon"><span>&nbsp;Bacon</span><br>
-	        <input type = "checkbox" name = "" value = "bacon">Mussarela<br>
-	        <input type = "checkbox" name = "" value = "bacon">Tomate<br>
-	        <input type = "checkbox" name = "" value = "bacon">Alface<br>
-	        <input type = "checkbox" name = "" value = "bacon">Salsicha<br>
-	        <input type = "checkbox" name = "" value = "bacon">Presunto<br>
 
-      </div>
+    	  	@foreach($itens as $item)
+		        {{-- Adicionar Item --}}
+	        	<div class="row">
+	        		<div class = "col-md-3">
+				        <div style = "float: left">
+				        	 {{-- checkbox --}}
+					        <input type = "checkbox" name = "" value = "bacon">
+					        	<span style = "font-weight: bold; font-size: 20px">&nbsp;{{ucfirst($item->nome)}}</span>
+					        	<br>
+					        	<label style = "margin-left: 30px">R$ {{number_format($item->precoVenda, 2)}}</label>
+				        </div>
+	        		</div>
+
+	        		{{-- Botoes +- --}}
+	        		<div class = "col-md-6">
+			    	  <div class="center"  style = "width: 150px;  padding-left: 0; margin: auto">
+			    	    <div class="input-group">
+				          <span class="input-group-btn">
+				          	  {{-- btn menos --}}
+				              <button type="button" class="btn btn-danger btn-number"  data-type="minus" data-field="{{$item->id}}">
+				                <span class="glyphicon glyphicon-minus"></span>
+				              </button>
+				          </span>
+				          {{-- quantidade --}}
+				          <input type="text" name="{{$item->id}}" class="form-control input-number" value="1" min="0" max="10" style = "text-align: center">
+				          <span class="input-group-btn">
+				          	  {{-- btn mais --}}
+				              <button type="button" class="btn btn-success btn-number" data-type="plus" data-field="{{$item->id}}">
+				                  <span class="glyphicon glyphicon-plus"></span>
+				              </button>
+			          		</span>
+			    	      </div>
+			        	</div>
+	        		</div>
+
+	        		{{-- Preço total com os itens adicionados ou removidos --}}
+	        		<div class = "col-md-3">
+			    	    <div class="input-group" style = "margin-left: 20px; float: left" >
+			    	      <label style = "font-size: 20px; font-weight: bold; color: green">R$ 25,00</label>
+				         
+			        	</div>
+	        		</div>
+
+	        	</div>
+	        	
+    	  	@endforeach
+	   </div>
     </div>
   </div>
 </div>
+{{-- fim do modal --}}
+
 
 
 <div class="modal fade" id="modalDetalhesPedido" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
