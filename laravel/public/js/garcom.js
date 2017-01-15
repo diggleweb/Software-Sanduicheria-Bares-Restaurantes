@@ -28,7 +28,7 @@ Creditos: http://bootsnipp.com/snippets/featured/buttons-minus-and-plus-in-input
     e.preventDefault();
     
     fieldName = $(this).attr('data-field');
-    type      = $(this).attr('data-type');
+type      = $(this).attr('data-type');
     var input = $("input[name='"+fieldName+"']");
     var currentVal = parseInt(input.val());
     if (!isNaN(currentVal)) {
