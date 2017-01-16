@@ -300,6 +300,8 @@ var nomeFuncionario = null;
 	$('.divCadaItem').click(
 		function() {
 
+			var clicked = $(this).attr("data-clicked");
+
 			//busca qual é o estado da borda do item que foi clicado
 			var borda = $(this).css("border");
 
@@ -307,7 +309,7 @@ var nomeFuncionario = null;
 			var id = $(this).attr('val');
 
 			//caso eu esteja selecionando um novo item (pintar a borda e colocar o id do item no array)
-			if (borda == "0px none rgb(51, 51, 51)") {		
+			if (clicked == 0) {		
 				$(this).css("border", "3px solid blue");	//adiciona a borda no ítem
 				$(this).css("box-shadow", "0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)");	//adiciona sombra
 				
@@ -322,6 +324,8 @@ var nomeFuncionario = null;
 				// contadorProdutosSelecionados = $("#contadorProdutosSelecionados").html().split(" ")[0];
 				contadorProdutosSelecionados++; 	//adiciona um produto do contador
 				$("#contadorProdutosSelecionados").css("display", "initial");
+
+				$(this).attr("data-clicked", 1);
 
 				if (contadorProdutosSelecionados == 0)	{     //caso nenhum produto esteja selecionado
 					$("#contadorProdutosSelecionados").html("");	//desaparecer com o texto
@@ -356,6 +360,8 @@ var nomeFuncionario = null;
 				if (index > -1)
 					itens.splice(index, 1);		
 				
+				$(this).attr("data-clicked", 0);
+
 				//adicionado em: 27/7
 				//contador de produtos selecionados
 				contadorProdutosSelecionados--;		//retira um produto do contador

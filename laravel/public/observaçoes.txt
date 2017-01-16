@@ -30,3 +30,10 @@ sanduiches:
 	-> buscar todos os itens como checkbox
 	-> os itens devem ser marcados, 
 	-> deixar uma caixa de observação para o usuário, caso queira colocar alguma observação
+
+-> Sanduíches devem ser compostos de ítens, devemos mudar no banco de dados.
+-> Cada sanduíche deve vir marcado com os ítens que o compõe. Ex: Bacon, Presunto, etc..
+-> Ao adicionar um ítem, deve ser cobrado sobre o preço do sanduíche o preço do ítem adicionado.
+-> No cadastro de produtos, caso o produto a ser adicionado seja 'sanduíche', devemos pedir
+para o usuário escolher quais itens compõem o sanduíche.
+-> Criar um cadastro para itens

@@ -4,6 +4,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Produto;
 use App\Categoria;
+use App\Item;
 use Illuminate\Http\Request;
 use Input;
 use File;
@@ -51,7 +52,9 @@ class ProdutosController extends Controller {
 	 */
 	public function create()
 	{
-		return view('adicionar.produtos');
+		$itens = new Item();
+		$itens = $itens->orderBy('nome', 'asc')->get();
+		return view('adicionar.produtos')->with('itens', $itens);
 	}
 
 	public function filtrar(Request $request) {

@@ -176,6 +176,41 @@ class ItensTableSeeder extends Seeder {
             'precoVenda' => 1.50,
             'urlImagem' => 'imagens/itens/salsicha.jpg'
         ));
+
+         Item::create(array(
+            'nome' => 'Mussarela',
+            'precoCompra' => 0.50,
+            'precoVenda' => 1.50,
+            'urlImagem' => 'imagens/itens/mussarela.jpg'
+        ));
+
+         Item::create(array(
+            'nome' => 'Tomate',
+            'precoCompra' => 0.50,
+            'precoVenda' => 1.50,
+            'urlImagem' => 'imagens/itens/tomate.jpg'
+        ));
+
+         Item::create(array(
+            'nome' => 'Alface',
+            'precoCompra' => 0.50,
+            'precoVenda' => 1.50,
+            'urlImagem' => 'imagens/itens/alface.jpg'
+        ));
+
+         Item::create(array(
+            'nome' => 'cebola',
+            'precoCompra' => 0.50,
+            'precoVenda' => 1.50,
+            'urlImagem' => 'imagens/itens/cebola.jpg'
+        ));
+
+         Item::create(array(
+            'nome' => 'pao',
+            'precoCompra' => 0.50,
+            'precoVenda' => 1.50,
+            'urlImagem' => 'imagens/itens/paohamburger.jpg'
+        ));
     }
 }
 
