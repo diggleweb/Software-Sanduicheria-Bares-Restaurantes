@@ -4,6 +4,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Produto;
 use App\Categoria;
+use App\ProdutosItens;
 use App\Item;
 use Illuminate\Http\Request;
 use Input;
@@ -141,6 +142,30 @@ class ProdutosController extends Controller {
 				$produto->ativo = true;
 
 				$produto->save();
+
+				//após salvar o produto, devo verificar se o produto era um sanduíche
+				//caso seja um sanduíche, armazenar na tabela produtos_itens os itens referentes
+				//ao sanduíche
+
+				//caso a categoria que está sendo adicionada é sanduíche
+				if ($produto->idCategoria == 1) {
+					//buscar os ids referentes aos itens
+					$idItens = $input['itens'];
+					
+					//os ĩds dos itens estão separados por vírgula, devemos colocá-los num array de ids
+					$idItens = explode(",", $idItens);
+					
+					//buscar o id do último produto que foi adicionado
+					$produto_ultimoId = $produto->select('id')->orderBy('id', 'desc')->first()['id'];
+					
+					foreach($idItens as $id) {
+						$obj = new ProdutosItens();
+						$obj->produto_id = $produto_ultimoId;
+						$obj->item_id = $id;
+						$obj->save();
+						
+					}
+				}	
 
 				Session::flash('mensagem', 'Produto inserido com sucesso!');
 				return Redirect()->back();

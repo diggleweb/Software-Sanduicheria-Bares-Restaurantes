@@ -74,7 +74,7 @@ $(function() {
 	<!-- Irá aparecer os nomes dos ítens selecionados aqui -->
 	<div id = "tituloItensSelecionados" style = "text-size: 30px; font-weight: bold; color: black">Ítens que compõem o sanduíche: </div>
 	<div id = "itensSelecionados" style = "text-size: 20px; font-weight: bold; color: green"></div>
-
+	{!! Form::hidden('itens', '') !!}
 	
 	<!-- Modal para adicionar ítens ao sanduíche -->
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -212,10 +212,12 @@ $(function() {
 		//remove a vírgula e o espaço final
 		text = text.substring(0, text.length-2);
 
+
 		$("#itensSelecionados").text(text);
 		$("#itensSelecionados").show();
 		$("#tituloItensSelecionados").show();
 		$("#closebutton").trigger("click");
+		$('[name=itens]').val(itens.toString());
 	}
 
 </script>

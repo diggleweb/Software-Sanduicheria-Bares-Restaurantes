@@ -25,6 +25,7 @@ Route::group(['prefix' => 'administrador'], function() {
 	Route::get('/listarProdutos/editarProduto{id}', ['as' => 'editarProduto', 'uses' => 'ProdutosController@edit']);
 	Route::put('/listarprodutos/updateProduto{id}', ['as' => 'updateProduto', 'uses' => 'ProdutosController@update']);
 	Route::get('/listarProdutos/filtrar/', ['as' => 'filtrar', 'uses' => 'ProdutosController@filtrar']);
+	
 
 	Route::get('/contasEncerradas', 'ContasController@index');
 
