@@ -7,6 +7,9 @@
 
 {{-- Controller associado: ItensController
 Variaveis:
+$itens
+$filtrarPor
+$filtro
 --}}
 
 @section('corpo')
@@ -18,7 +21,7 @@ Variaveis:
 	<ol class="breadcrumb">
 	 	 <li><a href="/">Garçom</a></li>
 	  	<li class="active"><a href="/administrador">Administrador</a></li>
-	  	<li class="active">Listar Itens</li>
+	  	<li class="active">Itens</li>
 	  	<a style = "float: right" href = "/auth/logout">Logout</a>
 	</ol>
 
@@ -42,7 +45,7 @@ Variaveis:
 				?>
 
 				{{-- Filtrar --}}
-				{!! Form::open(array('method' => 'GET', 'route' => 'filtrar')) !!}
+				{!! Form::open(array('method' => 'GET', 'route' => 'filtrarItem')) !!}
 					{!! Form::select('filtrarPor', array('nome' => 'Nome'), null, array("class" => "form-control", "style" => "width: 115px; display: inline-block"), $filtrarPor) !!}
 					{!! Form::text('filtro', $filtro, array("autofocus", "class" => "form-control", "style" => "width: 200px; display: inline-block; ")) !!}
 					{!! Form::submit('Filtrar', array('class' => 'btn btn-primary', 'style' => 'width: 100px')) !!}
@@ -74,8 +77,8 @@ Variaveis:
 					<tr>
 						<td style = "text-align: center; font-weight: bold; font-size: 16px"><img src = "/{{$item->urlImagem}}" width = "70" height = "70" alt = "imagem nao encontrada"></td>
 						<td style = "text-align: center; font-weight: bold">{{ucfirst($item->nome)}}</td>
-						<td style = "text-align: center">{{$item->precoCompra}}</td>
-						<td style = "text-align: center">{{$item->precoVenda}}</td>
+						<td style = "text-align: center">R$ {{$item->precoCompra}}</td>
+						<td style = "text-align: center">R$ {{$item->precoVenda}}</td>
 						<td style = "text-align: center">
 							{!! link_to_route('editarItem', 'Editar', array('id' => $item->id), array('class' => 'btn btn-primary')) !!}
 

@@ -45,7 +45,7 @@ $arrayNumeroProdutosPorCategoria -> cada posicao refencia o numero de produtos p
 				?>
 
 				{{-- Filtrar --}}
-				{!! Form::open(array('method' => 'GET', 'route' => 'filtrar')) !!}
+				{!! Form::open(array('method' => 'GET', 'route' => 'filtrarProduto')) !!}
 					{!! Form::select('filtrarPor', array('nome' => 'Nome', 'categoria' => 'Categoria'), null, array("class" => "form-control", "style" => "width: 115px; display: inline-block"), $filtrarPor) !!}
 					{!! Form::text('filtro', $filtro, array("autofocus", "class" => "form-control", "style" => "width: 200px; display: inline-block; ")) !!}
 					{!! Form::submit('Filtrar', array('class' => 'btn btn-primary', 'style' => 'width: 100px')) !!}

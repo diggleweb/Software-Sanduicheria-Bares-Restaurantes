@@ -44,3 +44,15 @@ para o usuário escolher quais itens compõem o sanduíche. - ok
 
 
 -> Produto mais vendido, produto mais lucrativo e funcionário que vendeu mais produtos, lucro total devem todos existir em relação a um período de tempo (mês, ano, determinado mês, etc...)
+
+
+#commit
+-> Criado um campo "ativo" em "itens"
+-> Criado o "filtrar" em "itens"
+-> Criar cadastro de novos 'itens'
+
+-> Produto não deve possuir preço de compra, pois o preço de compra deve ser 
+relacionado ao preço de compra de cada item que compõe este sanduíche
+
+-> em listar produtos, em sanduíches, devemos ver do que o sanduíche é composto
+-> em listar produtos, devemos ver a porcentagem de lucro também

@@ -153,21 +153,24 @@ class ItensTableSeeder extends Seeder {
             'nome' => 'bacon',
             'precoCompra' => 0.50,
             'precoVenda' => 1.50,
-            'urlImagem' => 'imagens/itens/bacon.jpg'
+            'urlImagem' => 'imagens/itens/bacon.jpg',
+            'ativo' => 1
         ));
 
         Item::create(array(
             'nome' => 'presunto',
             'precoCompra' => 0.50,
             'precoVenda' => 1.50,
-            'urlImagem' => 'imagens/itens/presunto.jpg'
+            'urlImagem' => 'imagens/itens/presunto.jpg',
+            'ativo' => 1
         ));
 
          Item::create(array(
             'nome' => 'cheddar',
             'precoCompra' => 0.50,
             'precoVenda' => 1.50,
-            'urlImagem' => 'imagens/itens/cheddar.png'
+            'urlImagem' => 'imagens/itens/cheddar.png',
+            'ativo' => 1
         ));
 
          Item::create(array(
@@ -188,28 +191,32 @@ class ItensTableSeeder extends Seeder {
             'nome' => 'Tomate',
             'precoCompra' => 0.50,
             'precoVenda' => 1.50,
-            'urlImagem' => 'imagens/itens/tomate.jpg'
+            'urlImagem' => 'imagens/itens/tomate.jpg',
+            'ativo' => 1
         ));
 
          Item::create(array(
             'nome' => 'Alface',
             'precoCompra' => 0.50,
             'precoVenda' => 1.50,
-            'urlImagem' => 'imagens/itens/alface.jpg'
+            'urlImagem' => 'imagens/itens/alface.jpg',
+            'ativo' => 1
         ));
 
          Item::create(array(
             'nome' => 'cebola',
             'precoCompra' => 0.50,
             'precoVenda' => 1.50,
-            'urlImagem' => 'imagens/itens/cebola.jpg'
+            'urlImagem' => 'imagens/itens/cebola.jpg',
+            'ativo' => 1
         ));
 
          Item::create(array(
             'nome' => 'pao',
             'precoCompra' => 0.50,
             'precoVenda' => 1.50,
-            'urlImagem' => 'imagens/itens/paohamburger.jpg'
+            'urlImagem' => 'imagens/itens/paohamburger.jpg',
+            'ativo' => 1
         ));
     }
 }

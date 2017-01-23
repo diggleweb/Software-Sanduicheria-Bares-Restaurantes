@@ -19,6 +19,7 @@ class CreateItemsTable extends Migration {
 			$table->float('precoCompra');
 			$table->float('precoVenda');
 			$table->string('urlImagem', 250);
+			$table->integer('ativo');
 
 			$table->timestamps();
 		});
