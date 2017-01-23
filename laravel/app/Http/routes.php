@@ -26,7 +26,10 @@ Route::group(['prefix' => 'administrador'], function() {
 	Route::put('/listarprodutos/updateProduto{id}', ['as' => 'updateProduto', 'uses' => 'ProdutosController@update']);
 	Route::get('/listarProdutos/filtrar/', ['as' => 'filtrar', 'uses' => 'ProdutosController@filtrar']);
 	
-
+	Route::get('/listarItens', ['as' =>'listarItens', 'uses' => 'ItensController@index']);
+	Route::get('/listarItens/novoItem', 'ItensController@create');
+	Route::get('/listarItens/editarItem{id}', ['as' => 'editarItem', 'uses' => 'ItensController@edit']);
+	
 	Route::get('/contasEncerradas', 'ContasController@index');
 
 	Route::get('/listarFuncionarios', 'FuncionariosController@index');

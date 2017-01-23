@@ -23,17 +23,24 @@ Por que utilizar o 'accordion'? O usuário só precisa ficar sabendo dos detalhe
 
 
 11/1/2017
--Ao clicar em detalhes, deve passar o nome e o preço do produto para o modal
+-Ao clicar em detalhes, deve passar o nome e o preço do produto para o modal - ok
 
--Ao clicar em 'detalhes', o software deve verificar qual é a categoria envolvida:
+-Ao clicar em 'detalhes', o software deve verificar qual é a categoria envolvida: 
 sanduiches:
 	-> buscar todos os itens como checkbox
 	-> os itens devem ser marcados, 
 	-> deixar uma caixa de observação para o usuário, caso queira colocar alguma observação
+quase ok
 
--> Sanduíches devem ser compostos de ítens, devemos mudar no banco de dados.
--> Cada sanduíche deve vir marcado com os ítens que o compõe. Ex: Bacon, Presunto, etc..
--> Ao adicionar um ítem, deve ser cobrado sobre o preço do sanduíche o preço do ítem adicionado.
+
+-> Sanduíches devem ser compostos de ítens, devemos mudar no banco de dados. - ok
+-> Cada sanduíche deve vir marcado com os ítens que o compõe. Ex: Bacon, Presunto, etc.. - ok
+-> Ao adicionar um ítem, deve ser cobrado sobre o preço do sanduíche o preço do ítem adicionado. 
 -> No cadastro de produtos, caso o produto a ser adicionado seja 'sanduíche', devemos pedir
-para o usuário escolher quais itens compõem o sanduíche.
+para o usuário escolher quais itens compõem o sanduíche. - ok
+
+17/01/2017
 -> Criar um cadastro para itens
+
+
+-> Produto mais vendido, produto mais lucrativo e funcionário que vendeu mais produtos, lucro total devem todos existir em relação a um período de tempo (mês, ano, determinado mês, etc...)

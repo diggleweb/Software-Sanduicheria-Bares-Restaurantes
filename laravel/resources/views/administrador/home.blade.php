@@ -7,9 +7,6 @@
 {{-- Variáveis que vêm do controller: 
 'urlMaisVendido', 'nomeGarcom', 'lucroTotal', 'produtoMaisLucrativo', $produtoMaisLucrativo, 'urlMaisLucrativo','lucroProdutoMaisLucrativo', 'unidadesProdutoMaisVendido', 'qtdeVendidaFuncionario' --}}
 
-<style>
-	
-</style>
 @section('corpo')
 	<div class="page-header">
 		<h1>Bem-vindo, administrador!</h1>
@@ -75,6 +72,11 @@
 	{{-- Produtos --}}
 		<div class = "opcoes reduzido" onclick = "location.href = '/administrador/listarProdutos';"  style = "cursor: pointer; background-color: #A19F00">
 			<h2 class = "tituloOpcoesPequeno">Produtos</h2>
+		</div>
+
+	{{-- Itens --}}
+		<div class = "opcoes reduzido" onclick = "location.href = '/administrador/listarItens';"  style = "cursor: pointer; background-color: #33A08A">
+			<h2 class = "tituloOpcoesPequeno">Itens</h2>
 		</div>
 	</div>
 

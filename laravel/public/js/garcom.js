@@ -144,7 +144,7 @@ var nomeFuncionario = null;
 			contadorQuantidade += quantidade;
 			var totalProduto = preco * quantidade;
 			$("#tabela").append(					//adiciona uma linha na tabela para cada produto
-				"<tr><td width = '40%' style = 'text-align: center'>" + nomeProduto + "</td><td width = '15%' style = 'text-align: center'>R$ " + preco.toFixed(2) + "</td><td width = '15%' style = 'text-align: center'>" + quantidade + "</td><td width = '20%' style = 'text-align: center; font-weight: bold;'> R$ " + totalProduto.toFixed(2) +"</td><td width = '30%' style = 'text-align: center'><button class = 'btn btn-danger' data-idConta = '" + idConta +"' id = '"+ nomeProduto +"' onclick = 'cancelarProduto(this.id, this.getAttribute(\"data-idConta\"))'>Cancelar</button></td></tr>"
+				"<tr><td width = '40%' style = 'text-align: center'>" + nomeProduto + "</td><td width = '15%' style = 'text-align: center'>R$ " + preco + "</td><td width = '15%' style = 'text-align: center'>" + quantidade + "</td><td width = '20%' style = 'text-align: center; font-weight: bold;'> R$ " + totalProduto +"</td><td width = '30%' style = 'text-align: center'><button class = 'btn btn-danger' data-idConta = '" + idConta +"' id = '"+ nomeProduto +"' onclick = 'cancelarProduto(this.id, this.getAttribute(\"data-idConta\"))'>Cancelar</button></td></tr>"
 			);
 
 			totalConta += totalProduto;
