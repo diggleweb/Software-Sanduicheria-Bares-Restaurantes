@@ -246,7 +246,7 @@ Route::get('/cancelarProduto', function() {
 Route::post('/salvarFuncionario', 'FuncionariosController@store');
 //Route::get('/excluirGarcom/{id}', ['as' => 'excluirGarcom', 'uses' => 'FuncionariosController@destroy']);
 Route::get('/excluirGarcom/', ['as' => 'excluirGarcom', 'uses' => 'FuncionariosController@destroy']);
-
+Route::get('/excluirItem', ['as' => 'excluirItem', 'uses' => 'ItensController@destroy']);
 Route::get('/excluirProduto', ['as' => 'excluirProduto', 'uses' => 'ProdutosController@destroy']);
 Route::post('/salvarProduto', 'ProdutosController@store');
 

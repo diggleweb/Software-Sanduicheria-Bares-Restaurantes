@@ -40,19 +40,29 @@ quase ok
 para o usuário escolher quais itens compõem o sanduíche. - ok
 
 17/01/2017
--> Criar um cadastro para itens
+-> Criar um cadastro para itens - ok
 
-
--> Produto mais vendido, produto mais lucrativo e funcionário que vendeu mais produtos, lucro total devem todos existir em relação a um período de tempo (mês, ano, determinado mês, etc...)
-
-
+23/01/17
 #commit
 -> Criado um campo "ativo" em "itens"
 -> Criado o "filtrar" em "itens"
 -> Criar cadastro de novos 'itens'
+ok
+
+
+#commit
+-> em listar produtos, devemos ver a porcentagem de lucro também - ok
 
 -> Produto não deve possuir preço de compra, pois o preço de compra deve ser 
 relacionado ao preço de compra de cada item que compõe este sanduíche
 
+-> conseguir editar ou excluir itens
+
+-> Problema na hora de editar um item
+
 -> em listar produtos, em sanduíches, devemos ver do que o sanduíche é composto
--> em listar produtos, devemos ver a porcentagem de lucro também
+
+-> Produto mais vendido, produto mais lucrativo e funcionário que vendeu mais produtos, lucro total devem todos existir em relação a um período de tempo (mês, ano, determinado mês, etc...)
+
+
+

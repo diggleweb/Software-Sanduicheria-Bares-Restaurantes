@@ -93,7 +93,7 @@ $arrayNumeroProdutosPorCategoria -> cada posicao refencia o numero de produtos p
 									<th class = "tituloTabela">Categoria</th>
 									<th class = "tituloTabela">Preço de Compra</th>
 									<th class = "tituloTabela">Preço de Venda</th>
-									<th class = "tituloTabela">Lucro</th>
+									<th class = "tituloTabela">Lucro (%)</th>
 									<th class = "tituloTabela">Imagem</th>
 								</tr>
 							</thead>
@@ -104,7 +104,16 @@ $arrayNumeroProdutosPorCategoria -> cada posicao refencia o numero de produtos p
 
 								{{-- Lista de produtos referentes a uma determinada categoria --}}
 								@foreach($produtos as $produto)
-									
+
+									<?php
+										//calcula o lucro de cada produto
+										$lucro = $produto->precoVenda - $produto->precoCompra;
+										//calcula a porcentagem deste lucro
+										$porcentagemLucro = ($lucro * 100)/$produto->precoCompra;
+										//passa para duas casas decimais
+										$porcentagemLucro = number_format($porcentagemLucro, 2);
+									?>
+
 									@if ($produto->idCategoria == $categoria->id)		<!-- verifica se a categoria do produto eh igual a categoria atual (da aba) -->
 									
 									<tr>
@@ -112,7 +121,8 @@ $arrayNumeroProdutosPorCategoria -> cada posicao refencia o numero de produtos p
 										<td style = "text-align: center">{{$categoria->nome}}</td>
 										<td style = "text-align: center">R$ {{number_format($produto->precoCompra, 2, '.', '')}}</td>
 										<td style = "text-align: center">R$ {{number_format($produto->precoVenda, 2, '.', '')}}</td>
-										<td style = "text-align: center">R$ {{number_format($produto->precoVenda - $produto->precoCompra, 2, '.', '')}}</td>
+										<td style = "text-align: center">R$ {{number_format($produto->precoVenda - $produto->precoCompra, 2, '.', '')}} 
+										({{$porcentagemLucro}} %)</td>
 										<td style = "text-align: center"><img src = "/{{$produto->urlImagem}}" width = "70" height = "70" alt = "imagem nao encontrada"></td>
 										<td style = "text-align: center">
 

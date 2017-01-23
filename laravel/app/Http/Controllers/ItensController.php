@@ -20,7 +20,7 @@ class ItensController extends Controller {
 	public function index()
 	{
 		$item = new Item();
-		$itens = $item->orderBy('nome', 'asc')->get();
+		$itens = $item->orderBy('nome', 'asc')->where('ativo', '=', 1)->get();
 		return view('listar.itens')->with('itens', $itens);
 	}
 
@@ -146,9 +146,14 @@ class ItensController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function destroy($id)
+	public function destroy()
 	{
-		//
+		$id = Input::get('id');
+		$item = new Item();
+		$item = $item->where('id', '=', $id)->first();
+		$item->ativo = 0;
+		$item->update();
+		return Redirect()->back();
 	}
 
 }

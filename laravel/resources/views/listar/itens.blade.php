@@ -64,6 +64,7 @@ $filtro
 					<th class = "tituloTabela">Nome</th>
 					<th class = "tituloTabela">Preço de Compra</th>
 					<th class = "tituloTabela">Preço de Venda</th>
+					<th class = "tituloTabela">Lucro</th>
 					<th class = "tituloTabela">Ação</th>
 				</tr>
 			</thead>
@@ -71,14 +72,29 @@ $filtro
 			<!-- corpo da tabela -->
 			<tbody>
 				
-
+				
 				{{-- Lista de produtos referentes a uma determinada categoria --}}
 				@foreach($itens as $item)
+				
+				<?php
+					//calcula o lucro de cada iconv(in_charset, out_charset, str)tem
+					$lucro = $item->precoVenda - $item->precoCompra;
+					//passa para duas casas decimais
+					$lucro = number_format($lucro, 2);
+
+					//calcula a porcentagem deste lucro
+					$porcentagemLucro = ($lucro * 100)/$item->precoCompra;
+					//passa para duas casas decimais
+					$porcentagemLucro = number_format($porcentagemLucro, 2);
+				?>
+
+
 					<tr>
 						<td style = "text-align: center; font-weight: bold; font-size: 16px"><img src = "/{{$item->urlImagem}}" width = "70" height = "70" alt = "imagem nao encontrada"></td>
 						<td style = "text-align: center; font-weight: bold">{{ucfirst($item->nome)}}</td>
 						<td style = "text-align: center">R$ {{$item->precoCompra}}</td>
 						<td style = "text-align: center">R$ {{$item->precoVenda}}</td>
+						<td style = "text-align: center">R$ {{$lucro}} ({{$porcentagemLucro}} %)</td>
 						<td style = "text-align: center">
 							{!! link_to_route('editarItem', 'Editar', array('id' => $item->id), array('class' => 'btn btn-primary')) !!}
 
@@ -140,12 +156,20 @@ $filtro
 				});
 			}
 
+			//armazena o id do item a ser excluído
+			var idItem;
+
+			function excluirItem(id) {
+				$("#myModal").modal('show');
+				idItem = id;
+			}
+
 			//função chamada pelo formulário do modal que é liberado assim que o usuário clica em 'excluir'
 			function confirmarSenha() {
 	 			var val = $("#password").val();		//pega a senha que o usuário escreveu no input
 				
 				if (val == "123123") {		//caso a senha esteja correta, excluir o produto
-					$.get( "/excluirItem", {"id": idGlobal} , function( data ) {
+					$.get( "/excluirItem", {"id": idItem} , function( data ) {
 					  location.reload(true);
 					});
 				} else {		//caso a senha nao esteja correta, mensagem para o usuario
