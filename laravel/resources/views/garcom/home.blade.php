@@ -30,6 +30,7 @@ pela view:
 
 		<div class="col-md-7" id = "div1">
 
+		{{-- Sanduíches --}}
 			<h4 class = "tituloCategoria">Sanduíches</h4>
 				<div>
 					<!-- percorre cada sanduíche no array 'sanduiches' p/ preencher os valores -->
@@ -45,6 +46,7 @@ pela view:
 
 			<hr>
 
+		{{-- Bebidas --}}
 			<h4 class = "tituloCategoria">Bebidas</h4>
 				<div>
 					@foreach($bebidas as $bebida) 
@@ -55,13 +57,12 @@ pela view:
 							<button name = "btnAbrirDetalhes" data-toggle = "modal" data-target = "#modalDetalhesPedido" class = "btn btn-primary">Detalhes</button>
 						</div>
 					@endforeach
-					
 				</div>
 
 			<hr>
-
 			<br>
 
+		{{-- Porções --}}
 			<h4 class = "tituloCategoria">Porções</h4>
 				<div>
 					
@@ -74,13 +75,12 @@ pela view:
 							<button name="btnAbrirDetalhes" data-toggle = "modal" data-target = "#modalDetalhesPedido" class = "btn btn-primary">Detalhes</button>
 						</div>
 					@endforeach
-					
 				</div>
 			<hr>
 
+		{{-- Pratos --}}
 			<h4 class = "tituloCategoria">Pratos</h4>
 				<div>
-
 					@foreach($pratos as $prato)
 						<div class = "divCadaItem" val = "{{$prato->id}}" data-clicked = "0">
 							<img src="{{$prato->urlImagem}}" class = "imagemItem">
@@ -89,14 +89,12 @@ pela view:
 							<button name = "btnAbrirDetalhes" data-toggle = "modal" data-target = "#modalDetalhesPedido" class = "btn btn-primary">Detalhes</button>
 						</div>
 					@endforeach
-					
 				</div>
 			<hr>
-		
 		</div>
 	
 
-	<!-- Números das mesas -->
+	{{-- Número de mesas --}}
 		<div class="col-md-5" id = "div2">
 			<div class="row">
 				<h1>Mesas</h1>
@@ -106,18 +104,15 @@ pela view:
 						<img src="imagens/numeros/{{$i}}.jpg" alt="{{$i}}" height = "90" width = "90">
 					</div>
 				@endfor
-				
 			</div>
-
-
 
 
 		<!-- TABELA  -->
 			<div class="row" id = "dadosDaConta">
-				<br><br><br><br>
-					
+				<br><br>
+
+				{{-- Contador de número de ítens selecionados --}}
 					<div>
-						<!-- contador de número de ítens selecionados -->
 						<h4 style = "margin-left: 335px; display: inline-block" id = "contadorProdutosSelecionados"></h4>&nbsp;&nbsp;&nbsp;&nbsp;
 						<!-- botão com ícone em 'x' para desselecionar todos os produtos selecionados -->
 						<button onclick = "desselecionarItens()" id = "desselecionaritens" class = "glyphicon glyphicon-remove" style = "color: red; display: none"></button>
@@ -125,13 +120,14 @@ pela view:
 
 					<br>
 
-					<button style = "width: 400px; margin-left: 250px; height: 50px; font-size: 20px" class = "btn btn-success" id = "btnAdicionar" >Adicionar Produtos</button>
+				{{-- Botão de adicionar itens --}}
+					<button style = "width: 400px; height: 80px; margin-left: 250px;  font-size: 20px" class = "btn btn-success" id = "btnAdicionar" >Adicionar Produtos</button>
 
 					<br><br><br><br>
 				
 					<h4 id = "tituloConta" style = "font-weight: bold; float: left">Conta Aberta</h4> 
 					
-					{{-- Botao detalhes --}}
+				{{-- Botao detalhes --}}
 					<button class = "btn btn-primary" style = "float: left; margin-left: 15px" name = "btnDetalhes" data-toggle = "modal" data-target = "#myModal">Detalhes</button>
 				
 				<style>

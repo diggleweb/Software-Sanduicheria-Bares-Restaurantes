@@ -51,10 +51,11 @@ class ProdutosController extends Controller {
 	 *
 	 * @return Response
 	 */
+	//busca os itens para adicionar ao sanduíche
 	public function create()
 	{
 		$itens = new Item();
-		$itens = $itens->orderBy('nome', 'asc')->get();
+		$itens = $itens->orderBy('nome', 'asc')->where('ativo', '=', 1)->get();
 		return view('adicionar.produtos')->with('itens', $itens);
 	}
 

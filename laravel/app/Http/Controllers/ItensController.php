@@ -57,7 +57,7 @@ class ItensController extends Controller {
 						$item->precoVenda = $input['precoVenda'];
 						$item->ativo = 1;
 
-						//monta o destino do arquivo, a partir da categoria, nome, e da extensao do produto
+						//monta o destino do arquivo, a partir do nome, e da extensao do item
 						$destinationPath = "imagens/itens/";
 						$fileName = $input['nome'] . "." . $input['urlImagem']->getClientOriginalExtension();
 
@@ -69,14 +69,14 @@ class ItensController extends Controller {
 						//salva no banco
 						$item->save();
 
-						Session::flash('mensagem', 'Produto inserido com sucesso!');
+						Session::flash('mensagem', 'item inserido com sucesso!');
 						return Redirect()->back();
 
 					} else {	//caso nao seja apenas uma imagem
 						return Redirect()->back()->withErrors('O arquivo adicionado deve ser uma imagem!');
 					}
 				} else {
-					return Redirect()->back()->withErrors("Por favor, insira uma imagem para o produto!");
+					return Redirect()->back()->withErrors("Por favor, insira uma imagem para o item!");
 				}	
 			} else {
 				return Redirect()->back()->withErrors('Por favor, preencha todos os campos corretamente!');
@@ -137,7 +137,48 @@ class ItensController extends Controller {
 	 */
 	public function update($id)
 	{
-		//
+		//primeira coisa eh verificar se existe ou nao uma imagem armazenada...
+		if (Input::hasFile('urlImagem')) {
+			$input = Input::all();
+			//verifica se o arquivo de upload realmente eh uma imagem
+			if(substr($input['urlImagem']->getMimeType(), 0, 5) == 'image') {
+	   			//cria uma nova instancia de item, coloca os dados, insere no banco
+	   			$item = new Item();
+	   			$item = $item->find($id);
+				$item->nome = $input['nome'];
+				$item->precoCompra = $input['precoCompra'];
+				$item->precoVenda = $input['precoVenda'];
+
+				//monta o destino do arquivo, a partir da categoria, nome, e da extensao do item
+				$destinationPath = "imagens/itens/";
+				$fileName = $input['nome'] . "." . $input['urlImagem']->getClientOriginalExtension();
+
+				//move a imagem para o local correto
+				$input['urlImagem']->move($destinationPath, $fileName);
+
+				$item->urlImagem = $destinationPath . "/" . $fileName;
+				$item->ativo = 1;
+
+				$item->update();
+
+				return Redirect()->to('/administrador/listarItens');
+
+			} else {	//caso nao seja apenas uma imagem
+				return Redirect()->back()->withErrors('O arquivo adicionado deve ser uma imagem!');
+			}
+
+		} else {
+			//se não tiver imagem, gravar  com a imagem antiga
+			$input = Input::all();
+   			$item = new item();
+   			$item = $item->find($id);
+   			$item->nome = $input['nome'];
+			$item->precoCompra = $input['precoCompra'];
+			$item->precoVenda = $input['precoVenda'];
+			$item->ativo = 1;
+			$item->update();
+			return Redirect()->to('/administrador/listarItens');
+		}
 	}
 
 	/**

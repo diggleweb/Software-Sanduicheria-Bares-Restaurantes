@@ -1,4 +1,3 @@
-
 @extends('comum')
 
 @section('titulo')

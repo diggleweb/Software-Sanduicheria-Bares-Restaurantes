@@ -89,12 +89,12 @@ $arrayNumeroProdutosPorCategoria -> cada posicao refencia o numero de produtos p
 							<!-- cabecalho da tabela -->
 							<thead>
 								<tr>
+									<th class = "tituloTabela">Imagem</th>
 									<th class = "tituloTabela">Nome</th>
 									<th class = "tituloTabela">Categoria</th>
 									<th class = "tituloTabela">Preço de Compra</th>
 									<th class = "tituloTabela">Preço de Venda</th>
 									<th class = "tituloTabela">Lucro (%)</th>
-									<th class = "tituloTabela">Imagem</th>
 								</tr>
 							</thead>
 
@@ -117,13 +117,13 @@ $arrayNumeroProdutosPorCategoria -> cada posicao refencia o numero de produtos p
 									@if ($produto->idCategoria == $categoria->id)		<!-- verifica se a categoria do produto eh igual a categoria atual (da aba) -->
 									
 									<tr>
+										<td style = "text-align: center"><img src = "/{{$produto->urlImagem}}" width = "70" height = "70" alt = "imagem nao encontrada"></td>
 										<td style = "text-align: center; font-weight: bold; font-size: 16px">{{$produto->nome}}</td>
 										<td style = "text-align: center">{{$categoria->nome}}</td>
 										<td style = "text-align: center">R$ {{number_format($produto->precoCompra, 2, '.', '')}}</td>
 										<td style = "text-align: center">R$ {{number_format($produto->precoVenda, 2, '.', '')}}</td>
 										<td style = "text-align: center">R$ {{number_format($produto->precoVenda - $produto->precoCompra, 2, '.', '')}} 
 										({{$porcentagemLucro}} %)</td>
-										<td style = "text-align: center"><img src = "/{{$produto->urlImagem}}" width = "70" height = "70" alt = "imagem nao encontrada"></td>
 										<td style = "text-align: center">
 
 											{!! link_to_route('editarProduto', 'Editar', array('id' => $produto->id), array('class' => 'btn btn-primary')) !!}

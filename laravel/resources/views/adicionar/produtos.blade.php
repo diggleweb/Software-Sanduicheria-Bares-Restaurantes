@@ -97,6 +97,11 @@ $(function() {
 		        	</div>
 		        @endforeach
 	        </div>
+	        <br>
+
+	        <p style = "float: right">Pressione 'ESC' para desselecionar todos os itens.</p>
+	      	<br>
+
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

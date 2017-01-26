@@ -62,6 +62,8 @@ relacionado ao preço de compra de cada item que compõe este sanduíche
 
 -> em listar produtos, em sanduíches, devemos ver do que o sanduíche é composto
 
+-> Número de mesas deve ser definida pelo usuário
+
 -> Produto mais vendido, produto mais lucrativo e funcionário que vendeu mais produtos, lucro total devem todos existir em relação a um período de tempo (mês, ano, determinado mês, etc...)
 
 

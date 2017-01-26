@@ -49,7 +49,7 @@ $(function() {
 	<div class = "alert alert-danger" role = "alert"> {{$errors->first()}} </div>
 @endif
 
-{!! Form::model($item, array('id' => 'formulario', 'route' => array('updateItens', $produto->id), 'method' => 'PUT', 'files' => true)) !!}
+{!! Form::model($item, array('id' => 'formulario', 'route' => array('updateItem', $item->id), 'method' => 'PUT', 'files' => true)) !!}
 	{!! Form::label('Nome: ') !!}
 	{!! Form::text('nome', null, array('class' => 'form-control', 'style' => 'width: 500px', 'maxlength' => '200')) !!}
 	<br>
