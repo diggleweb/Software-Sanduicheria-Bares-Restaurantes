@@ -36,7 +36,7 @@ class HomeController extends Controller {
 		$funcionarios = $funcionarios->where('ativo', '=', true)->get();
 
 		$itens = new Item();
-		$itens = $itens->get();
+		$itens = $itens->orderBy('nome', 'asc')->get();
 
 		return view('garcom/home')->
 		with('sanduiches', $sanduiches)->

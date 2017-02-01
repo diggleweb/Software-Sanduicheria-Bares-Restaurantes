@@ -29,26 +29,40 @@ Creditos: http://bootsnipp.com/snippets/featured/buttons-minus-and-plus-in-input
     e.preventDefault();
     
     fieldName = $(this).attr('data-field');
-type      = $(this).attr('data-type');
+	type      = $(this).attr('data-type');
     var input = $("input[name='"+fieldName+"']");
     var currentVal = parseInt(input.val());
     if (!isNaN(currentVal)) {
+        //botão menos
         if(type == 'minus') {
             
             if(currentVal > input.attr('min')) {
                 input.val(currentVal - 1).change();
+            	var precoVenda = parseFloat($(this).parents().eq(4).attr('data-valor'));
+            	var precoTotal = ((currentVal - 1) * precoVenda).toFixed(2);
+            	$(this).parents().eq(4).find('.precoTotal').children().html("R$ " + precoTotal);
             } 
+
             if(parseInt(input.val()) == input.attr('min')) {
                 $(this).attr('disabled', true);
             }
 
+        //botão mais
         } else if(type == 'plus') {
-
+        	//adiciona
             if(currentVal < input.attr('max')) {
-                input.val(currentVal + 1).change();
+            	input.val(currentVal + 1).change();
+                // var id = $(this).parents().eq(4).attr('data-id');
+                var precoVenda = parseFloat($(this).parents().eq(4).attr('data-valor'));
+                var precoTotal = ((currentVal+1) * precoVenda).toFixed(2);
+
+                //altera o preço total no html
+                $(this).parents().eq(4).find('.precoTotal').children().html("R$ " + precoTotal);
             }
+
             if(parseInt(input.val()) == input.attr('max')) {
                 $(this).attr('disabled', true);
+
             }
 
         }
@@ -74,6 +88,7 @@ $('.input-number').change(function() {
         alert('Sorry, the minimum value was reached');
         $(this).val($(this).data('oldValue'));
     }
+
     if(valueCurrent <= maxValue) {
         $(".btn-number[data-type='plus'][data-field='"+name+"']").removeAttr('disabled')
     } else {
@@ -478,4 +493,10 @@ var nomeFuncionario = null;
 		modal.find('.preco').text("R$" + preco.toFixed(2));
 		//abre o modal
 		modal.modal('toggle');
+	}
+
+	//acionado ao clicar em "+" no modal de detalhes do sanduíche
+	//
+	function adicionarItemAoPedido(nome, precoVenda) {
+		console.log(nome + precoVenda);
 	}

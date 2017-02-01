@@ -217,8 +217,8 @@ pela view:
 {{-- Modal: detalhes do pedido (para sanduiches) --}}
 <!-- Modal -->
 <div class="modal fade" id="modalDetalhesPedidoSanduiches" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content" style = "height: 900px">
+  <div class="modal-dialog" role="document" style = " width: 700px; margin: auto;">
+    <div class="modal-content" style = "height: 1024px">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" class="descricao" style = "font-weight: bold">Adicionar ou remover itens do pedido</h4>
@@ -247,47 +247,47 @@ pela view:
     	  	@foreach($itens as $item)
 		        {{-- Adicionar Item --}}
 	        	<div class="row">
-	        		<div class = "col-md-3">
-				        <div style = "float: left">
+	        		<div class = "col-md-5">
+				        <div style = "float: left">	
 				        	 {{-- checkbox --}}
 					        <input type = "checkbox" name = "" value = "bacon">
 					        	<span style = "font-weight: bold; font-size: 20px">&nbsp;{{ucfirst($item->nome)}}</span>
 					        	<br>
-					        	<label style = "margin-left: 30px">R$ {{number_format($item->precoVenda, 2)}}</label>
+					        	<label class = "precoVendaItem" style = "margin-left: 30px">Preço por unidade: R$ {{number_format($item->precoVenda, 2)}}</label>
 				        </div>
 	        		</div>
 
-	        		{{-- Botoes +- --}}
-	        		<div class = "col-md-6">
-			    	  <div class="center"  style = "width: 150px;  padding-left: 0; margin: auto">
-			    	    <div class="input-group">
-				          <span class="input-group-btn">
-				          	  {{-- btn menos --}}
-				              <button type="button" class="btn btn-danger btn-number"  data-type="minus" data-field="{{$item->id}}">
-				                <span class="glyphicon glyphicon-minus"></span>
-				              </button>
-				          </span>
-				          {{-- quantidade --}}
-				          <input type="text" name="{{$item->id}}" class="form-control input-number" value="1" min="0" max="10" style = "text-align: center">
-				          <span class="input-group-btn">
-				          	  {{-- btn mais --}}
-				              <button type="button" class="btn btn-success btn-number" data-type="plus" data-field="{{$item->id}}">
-				                  <span class="glyphicon glyphicon-plus"></span>
-				              </button>
-			          		</span>
-			    	      </div>
-			        	</div>
-	        		</div>
+	        		<div class = "containerBotoes" data-id = "{{$item->id}}" data-valor = "{{$item->precoVenda}}">
+			    		{{-- Botoes +- --}}
+		        		<div class = "col-md-4">
+				    	  <div class="center"  style = "width: 150px;  padding-left: 0; margin: auto">
+				    	    <div class="input-group">		
+					          <span class="input-group-btn">
+					          	  {{-- btn menos --}}
+					              <button type="button" class="btn btn-danger btn-number"  data-type="minus" data-field="{{$item->id}}">
+					                <span class="glyphicon glyphicon-minus"></span>
+					              </button>
+					          </span>
+					          {{-- quantidade --}}
+					          <input type="text" name="{{$item->id}}" class="form-control input-number" value="1" min="0" max="10" style = "text-align: center">
+					          <span class="input-group-btn">
+					          	  {{-- btn mais --}}
+					              <button type="button" class="btn btn-success btn-number" data-type="plus" data-field="{{$item->id}}">
+					                  <span class="glyphicon glyphicon-plus"></span>
+					              </button>
+				          		</span>
+				    	      </div>
+				        	</div>
+		        		</div>
 
 	        		{{-- Preço total com os itens adicionados ou removidos --}}
 	        		<div class = "col-md-3">
-			    	    <div class="input-group" style = "margin-left: 20px; float: left" >
-			    	      <label style = "font-size: 20px; font-weight: bold; color: green">R$ 25,00</label>
-				         
+			    	    <div class="input-group precoTotal" style = "margin-left: 20px; float: left" >
+			    	      <div id = "{{$item->id}}" class = "precoItem" style = "font-size: 20px; font-weight: bold; color: green">R$ 25,00</div>
 			        	</div>
 	        		</div>
-
-	        	</div>
+				</div>
+			</div>
 	        	
     	  	@endforeach
 	   </div>
@@ -297,7 +297,7 @@ pela view:
 {{-- fim do modal --}}
 
 
-
+{{-- Excluir --}}
 <div class="modal fade" id="modalDetalhesPedido" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content" style = "height: 900px">
