@@ -11,7 +11,7 @@ use App\Pedido;
 use App\Produto;
 use App\ContasProdutos;
 use App\Categoria;
-use App\ContasProdutosItens;
+use App\ProdutosItens;
 
 
 
@@ -32,8 +32,7 @@ class DatabaseSeeder extends Seeder {
         $this->call('FuncionariosTableSeeder');
         $this->call('ProdutosTableSeeder');
         $this->call('ItensTableSeeder');
-        //$this->call('ContasProdutosTableSeeder');
-	
+        $this->call('ProdutosItensTableSeeder');
 	}
 
 }
@@ -429,104 +428,68 @@ class ProdutosTableSeeder extends Seeder {
             'ativo' => true,
             'urlImagem' => 'imagens/produtos/pratos/salada.jpg'
         ));
+    }}
 
-    }
+
+class ProdutosItensTableSeeder extends Seeder {
+        public function run() {
+            /* itens que compõem o sanduíche simples */
+            ProdutosItens::create(array(
+                'produto_id' => 1,
+                'item_id' => 1
+            ));
+
+            ProdutosItens::create(array(
+                'produto_id' => 1,
+                'item_id' => 2
+            ));
+
+            ProdutosItens::create(array(
+                'produto_id' => 1,
+                'item_id' => 3
+            ));
+
+            ProdutosItens::create(array(
+                'produto_id' => 1,
+                'item_id' => 5
+            ));
+
+            ProdutosItens::create(array(
+                'produto_id' => 1,
+                'item_id' => 6
+            ));
+
+            ProdutosItens::create(array(
+                'produto_id' => 1,
+                'item_id' => 7
+            ));
+
+            ProdutosItens::create(array(
+                'produto_id' => 1,
+                'item_id' => 9
+            ));
+
+
+            /* itens que compõem o baguete (filé) */
+            ProdutosItens::create(array(
+                'produto_id' => 2,
+                'item_id' => 2
+            ));
+
+            ProdutosItens::create(array(
+                'produto_id' => 2,
+                'item_id' => 5
+            ));
+
+            ProdutosItens::create(array(
+                'produto_id' => 2,
+                'item_id' => 6
+            ));
+
+            ProdutosItens::create(array(
+                'produto_id' => 2,
+                'item_id' => 7
+            ));
+        }
 }
-// 
-
-// class ContasTableSeeder extends Seeder {
-
-//     public function run()
-//     {
-//         DB::table('contas')->delete();
-
-//         Conta::create(array(
-//             'mesa_numero' => 1,
-//             'funcionario_id' => 1, 
-//             'valor' => 0,
-//             'encerrada' => false
-//         ));
-
-//         Conta::create(array(
-//             'mesa_numero' => 2,
-//             'funcionario_id' => 1, 
-//             'valor' => 0,
-//             'encerrada' => false
-//         ));
-
-
-//         Conta::create(array(
-//             'mesa_numero' => 3,
-//             'funcionario_id' => 1, 
-//             'valor' => 0,
-//             'encerrada' => false
-//         ));
-
-
-//         Conta::create(array(
-//             'mesa_numero' => 4,
-//             'funcionario_id' => 1, 
-//             'valor' => 0,
-//             'encerrada' => false
-//         ));
-
-
-//         Conta::create(array(
-//             'mesa_numero' => 5,
-//             'funcionario_id' => 1, 
-//             'valor' => 0,
-//             'encerrada' => false
-//         ));
-
-
-//         Conta::create(array(
-//             'cliente_id' => 1,
-//             'funcionario_id' => 2, 
-//             'valor' => 0,
-//             'encerrada' => false
-//         ));
-
-
-//     }
-// }
-
-
-// class ContasProdutosTableSeeder extends Seeder {
-
-//     public function run()
-//     {
-//         DB::table('conta_produtos')->delete();
-
-//         ContasProdutos::create(array(
-//             'conta_id' => 1,
-//             'produto_id' => 1,
-//         ));
-
-//         ContasProdutos::create(array(
-//             'conta_id' => 1,
-//             'produto_id' => 3,
-//         ));
-
-//         ContasProdutos::create(array(
-//             'conta_id' => 1,
-//             'produto_id' => 4,
-//         ));
-
-//         ContasProdutos::create(array(
-//             'conta_id' => 1,
-//             'produto_id' => 5,
-//         ));
-
-//         ContasProdutos::create(array(
-//             'conta_id' => 2,
-//             'produto_id' => 1,
-//         ));
-
-//         ContasProdutos::create(array(
-//             'conta_id' => 1,
-//             'produto_id' => 7,
-//         ));
-
-//     }
-// }
 

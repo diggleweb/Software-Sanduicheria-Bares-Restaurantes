@@ -3,6 +3,7 @@
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Produto;
+use App\ProdutosItens;
 use App\Funcionario;
 use App\Item;
 use Illuminate\Http\Request;

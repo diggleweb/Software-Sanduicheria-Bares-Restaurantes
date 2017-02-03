@@ -485,12 +485,41 @@ var nomeFuncionario = null;
 
 	//adicionbado em 12/1/2017
 	/* abre o modal de detalhes para pedidos relacionados a sanduiches */
-	function abrirModalSanduiches(nome, preco, urlImagem) {
+	function abrirModalSanduiches(id, nome, preco, urlImagem) {
 		var modal = $("#modalDetalhesPedidoSanduiches");
 		//altera a url da imagem, nome e preço
 		modal.find('.imagem').attr('src', urlImagem);
 		modal.find('.nome').text(nome);
 		modal.find('.preco').text("R$" + preco.toFixed(2));
+
+		//precisamos, a partir do id do sanduíche, buscar quais sãos os ids
+		//dos itens que este sanduíche possui
+		//percorrer cada item listado no modal e caso o item corresponda a um item do sanduíche
+		//marcar 1 em '.input-number'
+		//marcar a checkbox
+		//data: array contendo ids dos itens que compõe o determinado produto
+		$.get('/encontrarItens', {'idProduto': id}, function(data) {
+			$.each(data, function(e) {
+				//e = id do item atual
+				//cada um desses números aqui são ids dos itens que compõem o sanduíche
+				$("[name='checkboxItens']").each(
+					function(idCheckbox) {
+						//verifica se o ID do checkbox atual é igual ao id do item que estamos percorrendo
+						//caso seja verdade, desejamos marcar o checkbox
+						if (e == idCheckbox) {
+							$(this).prop('checked', 'checked');
+						} 
+					}				
+				);		
+			});
+		});
+
+
+		//precisamos sempre voltar para '1' o número de itens
+		$.each(modal.find('.input-number'), function(index, value) {
+			$(this).val(1);
+		});
+
 		//abre o modal
 		modal.modal('toggle');
 	}

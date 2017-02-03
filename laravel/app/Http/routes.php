@@ -2,6 +2,7 @@
 
 use App\Pedido;
 use App\Funcionario;
+use App\ProdutosItens;
 use App\Produto;
 use App\Conta;
 use App\ContasProdutos;
@@ -252,6 +253,16 @@ Route::get('/excluirProduto', ['as' => 'excluirProduto', 'uses' => 'ProdutosCont
 Route::post('/salvarProduto', 'ProdutosController@store');
 
 Route::get('/excluirContaEncerrada', ['as' => 'excluirContaEncerrada', 'uses' => 'ContasController@destroy']);
+
+//retorna os itens que são utilizados em um determinado produto
+Route::get('/encontrarItens', function() {
+	$id = Input::get('idProduto');
+	$produtosItens = new ProdutosItens();
+	//$idsItens = array de ids dos itens de um determinado produto
+	$idsItens = $produtosItens->where('produto_id', '=', $id)->select('item_id')->get();
+
+	return $idsItens;
+});
 
 Route::controllers([
 	'auth' => 'Auth\AuthController',

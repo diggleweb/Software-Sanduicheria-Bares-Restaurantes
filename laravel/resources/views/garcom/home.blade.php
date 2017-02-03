@@ -39,7 +39,7 @@ pela view:
 							<img src="{{$sanduiche->urlImagem}}" class = "imagemItem">
 							<h5 class = "nomeItem">{{$sanduiche->nome}}</h5>
 							<h4 style = "color: red; text-align: center;">R$ {{number_format($sanduiche->precoVenda, 2, ".", "")}}</h4>
-							<button name = "btnAbrirDetalhes" class = "btn btn-primary" onclick = "abrirModalSanduiches('{{$sanduiche->nome}}', {{$sanduiche->precoVenda}}, '{{$sanduiche->urlImagem}}')">Detalhes</button>
+							<button name = "btnAbrirDetalhes" class = "btn btn-primary" onclick = "abrirModalSanduiches('{{$sanduiche->id}}', '{{$sanduiche->nome}}', {{$sanduiche->precoVenda}}, '{{$sanduiche->urlImagem}}')">Detalhes</button>
 						</div>
 					@endforeach
 				</div>
@@ -250,7 +250,7 @@ pela view:
 	        		<div class = "col-md-5">
 				        <div style = "float: left">	
 				        	 {{-- checkbox --}}
-					        <input type = "checkbox" name = "" value = "bacon">
+					        <input type = "checkbox" name = "checkboxItens" value = "{{$item->id}}">
 					        	<span style = "font-weight: bold; font-size: 20px">&nbsp;{{ucfirst($item->nome)}}</span>
 					        	<br>
 					        	<label class = "precoVendaItem" style = "margin-left: 30px">Preço por unidade: R$ {{number_format($item->precoVenda, 2)}}</label>
@@ -283,7 +283,7 @@ pela view:
 	        		{{-- Preço total com os itens adicionados ou removidos --}}
 	        		<div class = "col-md-3">
 			    	    <div class="input-group precoTotal" style = "margin-left: 20px; float: left" >
-			    	      <div id = "{{$item->id}}" class = "precoItem" style = "font-size: 20px; font-weight: bold; color: green">R$ 25,00</div>
+			    	      <div id = "{{$item->id}}" class = "precoItem" style = "font-size: 20px; font-weight: bold; color: green">R$ {{$item->precoVenda}}</div>
 			        	</div>
 	        		</div>
 				</div>
