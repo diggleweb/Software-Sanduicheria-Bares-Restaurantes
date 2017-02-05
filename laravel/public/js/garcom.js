@@ -25,26 +25,43 @@ $(document).keyup(function(e) {
 Este JS está relacionado apenas ao modal de adicionar detalhes aos pedidos (é apenas a funcionalidade de + e -)
 Creditos: http://bootsnipp.com/snippets/featured/buttons-minus-and-plus-in-input
 */
- $('.btn-number').click(function(e){
+
+ $('.btn-number').click(function(e) {
     e.preventDefault();
     
     fieldName = $(this).attr('data-field');
 	type      = $(this).attr('data-type');
     var input = $("input[name='"+fieldName+"']");
     var currentVal = parseInt(input.val());
+
+    //busca o preço total atual do produto + adicionais (será atualizado a cada + ou - pressionado)
+    var precoAtual = $(".preco").html();
+    //retira desse preço atual o R$
+    precoAtual = parseFloat(precoAtual.substr(2, precoAtual.length));
+    
     if (!isNaN(currentVal)) {
         //botão menos
         if(type == 'minus') {
             
-            if(currentVal > input.attr('min')) {
+            //caso o valor seja diferente de zero
+            if(currentVal >= input.attr('min')) {
                 input.val(currentVal - 1).change();
             	var precoVenda = parseFloat($(this).parents().eq(4).attr('data-valor'));
-            	var precoTotal = ((currentVal - 1) * precoVenda).toFixed(2);
-            	$(this).parents().eq(4).find('.precoTotal').children().html("R$ " + precoTotal);
+            	var precoAdicional = ((currentVal - 1) * precoVenda).toFixed(2);
+            	
+            	//altera o preço adicional na página html
+            	$(this).parents().eq(4).find('.precoTotal').children().html("R$ " + precoAdicional);
+            	//atualiza o preço total
+            	precoAtual -= parseFloat(precoVenda);
+            	//altera o preço total
+            	$(".preco").html("R$" + precoAtual.toFixed(2));
             } 
 
+            //caso atinja o valor zero
             if(parseInt(input.val()) == input.attr('min')) {
                 $(this).attr('disabled', true);
+                //desabilitar a checkbox correspondente a este item
+                $(this).parents().eq(5).find("[name='checkboxItens']").prop('checked', '');
             }
 
         //botão mais
@@ -54,10 +71,16 @@ Creditos: http://bootsnipp.com/snippets/featured/buttons-minus-and-plus-in-input
             	input.val(currentVal + 1).change();
                 // var id = $(this).parents().eq(4).attr('data-id');
                 var precoVenda = parseFloat($(this).parents().eq(4).attr('data-valor'));
-                var precoTotal = ((currentVal+1) * precoVenda).toFixed(2);
+                var precoAdicional = ((currentVal+1) * precoVenda).toFixed(2);
+                //altera o preço adicional na página html
+                $(this).parents().eq(4).find('.precoTotal').children().html("R$ " + precoAdicional);
+                //atualiza o preço total
+            	precoAtual += parseFloat(precoVenda);
+            	//altera o preço total
+            	$(".preco").html("R$" + precoAtual.toFixed(2));
 
-                //altera o preço total no html
-                $(this).parents().eq(4).find('.precoTotal').children().html("R$ " + precoTotal);
+            	//ativar novamente a checkbox correspondente a este item
+            	$(this).parents().eq(5).find("[name='checkboxItens']").prop('checked', 'checked');
             }
 
             if(parseInt(input.val()) == input.attr('max')) {
@@ -70,6 +93,7 @@ Creditos: http://bootsnipp.com/snippets/featured/buttons-minus-and-plus-in-input
         input.val(0);
     }
 });
+
 
 $('.input-number').focusin(function(){
    $(this).data('oldValue', $(this).val());
@@ -94,9 +118,7 @@ $('.input-number').change(function() {
     } else {
         alert('Sorry, the maximum value was reached');
         $(this).val($(this).data('oldValue'));
-    }
-    
-    
+    }    
 });
 
 $(".input-number").keydown(function (e) {
@@ -483,6 +505,12 @@ var nomeFuncionario = null;
 		    $(e.currentTarget).find('input[name="id"]').text(id);
 	})
 
+	//desabilita os botões + e - referentes a um determinado item
+	function desabilitarBotoes(e) {
+		
+	}
+
+
 	//adicionbado em 12/1/2017
 	/* abre o modal de detalhes para pedidos relacionados a sanduiches */
 	function abrirModalSanduiches(id, nome, preco, urlImagem) {
@@ -504,11 +532,16 @@ var nomeFuncionario = null;
 				//cada um desses números aqui são ids dos itens que compõem o sanduíche
 				$("[name='checkboxItens']").each(
 					function(idCheckbox) {
+						//habilita todos os botões +
+						$(this).parents().eq(1).next().find('.btn-success').eq(0).attr('disabled', false);
 						//verifica se o ID do checkbox atual é igual ao id do item que estamos percorrendo
-						//caso seja verdade, desejamos marcar o checkbox
 						if (e == idCheckbox) {
+							$(this).parents().eq(1).next().find(".input-number").val(1);
+							//checkbox marcado
 							$(this).prop('checked', 'checked');
-						} 
+							//desabilita os botões - daqueles que tem zero itens
+							$(this).parents().eq(1).next().find(".btn-number").eq(0).attr('disabled', false);
+						}
 					}				
 				);		
 			});
@@ -516,9 +549,9 @@ var nomeFuncionario = null;
 
 
 		//precisamos sempre voltar para '1' o número de itens
-		$.each(modal.find('.input-number'), function(index, value) {
-			$(this).val(1);
-		});
+		// $.each(modal.find('.input-number'), function(index, value) {
+		// 	$(this).val(1);
+		// });
 
 		//abre o modal
 		modal.modal('toggle');

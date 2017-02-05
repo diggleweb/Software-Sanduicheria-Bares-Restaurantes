@@ -101,7 +101,7 @@ pela view:
 				<!-- Adiciona todas as imagens dos números das mesas -->
 				@for($i = 1 ; $i <= 8 ; $i++) 
 					<div class = "numeros" id = "{{$i}}">
-						<img src="imagens/numeros/{{$i}}.jpg" alt="{{$i}}" height = "90" width = "90">
+						<img src="imagens/numeros/{{$i}}.jpg" alt="{{$i}}" height = "60" width = "60">
 					</div>
 				@endfor
 			</div>
@@ -121,7 +121,7 @@ pela view:
 					<br>
 
 				{{-- Botão de adicionar itens --}}
-					<button style = "width: 400px; height: 80px; margin-left: 250px;  font-size: 20px" class = "btn btn-success" id = "btnAdicionar" >Adicionar Produtos</button>
+					<button style = "width: 400px; height: 80px; border: 1px solid black; margin-left: 250px; font-size: 20px" class = "btn btn-success" id = "btnAdicionar" >Adicionar Produtos</button>
 
 					<br><br><br><br>
 				
@@ -233,14 +233,16 @@ pela view:
       		</div>
       		<div class = "col-md-4">
       			{{-- Preço --}}
-      			<h2 class = "preco" style = "text-align: right; float: right; padding-top: 8px"></h2>
+      			<h2 class = "preco" style = "text-align: right; color: green; float: right; padding-top: 8px"></h2>
+      			<br>
+      			<div style = "float: right">(Preço Total)</div>
       		</div>
 	  </div>
+	  		<br>
 	        	{{-- Imagem --}}
-	      	<img class = "imagem" src = "#" height = "110" width = "110">
+	      	<img class = "imagem" src = "#" height = "110" width = "200" style = "margin-left: 230px">
 	      	<br>
 	        
-
 	        <br><br>
 	        <h3>Deseja adicionar ou retirar alguns itens?</h3>
 
@@ -250,7 +252,7 @@ pela view:
 	        		<div class = "col-md-5">
 				        <div style = "float: left">	
 				        	 {{-- checkbox --}}
-					        <input type = "checkbox" name = "checkboxItens" value = "{{$item->id}}">
+					        <input type = "checkbox" name = "checkboxItens" onclick = "return false;" value = "{{$item->id}}">
 					        	<span style = "font-weight: bold; font-size: 20px">&nbsp;{{ucfirst($item->nome)}}</span>
 					        	<br>
 					        	<label class = "precoVendaItem" style = "margin-left: 30px">Preço por unidade: R$ {{number_format($item->precoVenda, 2)}}</label>
@@ -264,12 +266,12 @@ pela view:
 				    	    <div class="input-group">		
 					          <span class="input-group-btn">
 					          	  {{-- btn menos --}}
-					              <button type="button" class="btn btn-danger btn-number"  data-type="minus" data-field="{{$item->id}}">
+					              <button type="button" class="btn btn-danger btn-number" disabled="true" data-type="minus" data-field="{{$item->id}}">
 					                <span class="glyphicon glyphicon-minus"></span>
 					              </button>
 					          </span>
 					          {{-- quantidade --}}
-					          <input type="text" name="{{$item->id}}" class="form-control input-number" value="1" min="0" max="10" style = "text-align: center">
+					          <input type="text" name="{{$item->id}}" class="form-control input-number" value="0" min="0" max="10" style = "text-align: center">
 					          <span class="input-group-btn">
 					          	  {{-- btn mais --}}
 					              <button type="button" class="btn btn-success btn-number" data-type="plus" data-field="{{$item->id}}">

@@ -64,5 +64,10 @@ relacionado ao preço de compra de cada item que compõe este sanduíche
 
 -> Produto mais vendido, produto mais lucrativo e funcionário que vendeu mais produtos, lucro total devem todos existir em relação a um período de tempo (mês, ano, determinado mês, etc...)
 
--> Ao editar um sanduíche, devemos poder reescolher os itens que compõem esse sanduíche
+-> Ao editar um sanduíche, devemos poder reescolher os itens que compõem esse sanduíche 
+
+-> Ao desselecionar o checkbox de um item, devemos desativar os botões +- e zerar o valor referente a este item - ok
+
+-> Ao aumentar ou reduzir a quantidade de um determinado item, devemos também reduzir ou aumentar o valor final do produto - ok
+
 
