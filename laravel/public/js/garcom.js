@@ -420,6 +420,13 @@ var nomeFuncionario = null;
 		}
 	);
 
+	//ao clicar em 'detalhes', e após decidir a quantidade de cada produto, o usuário clica em adicionar
+	function adicionarItensAoPedido() {
+		//o que a função deve fazer?
+		/*
+		
+		*/
+	}
 
 	function adicionarItens() {
 		//verifica se pelo menos uma mesa foi escolhida
@@ -527,15 +534,19 @@ var nomeFuncionario = null;
 		//marcar a checkbox
 		//data: array contendo ids dos itens que compõe o determinado produto
 		$.get('/encontrarItens', {'idProduto': id}, function(data) {
-			$.each(data, function(e) {
-				//e = id do item atual
+			$.each(data, function(e, objItem) {
+				var itemId = objItem['item_id'];
+				console.log(itemId);
+				//e = object referente ao item atual
+				//idItem = id referente ao item atual
 				//cada um desses números aqui são ids dos itens que compõem o sanduíche
 				$("[name='checkboxItens']").each(
 					function(idCheckbox) {
+						// console.log(e + " . " + $(this).val());
 						//habilita todos os botões +
 						$(this).parents().eq(1).next().find('.btn-success').eq(0).attr('disabled', false);
 						//verifica se o ID do checkbox atual é igual ao id do item que estamos percorrendo
-						if (e == idCheckbox) {
+						if (itemId == $(this).val()) {
 							$(this).parents().eq(1).next().find(".input-number").val(1);
 							//checkbox marcado
 							$(this).prop('checked', 'checked');

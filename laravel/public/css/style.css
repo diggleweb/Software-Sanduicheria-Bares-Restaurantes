@@ -3,6 +3,13 @@
 		height: 20px;
 	}
 
+	.wrapper {
+		overflow: scroll;
+		height: 600px;
+		overflow-x: hidden;
+		width: 700px;
+	}
+
 	.col-xs-6{
 		padding: 0;
 	}
@@ -72,6 +79,7 @@
 
 	[name="btnAbrirDetalhes"] {
 		width: 160px;
+		font-size: 15px;
 	}
 
 	.divCadaItem {
