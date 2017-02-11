@@ -10,14 +10,14 @@ $(document).ready(
 //caso o usuario aperte ESC, cancelar todos os produtos selecionados
 $(document).keyup(function(e) {
 	if (e.keyCode == 27) {
-		desselecionarItens();
+		desselecionarProdutos();
 	}
 });
 
 //caso o usuario aperte ENTER, adicionar todos os produtos selecionados
 $(document).keyup(function(e) {
 	if (e.keyCode == 13 || e.keyCode == 32)
-		adicionarItens();
+		adicionarProdutos();
 
 });
 
@@ -141,9 +141,10 @@ $(".input-number").keydown(function (e) {
 
 //Adicionado em: 26/01/2016
 var numeroMesa = null;	//variável que armazenará a mesa selecionada (para adicionar um pedido)
-var itens = [];		//array que armazenará os ids dos itens 
+var produtos = [];		//array que armazenará os ids dos produtos 
 var idConta = null;	//variável que armazenará o número da conta relacionado ao número da mesa
 var nomeFuncionario = null;	
+var arrayProdutosAlterados = [];		//variável que contém objetos de produtos que tiveram seus itens modificados
 
 	//função auxiliar que irá apagar as bordas de todos os números (para o usuário selecionar apenas
 	//uma mesa)
@@ -151,11 +152,13 @@ var nomeFuncionario = null;
 		$(".numeros").css("border", "0px solid black");
 	}
 
-	//apaga as bordas dos itens e zera o array de itens
-	function apagarBordasItens() {
+	//apaga as bordas dos produtos e zera o array de produtos
+	function apagarBordasProdutos() {
 		$(".divCadaItem").css("border", "0px none rgb(51, 51, 51)");
 		$(".divCadaItem").css("box-shadow", "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)");
-		itens = [];
+		$(".divCadaItem").attr("data-clicked", 0);
+		produtos = [];
+		arrayProdutosAlterados = [];
 	}
 
 	//apenas clica novamente na mesma mesa, para atualizar a tabela
@@ -238,8 +241,6 @@ var nomeFuncionario = null;
 			} else if (senha != null) {
 				alert("Pedido NÃO cancelado! Senha inválida!");
 			}
-		
-			
 		
 	}
 
@@ -351,11 +352,11 @@ var nomeFuncionario = null;
 				$(this).css("border", "3px solid blue");	//adiciona a borda no ítem
 				$(this).css("box-shadow", "0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)");	//adiciona sombra
 				
-				itens.push(id);		//adiciona o ítem no array
+				produtos.push(id);		//adiciona o ítem no array
 				
 				//adiciona um botão embaixo do item para adicionar detalhes sobre ele
 				//$(this).after("<button name = 'btnDetalhes' class = 'btn btn-primary'>Detalhes</button>");
-				$(this).find("[name='btnDetalhes']").css('display', 'block');
+			//	$(this).find("[name='btnDetalhes']").css('display', 'block');
 
 				//adicionado em: 27/7
 				//contador de produtos selecionados
@@ -367,20 +368,20 @@ var nomeFuncionario = null;
 
 				if (contadorProdutosSelecionados == 0)	{     //caso nenhum produto esteja selecionado
 					$("#contadorProdutosSelecionados").html("");	//desaparecer com o texto
-					$("#desselecionaritens").css("display", ""); //desaparecer com o ícone de desselecionar 
+					$("#desselecionarProdutos").css("display", ""); //desaparecer com o ícone de desselecionar 
 				}
 
 				else if (contadorProdutosSelecionados == 1) {	//caso apenas um produto esteja selecionado
 					$("#contadorProdutosSelecionados").html(
 						contadorProdutosSelecionados + " produto selecionado" //atualizar o texto no singular
 					);
-					$("#desselecionaritens").css("display", "initial");	
+					$("#desselecionarProdutos").css("display", "initial");	
 				}
 				else {					
 					$("#contadorProdutosSelecionados").html(
 						contadorProdutosSelecionados + " produtos selecionados" //atualizar o texto no plural
 					);
-					$("#desselecionaritens").css("display", "initial");
+					$("#desselecionarProdutos").css("display", "initial");
 				} 
 			
 
@@ -389,14 +390,14 @@ var nomeFuncionario = null;
 				$(this).css("border", "0px none rgb(51, 51, 51)");	//retira a borda
 				$(this).css("box-shadow", "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)");	//retira a sombra
 
-				var index = itens.indexOf(id);		//encontra o índice deste item no array
+				var index = produtos.indexOf(id);		//encontra o índice deste item no array
 				
 				//remove o botão de detalhes
 				$(this).next("[name='btnDetalhes']").remove();
 
 				//remove o ítem do array
 				if (index > -1)
-					itens.splice(index, 1);		
+					produtos.splice(index, 1);		
 				
 				$(this).attr("data-clicked", 0);
 
@@ -405,15 +406,15 @@ var nomeFuncionario = null;
 				contadorProdutosSelecionados--;		//retira um produto do contador
 				if (contadorProdutosSelecionados == 0) {	//caso nenhum produto esteja selecionado
 					$("#contadorProdutosSelecionados").html("");	//desaparecer com o texto
-					$("#desselecionaritens").css("display", "none"); //desaparecer com o ícone de desselecionar 
+					$("#desselecionarProdutos").css("display", "none"); //desaparecer com o ícone de desselecionar 
 				}
 				else if (contadorProdutosSelecionados == 1)	{//caso apenas um produto esteja selecionado
 					$("#contadorProdutosSelecionados").html(contadorProdutosSelecionados + " produto selecionado");	//atualizar o texto no singular
-					$("#desselecionaritens").css("display", "initial");
+					$("#desselecionarProdutos").css("display", "initial");
 				}
 				else {				
 					$("#contadorProdutosSelecionados").html(contadorProdutosSelecionados + " produtos selecionados"); //atualizar o texto no plural
-					$("#desselecionaritens").css("display", "initial");
+					$("#desselecionarProdutos").css("display", "initial");
 				}
 			}
 			
@@ -421,36 +422,74 @@ var nomeFuncionario = null;
 	);
 
 	//ao clicar em 'detalhes', e após decidir a quantidade de cada produto, o usuário clica em adicionar
-	function adicionarItensAoPedido() {
+	function adicionarItensAoPedido(obj) {
 		//o que a função deve fazer?
 		/*
-		
+			1) Pegar o valor total do pedido e substituir o valor antigo do produto por este valor
+			2) Fechar o modal
+			3) Selecionar o item 
 		*/
+		//pega o preço atualizado
+		var precoString = $(".preco").html();
+		var precoString = precoString.substr(2, precoString.length);
+		var precoFloat = parseFloat(precoString).toFixed(2);
+
+		//fecha o modal
+		$("#modalDetalhesPedidoSanduiches").modal('toggle');
+		
+		//pego sempre o id do último item que foi adicionado (o id do item atual)
+		//obs: o array produtos é preenchido sempre que se clica em um elemento ('.divCadaItem.click')
+		var idAtual = produtos[produtos.length - 1];
+		//adicionamos a um array de produtos que tiveram seus valores alterados
+		var obj = {
+			"id": idAtual,
+			"preco": precoFloat
+		}
+		arrayProdutosAlterados.push(obj);
+
 	}
 
-	function adicionarItens() {
+	//ao clicar no botão verde 'adicionar produtos'
+	function adicionarProdutos() {
 		//verifica se pelo menos uma mesa foi escolhida
 		
-			//verifica se pelo menos um ítem foi escolhido
-			if (itens.length == 0) {
-				alert("Escolha pelo menos um ítem antes de adicionar um pedido!");
+			//verifica se pelo menos um produto foi escolhido
+			if (produtos.length == 0) {
+				alert("Escolha pelo menos um produto antes de adicionar um pedido!");
 			} else {
 
-				//caso positivo...
+				//verifica se foi adicionado algum item a algum produto. Em caso positivo, devemos alterar o valor do preço do item
+				if (arrayProdutosAlterados.length != 0) {
+					var json = {
+						"idConta": idConta,
+						"produtos": produtos,
+						"produtosAlterados": arrayProdutosAlterados
+					};
 
-				//criar um objeto json com o id da conta e os ids dos itens 
-				var json = {
-					"idConta": idConta,
-					"itens": itens 
-				};
+					//temos que fazer a requisição get, mas temos também agora o preço de venda, que não é o do banco!
+					//e sim o preço alterado conforme os itens adicionados
+					//este preço está na arrayProdutosAlterados
+					$.get('addPedidoComItens/', json, function(data) {
+						atualizar();
+						desselecionarProdutos();
+					});
+				} else {
+					//criar um objeto json com o id da conta e os ids dos produtos 
+					var json = {
+						"idConta": idConta,
+						"produtos": produtos 
+					};
 
-				//tudo certo, podemos adicionar os pedidos no banco
-				//realiza uma requisição ajax para que a rota trate de adicionar os pedidos
-				$.get('addPedido/', json, function(data) {
-					atualizar();		//força o clique no número da mesa para atualizar a tabela
-					//remove as bordas dos itens selecionados (é uma forma de confirmação que o produto foi adicionado)
-					desselecionarItens();
-				});
+					//tudo certo, podemos adicionar os pedidos no banco
+					//realiza uma requisição ajax para que a rota trate de adicionar os pedidos
+					$.get('addPedido/', json, function(data) {
+						atualizar();		//força o clique no número da mesa para atualizar a tabela
+						//remove as bordas dos itens selecionados (é uma forma de confirmação que o produto foi adicionado)
+						desselecionarProdutos();
+					});	
+				}
+
+				
 
 			}
 	}
@@ -458,7 +497,7 @@ var nomeFuncionario = null;
 	//botão adicionar (dado um array de id de ítens ('itens') e uma mesa, adicionará um pedido no banco de dados)
 	$("#btnAdicionar").click(
 		function() {
-			adicionarItens();
+			adicionarProdutos();
 		}
 	);
 
@@ -491,17 +530,18 @@ var nomeFuncionario = null;
 		$("#modalDetalhesPedido").modal('show');
 	}
 
-	//desseleciona todos os itens (para facilitar para o usuário que selecionou vários itens e deseja cancelar a operação)
-	function desselecionarItens() {
-		//retira a borda de todos os itens selecionados e apaga o array de itens
-		apagarBordasItens();
+	//desseleciona todos os produtos (para facilitar para o usuário que selecionou vários itens e deseja cancelar a operação)
+	function desselecionarProdutos() {
+		//retira a borda de todos os produtos selecionados e apaga o array de itens
+		apagarBordasProdutos();
 		
 		$("#contadorProdutosSelecionados").css('display', 'none');
-		$("#desselecionaritens").css('display', 'none');
+		$("#desselecionarProdutos").css('display', 'none');
 		contadorProdutosSelecionados = 0;
 		$("#contadorProdutosSelecionados").html(contadorProdutosSelecionados + " produtos selecionados");
 		//remove todos os botões de 'Detalhes' que foram criados
 		$("[name='btnDetalhes']").remove();
+
 	}
 
 
@@ -512,11 +552,7 @@ var nomeFuncionario = null;
 		    $(e.currentTarget).find('input[name="id"]').text(id);
 	})
 
-	//desabilita os botões + e - referentes a um determinado item
-	function desabilitarBotoes(e) {
-		
-	}
-
+	
 
 	//adicionbado em 12/1/2017
 	/* abre o modal de detalhes para pedidos relacionados a sanduiches */
@@ -536,7 +572,7 @@ var nomeFuncionario = null;
 		$.get('/encontrarItens', {'idProduto': id}, function(data) {
 			$.each(data, function(e, objItem) {
 				var itemId = objItem['item_id'];
-				console.log(itemId);
+				
 				//e = object referente ao item atual
 				//idItem = id referente ao item atual
 				//cada um desses números aqui são ids dos itens que compõem o sanduíche

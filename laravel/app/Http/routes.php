@@ -45,6 +45,28 @@ Route::group(['prefix' => 'administrador'], function() {
 });
 
 
+//retorna os produtos referente 
+Route::get('/addPedidoComItens', function() {
+	$contadorProdutos = 0; //contador de produtos que serão adicionados
+
+	//busca os dados da view
+	$input = Input::only('idConta', 'produtos', 'arrayProdutosAlterados');
+	$idConta = $input['idConta'];
+	
+	//percorre o array de produtos e insere no banco (tabela: contasProdutos)
+	foreach($input['produtos'] as $idProduto) {
+		$contadorProdutos++;
+		$idProduto = trim($idProduto);
+		$contasProdutos = new App\ContasProdutos();
+		$contasProdutos['conta_id'] = $input['idConta'];	
+		$contasProdutos['produto_id'] = $idProduto;
+		$contasProdutos->save();
+	}
+
+	atualizarProdutosDoGarcom($idConta, $contadorProdutos);
+});
+
+
 //recebe uma requisição ajax da view do garçom e adiciona novos produtos na conta, baseado nos IDs dos ítens
 //e no número da conta referente à mesa
 Route::get('/addPedido', function() {
@@ -52,11 +74,11 @@ Route::get('/addPedido', function() {
 	$contadorProdutos = 0; //contador de produtos que serão adicionados
 
 	//busca os dados da view
-	$input = Input::only('idConta', 'itens');
+	$input = Input::only('idConta', 'produtos');
 	$idConta = $input['idConta'];
 	
-	//percorre o array de itens e insere no banco (tabela: contasProdutos)
-	foreach($input['itens'] as $idItem) {
+	//percorre o array de produtos e insere no banco (tabela: contasProdutos)
+	foreach($input['produtos'] as $idItem) {
 		$contadorProdutos++;
 		$idItem = trim($idItem);
 		$contasProdutos = new App\ContasProdutos();
@@ -65,6 +87,14 @@ Route::get('/addPedido', function() {
 		$contasProdutos->save();
 	}
 
+	atualizarProdutosDoGarcom($idConta, $contadorProdutos);
+});
+
+//helper function apenas para não repetir código (utilizado nas rotas /addPedido e /addPedidoComItens)
+function atualizarProdutosDoGarcom($idConta, $contadorProdutos) {
+
+
+/* apenas atualiza o número de vendas do garçom */
 	//busca qual funcionário é o responsável por esses produtos
 
 	//cria uma nova instância de 'contas'
@@ -89,8 +119,8 @@ Route::get('/addPedido', function() {
 	$funcionario['produtosVendidos'] = $produtosVendidos;
 	$funcionario->update();
 
+}
 
-});
 
 //rota que irá retornar uma o id da conta que está relacionada ao número da mesa
 Route::get('/buscarContaRelacionada', function() {

@@ -115,12 +115,12 @@ pela view:
 					<div>
 						<h4 style = "margin-left: 335px; display: inline-block" id = "contadorProdutosSelecionados"></h4>&nbsp;&nbsp;&nbsp;&nbsp;
 						<!-- botão com ícone em 'x' para desselecionar todos os produtos selecionados -->
-						<button onclick = "desselecionarItens()" id = "desselecionaritens" class = "glyphicon glyphicon-remove" style = "color: red; display: none"></button>
+						<button onclick = "desselecionarProdutos()" id = "desselecionarProdutos" class = "glyphicon glyphicon-remove" style = "color: red; display: none"></button>
 					</div>
 
 					<br>
 
-				{{-- Botão de adicionar itens --}}
+				{{-- Botão de adicionar produtos --}}
 					<button style = "width: 400px; height: 80px; border: 1px solid black; margin-left: 250px; font-size: 20px" class = "btn btn-success" id = "btnAdicionar" >Adicionar Produtos</button>
 
 					<br><br><br><br>
@@ -296,7 +296,7 @@ pela view:
 	    	</div>
 
 	    	  	<br><br>
-		    	  	<button style = "margin-left: 250px; width: 200px; height: 50px; font-size: 20px; display:" class = "btn btn-primary btn-large" onclick = "adicionarItensAoPedido()">
+		    	  	<button style = "margin-left: 250px; width: 200px; height: 50px; font-size: 20px; display:" class = "btn btn-primary btn-large" onclick = "adicionarItensAoPedido(this)">
 		    	  		Concluir
 		    	  	</button>
 	    	  	
