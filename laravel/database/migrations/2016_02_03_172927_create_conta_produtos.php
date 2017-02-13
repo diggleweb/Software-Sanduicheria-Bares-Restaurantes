@@ -19,7 +19,8 @@ class CreateContaProdutos extends Migration {
 		{
 			$table->increments('id');
 			$table->integer('conta_id')->unsigned();
-			$table->integer('produto_id')->unsigned();			
+			$table->integer('produto_id')->unsigned();
+			$table->float('precoFinal');			
 			// $table->integer('item_id')->unsigned()->nullable();		
 
 			// $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade');

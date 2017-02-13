@@ -180,12 +180,22 @@ var arrayProdutosAlterados = [];		//variável que contém objetos de produtos qu
 
 			var idConta = entry['conta_id'];
 			var nomeProduto = entry['nome'];
-			var preco = entry['precoVenda'];
+			var preco = entry['precoFinal'];
 			var quantidade = parseInt(entry['quantidade']);
 			contadorQuantidade += quantidade;
 			var totalProduto = preco * quantidade;
 			$("#tabela").append(					//adiciona uma linha na tabela para cada produto
-				"<tr><td width = '40%' style = 'text-align: center'>" + nomeProduto + "</td><td width = '15%' style = 'text-align: center'>R$ " + preco + "</td><td width = '15%' style = 'text-align: center'>" + quantidade + "</td><td width = '20%' style = 'text-align: center; font-weight: bold;'> R$ " + totalProduto.toFixed(2) +"</td><td width = '30%' style = 'text-align: center'><button class = 'btn btn-danger' data-idConta = '" + idConta +"' id = '"+ nomeProduto +"' onclick = 'cancelarProduto(this.id, this.getAttribute(\"data-idConta\"))'>Cancelar</button></td></tr>"
+				"<tr><td width = '40%' style = 'text-align: center'>" 
+				+ nomeProduto 
+				+ "</td><td width = '15%' style = 'text-align: center'>R$ " 
+				+ preco.toFixed(2) 
+				+ "</td><td width = '15%' style = 'text-align: center'>"
+			    + quantidade 
+			    + "</td><td width = '20%' style = 'text-align: center; font-weight: bold;'> R$ " 
+			    + totalProduto.toFixed(2) 
+			    +"</td><td width = '30%' style = 'text-align: center'><button class = 'btn btn-danger' data-idConta = '" 
+			    + idConta +"' id = '"+ nomeProduto 
+			    +"' onclick = 'cancelarProduto(this.id, this.getAttribute(\"data-idConta\"))'>Cancelar</button></td></tr>"
 			);
 
 			totalConta += totalProduto;
@@ -472,6 +482,7 @@ var arrayProdutosAlterados = [];		//variável que contém objetos de produtos qu
 					$.get('addPedidoComItens/', json, function(data) {
 						atualizar();
 						desselecionarProdutos();
+						console.log(data);
 					});
 				} else {
 					//criar um objeto json com o id da conta e os ids dos produtos 

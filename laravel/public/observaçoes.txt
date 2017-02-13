@@ -71,3 +71,7 @@ relacionado ao preço de compra de cada item que compõe este sanduíche
 -> Ao aumentar ou reduzir a quantidade de um determinado item, devemos também reduzir ou aumentar o valor final do produto - ok
 
 
+-> Alterado no banco de dados, em conta_produtos, agora temos uma nova coluna denominada precoFinal, porque o preco de um produto pode alterar
+dependendo da quantidade de itens que este produto tiver - ok
+
+-> Falta alterar na tabela, para pegar o preco do produto da tabela conta_produtos - ok

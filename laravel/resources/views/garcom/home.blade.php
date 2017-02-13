@@ -285,7 +285,7 @@ pela view:
 		        		{{-- Preço total com os itens adicionados ou removidos --}}
 		        		<div class = "col-md-3">
 				    	    <div class="input-group precoTotal" style = "margin-left: 20px; float: left" >
-				    	      <div id = "{{$item->id}}" class = "precoItem" style = "font-size: 20px; font-weight: bold; color: green">R$ {{$item->precoVenda}}</div>
+				    	      <div id = "{{$item->id}}" class = "precoItem" style = "font-size: 20px; font-weight: bold; color: green">R$ {{number_format($item->precoVenda, 2)}}</div>
 				        	</div>
 		        		</div>
 					</div>

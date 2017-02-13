@@ -45,22 +45,52 @@ Route::group(['prefix' => 'administrador'], function() {
 });
 
 
-//retorna os produtos referente 
+//Esta rota existe porque a alguns produtos podem ser adicionados itens, alterando assim seu valor final
 Route::get('/addPedidoComItens', function() {
 	$contadorProdutos = 0; //contador de produtos que serão adicionados
 
 	//busca os dados da view
-	$input = Input::only('idConta', 'produtos', 'arrayProdutosAlterados');
+	$input = Input::only('idConta', 'produtos', 'produtosAlterados');
 	$idConta = $input['idConta'];
-	
-	//percorre o array de produtos e insere no banco (tabela: contasProdutos)
-	foreach($input['produtos'] as $idProduto) {
-		$contadorProdutos++;
-		$idProduto = trim($idProduto);
-		$contasProdutos = new App\ContasProdutos();
-		$contasProdutos['conta_id'] = $input['idConta'];	
+	$produtosAlterados = $input['produtosAlterados'];	//produtos que nao foram adicionados itens
+	$produtosNaoAlterados = $input['produtos'];	//produtos para o qual foram adicionados itens, portanto seu valor final sera alterado
+												//obs: isso eh um array de obj, contendo o id do produto e o preco final
+
+	/* observacao importante: em $produtosNaoAlterados vem tambem os ids dos produtos alterados, preciso retirar estes ids para nao repetir no banco */
+	//percorre todos os produtos alterados para buscar dentro de produtos nao alterados qual possui o mesmo id, para retirar
+	foreach($produtosAlterados as $produtoAlterado) {
+		$id = $produtoAlterado['id'];
+		foreach($produtosNaoAlterados as $key => $pna) {		//percorre todos os produtos nao alterados
+			if ($pna == $id)									//caso o id do produto alterado seja igual ao do nao alterado
+				array_splice($produtosNaoAlterados, $key, 1);	//retira o elemento repetido do array de nao alterados
+		}
+
+		//aproveitando o foreach de produtos alterados, podemos adicionar ao banco adicionando o preco correto
+		$contadorProdutos++;		//incrementa o contador de produtos para o garcom
+		$idProduto = $produtoAlterado['id'];
+		$precoProduto = $produtoAlterado['preco'];		//pega o novo preco, com o valor dos itens embutidos
+		$contasProdutos = new App\ContasProdutos();		//nova instancia de contasprodutos
+		$contasProdutos['conta_id'] = $idConta;			
+		$contasProdutos['precoFinal'] = $precoProduto;
 		$contasProdutos['produto_id'] = $idProduto;
+		$contasProdutos->save();						//salva no banco
+
+	}
+
+	/* agora que adicionamos os produtos alterados, devemos adicionar os produtos nao alterados */
+	foreach($produtosNaoAlterados as $pna) {
+		$contadorProdutos++;
+		$idProduto = $pna;
+		$contasProdutos = new App\ContasProdutos();
+		$contasProdutos['conta_id'] = $idConta;
+		$contasProdutos['produto_id'] = $idProduto;
+
+		//temos que buscar no banco de dados qual eh o valor real do produto (sem alteracoes de itens)
+		$produtos = new App\Produto();
+		$objProduto = $produtos->select('precoVenda')->where('id', '=', $idProduto)->first();
+		$contasProdutos['precoFinal'] = $objProduto->precoVenda;
 		$contasProdutos->save();
+
 	}
 
 	atualizarProdutosDoGarcom($idConta, $contadorProdutos);
@@ -78,12 +108,19 @@ Route::get('/addPedido', function() {
 	$idConta = $input['idConta'];
 	
 	//percorre o array de produtos e insere no banco (tabela: contasProdutos)
-	foreach($input['produtos'] as $idItem) {
+	foreach($input['produtos'] as $idProduto) {
 		$contadorProdutos++;
-		$idItem = trim($idItem);
+		$idProduto = trim($idProduto);
 		$contasProdutos = new App\ContasProdutos();
-		$contasProdutos['conta_id'] = $input['idConta'];	
-		$contasProdutos['produto_id'] = $idItem;
+		$contasProdutos['conta_id'] = $idConta;	
+		$contasProdutos['produto_id'] = $idProduto;
+
+		//busca o preco do produto para preencher o campo precoFinal
+		$produto = new App\Produto();
+		$obj = $produto->select('precoVenda')->where('id', '=', $idProduto)->first();
+		$precoFinal = $obj->precoVenda;
+		$contasProdutos['precoFinal'] = $precoFinal;	//obs: o preco final deste produto eh igual ao preco de venda dele, diferente de quando se adiciona 
+		
 		$contasProdutos->save();
 	}
 
@@ -151,15 +188,26 @@ Route::get('/buscarProdutos', function() {
 	//na tabela 'conta_produtos' existe a coluna produto.id e quero relacionar este id com o id da tabela produtos
 	//busco, então, o preco de venda, o nome e a quantidade
 	
+	// $contaProdutos = new App\ContasProdutos();
+	// $dados = $contaProdutos
+	// ->where('conta_produtos.conta_id', '=', $idConta)
+	// ->join('produtos', 'conta_produtos.produto_id', '=', 'produtos.id')
+	// ->select('conta_produtos.conta_id', 'produtos.nome', 'produtos.precoVenda', DB::raw('count(*) as quantidade'))		//DB::RAW faz uma query SQL normal
+	// ->groupBy('produtos.id')
+	// ->get();
+
+	// return $dados;
+
 	$contaProdutos = new App\ContasProdutos();
 	$dados = $contaProdutos
 	->where('conta_produtos.conta_id', '=', $idConta)
 	->join('produtos', 'conta_produtos.produto_id', '=', 'produtos.id')
-	->select('conta_produtos.conta_id', 'produtos.nome', 'produtos.precoVenda', DB::raw('count(*) as quantidade'))		//DB::RAW faz uma query SQL normal
+	->select('conta_produtos.conta_id', 'produtos.nome', 'conta_produtos.precoFinal', DB::raw('count(*) as quantidade'))		//DB::RAW faz uma query SQL normal
 	->groupBy('produtos.id')
 	->get();
 
 	return $dados;
+
 
 });
 
