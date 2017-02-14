@@ -121,7 +121,7 @@ pela view:
 					<br>
 
 				{{-- Botão de adicionar produtos --}}
-					<button style = "width: 400px; height: 80px; border: 1px solid black; margin-left: 250px; font-size: 20px" class = "btn btn-success" id = "btnAdicionar" >Adicionar Produtos</button>
+					<button style = "width: 400px; height: 80px; border: 1px solid black; margin-left: 250px; font-size: 20px" class = "btn btn-success" id = "btnAdicionar" onclick="adicionarProdutos()" >Adicionar Produtos</button>
 
 					<br><br><br><br>
 				

@@ -184,30 +184,26 @@ Route::get('/buscarProdutos', function() {
 	$input = Input::only('idConta');
 	$idConta = $input['idConta'];
 
-	//faz um inner join.
-	//na tabela 'conta_produtos' existe a coluna produto.id e quero relacionar este id com o id da tabela produtos
-	//busco, então, o preco de venda, o nome e a quantidade
-	
 	// $contaProdutos = new App\ContasProdutos();
 	// $dados = $contaProdutos
 	// ->where('conta_produtos.conta_id', '=', $idConta)
 	// ->join('produtos', 'conta_produtos.produto_id', '=', 'produtos.id')
-	// ->select('conta_produtos.conta_id', 'produtos.nome', 'produtos.precoVenda', DB::raw('count(*) as quantidade'))		//DB::RAW faz uma query SQL normal
+	// ->select('conta_produtos.conta_id', 'produtos.nome', 'conta_produtos.precoFinal', DB::raw('count(*) as quantidade'))		//DB::RAW faz uma query SQL normal
 	// ->groupBy('produtos.id')
 	// ->get();
-
-	// return $dados;
 
 	$contaProdutos = new App\ContasProdutos();
 	$dados = $contaProdutos
 	->where('conta_produtos.conta_id', '=', $idConta)
 	->join('produtos', 'conta_produtos.produto_id', '=', 'produtos.id')
-	->select('conta_produtos.conta_id', 'produtos.nome', 'conta_produtos.precoFinal', DB::raw('count(*) as quantidade'))		//DB::RAW faz uma query SQL normal
-	->groupBy('produtos.id')
+	->select('conta_produtos.id', 'conta_produtos.conta_id', 'produtos.nome', 'conta_produtos.produto_id', 'conta_produtos.precoFinal', DB::raw('count(*) as quantidade'))		//DB::RAW faz uma query SQL normal
+	->orderBy('produtos.id', 'asc')
+	->groupBy('conta_produtos.produto_id', 'conta_produtos.precoFinal')
 	->get();
 
 	return $dados;
 
+	/* obs: sql alterado em 13/02/2017: trocado 'select(produtos.precoVenda) por select(conta_produtos.precoVenda) porque o preco de venda pode ser alterado conforme adiciona-se ou retira-se itens do produto */
 
 });
 
@@ -225,9 +221,10 @@ Route::get('/buscarProdutosComDetalhes', function() {
 	$dados = $contaProdutos
 	->where('conta_produtos.conta_id', '=', $idConta)
 	->join('produtos', 'conta_produtos.produto_id', '=', 'produtos.id')
-	->select('conta_produtos.conta_id', 'conta_produtos.created_at', 'produtos.nome', 'produtos.precoVenda')		//DB::RAW faz uma query SQL normal
+	->select('conta_produtos.conta_id', 'conta_produtos.created_at', 'produtos.nome', 'conta_produtos.precoFinal')		//DB::RAW faz uma query SQL normal
 	->orderBy('conta_produtos.created_at', 'asc')
 	->get();
+	/* obs: sql alterado em 13/02/2017: trocado 'select(produtos.precoVenda) por select(conta_produtos.precoFinal) porque o preco de venda pode ser alterado conforme adiciona-se ou retira-se itens do produto' */
 
 	return $dados;
 });
@@ -290,8 +287,8 @@ Route::get('/buscaFuncionario', function() {
 Route::get('/cancelarProduto', function() {
 	
 	//busca os dados que vêm da view
-	$nomeProduto = Input::get('nomeProduto');
 	$idConta = Input::get('idConta');
+	$idContasProdutos = Input::get('idContasProdutos');
 
 	//cria uma nova instância de 'contas'
 	$contas = new App\Conta();
@@ -311,15 +308,9 @@ Route::get('/cancelarProduto', function() {
 	$funcionario = $funcionarios->where('id', '=', $idFuncionario)->first();
 	$funcionario['produtosVendidos'] = $produtosVendidos;
 	$funcionario->update();
-
-
-	$produtos = new App\Produto();
-	$idProduto = $produtos->where('nome', '=', $nomeProduto)->select('id')->first();		//busca o ID do produto 
-	
-	$idProduto = $idProduto['id'];
 	
 	$cp = new App\ContasProdutos();	
-	$cp->where('conta_id', '=', $idConta)->where('produto_id', '=', $idProduto)->first()->delete();	//deleta o produto da tabela conta_produtos
+	$cp->where('id', '=', $idContasProdutos)->first()->delete();	//deleta o produto da tabela conta_produtos
 
 });
 

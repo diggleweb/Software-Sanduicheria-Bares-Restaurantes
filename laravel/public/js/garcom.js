@@ -152,19 +152,8 @@ var arrayProdutosAlterados = [];		//variável que contém objetos de produtos qu
 		$(".numeros").css("border", "0px solid black");
 	}
 
-	//apaga as bordas dos produtos e zera o array de produtos
-	function apagarBordasProdutos() {
-		$(".divCadaItem").css("border", "0px none rgb(51, 51, 51)");
-		$(".divCadaItem").css("box-shadow", "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)");
-		$(".divCadaItem").attr("data-clicked", 0);
-		produtos = [];
-		arrayProdutosAlterados = [];
-	}
+	
 
-	//apenas clica novamente na mesma mesa, para atualizar a tabela
-	function atualizar() {
-		$("#" + numeroMesa).trigger('click');
-	}
 
 	
 //utilizada em .numeros.click
@@ -177,9 +166,10 @@ var arrayProdutosAlterados = [];		//variável que contém objetos de produtos qu
 
 
 		data.forEach(function(entry) {		//percorre cada produto
-
+			var idContaProdutos = entry['id'];
 			var idConta = entry['conta_id'];
 			var nomeProduto = entry['nome'];
+			var idProduto = entry['produto_id'];
 			var preco = entry['precoFinal'];
 			var quantidade = parseInt(entry['quantidade']);
 			contadorQuantidade += quantidade;
@@ -194,7 +184,7 @@ var arrayProdutosAlterados = [];		//variável que contém objetos de produtos qu
 			    + "</td><td width = '20%' style = 'text-align: center; font-weight: bold;'> R$ " 
 			    + totalProduto.toFixed(2) 
 			    +"</td><td width = '30%' style = 'text-align: center'><button class = 'btn btn-danger' data-idConta = '" 
-			    + idConta +"' id = '"+ nomeProduto 
+			    + idConta +"' id = '"+ idContaProdutos 
 			    +"' onclick = 'cancelarProduto(this.id, this.getAttribute(\"data-idConta\"))'>Cancelar</button></td></tr>"
 			);
 
@@ -207,6 +197,7 @@ var arrayProdutosAlterados = [];		//variável que contém objetos de produtos qu
 
 	}
 
+	//qual funcao usa essa funcao? .numeros.click
 	function atualizarTabelaComDetalhes(data) { 
 	//data = vetor que vem do banco de dados, com 	todos os produtos relacionados a esta conta
 
@@ -219,7 +210,7 @@ var arrayProdutosAlterados = [];		//variável que contém objetos de produtos qu
 		data.forEach(function(entry) {		//percorre cada produto
 			var idConta = entry['conta_id'];
 			var nomeProduto = entry['nome'];
-			var preco = entry['precoVenda'];
+			var preco = entry['precoFinal'];
 			var horario = entry['created_at'];
 
 			$("#bodyTabelaDetalhes").append(					//adiciona uma linha na tabela para cada produto
@@ -231,17 +222,18 @@ var arrayProdutosAlterados = [];		//variável que contém objetos de produtos qu
 		//aumenta o tamanho da altura do modal
 		var tamanhoInicial = 150;
 		$(".modal-body").height(tamanhoInicial + contador*40);
-
 	}
 
 	//cancela um produto de uma determinada conta
-	function cancelarProduto(nomeProduto, idConta) {
+	//idContasProdutos = id da relacao entre contas e produtos
+	//o id da conta eh necessario por causa do funcionario
+	function cancelarProduto(idContasProdutos, idConta) {
 		var senha = prompt("Digite a sua senha para poder cancelar o pedido:");
 
 			if (senha == "123123") {
 				var json = {
-					'nomeProduto': nomeProduto,
-					'idConta': idConta
+					'idConta': idConta,
+					'idContasProdutos': idContasProdutos
 				};
 
 				$.get('cancelarProduto', json, function() {
@@ -307,15 +299,11 @@ var arrayProdutosAlterados = [];		//variável que contém objetos de produtos qu
 						nomeFuncionario = data[0]['nome'];
 						//adiciona ao título o nome do funcionário
 						$("#tituloConta").text("Conta Aberta (Funcionário: " + nomeFuncionario + ")");
-
 					});
 				
 				}
 				
 			});
-
-			
-
 		}
 	);
 
@@ -480,7 +468,7 @@ var arrayProdutosAlterados = [];		//variável que contém objetos de produtos qu
 					//e sim o preço alterado conforme os itens adicionados
 					//este preço está na arrayProdutosAlterados
 					$.get('addPedidoComItens/', json, function(data) {
-						atualizar();
+						atualizar();		//forca um trigger no botao da mesa atual para atualizar a tabela
 						desselecionarProdutos();
 						console.log(data);
 					});
@@ -505,12 +493,30 @@ var arrayProdutosAlterados = [];		//variável que contém objetos de produtos qu
 			}
 	}
 
-	//botão adicionar (dado um array de id de ítens ('itens') e uma mesa, adicionará um pedido no banco de dados)
-	$("#btnAdicionar").click(
-		function() {
-			adicionarProdutos();
-		}
-	);
+	//apenas clica novamente na mesma mesa, para atualizar a tabela
+	function atualizar() {
+		$("#" + numeroMesa).trigger('click');
+	}
+
+	//desseleciona todos os produtos (para facilitar para o usuário que selecionou vários itens e deseja cancelar a operação)
+	function desselecionarProdutos() {
+		//retira a borda de todos os produtos selecionados e apaga o array de itens
+		apagarBordasProdutos();
+		$("#contadorProdutosSelecionados").css('display', 'none');
+		$("#desselecionarProdutos").css('display', 'none');
+		contadorProdutosSelecionados = 0;
+		$("#contadorProdutosSelecionados").html(contadorProdutosSelecionados + " produtos selecionados");
+	}
+
+	//apaga as bordas dos produtos e zera o array de produtos
+	function apagarBordasProdutos() {
+		$(".divCadaItem").css("border", "0px none rgb(51, 51, 51)");
+		$(".divCadaItem").css("box-shadow", "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)");
+		$(".divCadaItem").attr("data-clicked", 0);
+		produtos = [];
+		arrayProdutosAlterados = [];
+	}
+
 
 
 	//ao clicar no nome de um garçom, para adicionar uma nova conta à mesa
@@ -539,20 +545,6 @@ var arrayProdutosAlterados = [];		//variável que contém objetos de produtos qu
 	//abre o modal relacionado aos detalhes do pedido
 	function abrirModalDetalhes(id, categoria, nome, preco) {
 		$("#modalDetalhesPedido").modal('show');
-	}
-
-	//desseleciona todos os produtos (para facilitar para o usuário que selecionou vários itens e deseja cancelar a operação)
-	function desselecionarProdutos() {
-		//retira a borda de todos os produtos selecionados e apaga o array de itens
-		apagarBordasProdutos();
-		
-		$("#contadorProdutosSelecionados").css('display', 'none');
-		$("#desselecionarProdutos").css('display', 'none');
-		contadorProdutosSelecionados = 0;
-		$("#contadorProdutosSelecionados").html(contadorProdutosSelecionados + " produtos selecionados");
-		//remove todos os botões de 'Detalhes' que foram criados
-		$("[name='btnDetalhes']").remove();
-
 	}
 
 
