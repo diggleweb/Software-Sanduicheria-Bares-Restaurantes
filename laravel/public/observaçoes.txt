@@ -1,0 +1,88 @@
+Documento criado em: 
+01/08/2016
+
+-Alterar 'garcom' para 'Garçom' em todos os breadcumbs   - ok 
+-Em 'contas encerradas', o preço de venda deve conter o segundo dígito  - ok
+- Adicionado o jQuery UI ao projeto	- ok
+-Em 'contas encerradas', utilizar o 'Accordion' do jQuery UI para criar abas e facilitar para o usuário visualizar cada conta encerrada.  - ok
+Por que utilizar o 'accordion'? O usuário só precisa ficar sabendo dos detalhes de cada conta encerrada que lhe for interessante no momento.
+-Adicionar uma navbar para poder ter acesso à área do administrador - ok
+-Contas encerradas, funcionarios, produtos devem ter suas views extendidas de administrador.
+-Para cada funcionário, mostrar qual o lucro total que ele deu para a empresa (lucro dos produtos vendidos)
+-Em Lista de Produtos, o preço de venda, preço de compra e lucro devem ter o segundo dígito - ok
+-Separar a lista de produtos utilizando o Accordion (separar por categorias) 
+
+-Para cada funcionário, fazer:
+	*Criar um perfil (uma página), contendo:
+		**Nome, foto, salário, cargo, produtos vendidos em um determinado período, lucro total em um determinado período, gráfico do lucro total deste funcionário ao longo de um ano.
+		
+-Em Listar produtos, ao filtrar por nome, colocar um número referente a quantos resultados foram encontrados dentro de cada categoria
+
+
+-Fazer um CRUD de categorias
+
+
+11/1/2017
+-Ao clicar em detalhes, deve passar o nome e o preço do produto para o modal - ok
+
+-Ao clicar em 'detalhes', o software deve verificar qual é a categoria envolvida: 
+sanduiches:
+	-> buscar todos os itens como checkbox
+	-> os itens devem ser marcados, 
+	-> deixar uma caixa de observação para o usuário, caso queira colocar alguma observação
+quase ok
+
+
+-> Sanduíches devem ser compostos de ítens, devemos mudar no banco de dados. - ok
+-> Cada sanduíche deve vir marcado com os ítens que o compõe. Ex: Bacon, Presunto, etc.. - ok
+-> Ao adicionar um ítem, deve ser cobrado sobre o preço do sanduíche o preço do ítem adicionado. 
+-> No cadastro de produtos, caso o produto a ser adicionado seja 'sanduíche', devemos pedir
+para o usuário escolher quais itens compõem o sanduíche. - ok
+
+17/01/2017
+-> Criar um cadastro para itens - ok
+
+23/01/17
+#commit
+-> Criado um campo "ativo" em "itens"
+-> Criado o "filtrar" em "itens"
+-> Criar cadastro de novos 'itens'
+ok
+
+
+#commit
+-> em listar produtos, devemos ver a porcentagem de lucro também - ok
+
+-> Produto não deve possuir preço de compra, pois o preço de compra deve ser 
+relacionado ao preço de compra de cada item que compõe este sanduíche
+
+-> conseguir editar ou excluir itens - ok
+
+-> Problema na hora de editar um item - ok
+
+-> Número de mesas deve ser definida pelo usuário 
+
+-> Produto mais vendido, produto mais lucrativo e funcionário que vendeu mais produtos, lucro total devem todos existir em relação a um período de tempo (mês, ano, determinado mês, etc...)
+
+-> Ao editar um sanduíche, devemos poder reescolher os itens que compõem esse sanduíche 
+
+-> Ao desselecionar o checkbox de um item, devemos desativar os botões +- e zerar o valor referente a este item - ok
+
+-> Ao aumentar ou reduzir a quantidade de um determinado item, devemos também reduzir ou aumentar o valor final do produto - ok
+
+
+-> Alterado no banco de dados, em conta_produtos, agora temos uma nova coluna denominada precoFinal, porque o preco de um produto pode alterar
+dependendo da quantidade de itens que este produto tiver - ok
+
+-> Falta alterar na tabela, para pegar o preco do produto da tabela conta_produtos - ok
+
+-> Mais um problema: Suponha que eu adicionei um sanduiche com adicional. O preco muda. Agora eu adicionei um sanduiche normal, ele ta juntando na tabela - ok
+
+-> Corrigido o seguinte problema: ao adicionar um sanduiche com adicional, nas contas encerradas o preço não está sendo modificado. Devemos buscar o preço da tabela 'contas_produtos'
+
+-> Btn detalhes nao funciona
+
+-> A senha para excluir funcionarios, itens, etc, deve ser customizada pelo usuário e deve haver um painel de controles para isso
+
+
+-> Preço de venda e preço de compra alterados para 2 casas decimais - ok
