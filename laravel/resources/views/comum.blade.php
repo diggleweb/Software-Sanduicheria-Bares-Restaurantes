@@ -9,15 +9,18 @@
 	<link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
 	<link href="{{ asset('css/style.css') }}" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="{{asset('js/jquery-ui-1.12.0.custom/jquery-ui.min.css')}}">
-
+	
 	<!-- jQuery -->
-	<script src = "{{ asset('js/jquery-2.2.0.min.js') }}"></script>
-	<script src = "{{ asset('js/maskmoney.js') }}"></script>
-	<!-- jQuery UI -->
+	<script src = "{{ asset('js/jquery/jquery-2.2.0.min.js') }}"></script>
 	<script src="{{ asset('js/jquery-ui-1.12.0.custom/jquery-ui.min.js') }}"></script>
+	<script src = "{{ asset('js/maskmoney/maskmoney.min.js') }}"></script>
+	<script src = "{{ asset('js/bootstrap/bootstrap.min.js') }}"></script>
+	<script src = "{{ asset('js/garcom/garcom.js') }}" type="text/javascript"></script>
+	<script src = "{{ asset('js/contasEncerradas/contasEncerradas.js') }}" type="text/javascript" ></script>
+	<script src = "{{ asset('js/produtos/adicionarProdutos.js') }}" type="text/javascript"></script>
+	<script src = "{{ asset('js/produtos/listarProdutos.js') }}" type="text/javascript"></script>
 
-	<script src = "{{ asset('js/bootstrap.js') }}"></script>
-	<script src = "{{ asset('js/scripts.js') }}"></script>
+	
 </head>
 
 <body>
@@ -38,6 +41,7 @@
 	
 
 	@yield('corpo')
+
 
 </body>
 
