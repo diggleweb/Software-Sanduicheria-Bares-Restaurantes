@@ -30,7 +30,11 @@ Route::group(['prefix' => 'administrador'], function() {
 	Route::get('/listarItens', ['as' =>'listarItens', 'uses' => 'ItensController@index']);
 	Route::get('/listarItens/novoItem', 'ItensController@create');
 	Route::get('/listarItens/editarItem{id}', ['as' => 'editarItem', 'uses' => 'ItensController@edit']);
+<<<<<<< HEAD
 	Route::get('/listarItens/filtrar/', ['as' => 'filtrarItem', 'uses' => 'ItensController@filtrar']);
+=======
+	Route::get('/listarProdutos/filtrar/', ['as' => 'filtrarItem', 'uses' => 'ItensController@filtrar']);
+>>>>>>> 2a8436c5de9d87ec2003925ab3ac935e1495223a
 	Route::post('/salvarItem', 'ItensController@store');
 	Route::put('/listarItens/updateItem{id}', ['as' => 'updateItem', 'uses' => 'ItensController@update']);
 	

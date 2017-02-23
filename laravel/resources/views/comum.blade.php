@@ -9,6 +9,7 @@
 	<link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
 	<link href="{{ asset('css/style.css') }}" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="{{asset('js/jquery-ui-1.12.0.custom/jquery-ui.min.css')}}">
+<<<<<<< HEAD
 	
 	<!-- jQuery -->
 	<script src = "{{ asset('js/jquery/jquery-2.2.0.min.js') }}"></script>
@@ -21,6 +22,17 @@
 	<script src = "{{ asset('js/produtos/listarProdutos.js') }}" type="text/javascript"></script>
 
 	
+=======
+
+	<!-- jQuery -->
+	<script src = "{{ asset('js/jquery-2.2.0.min.js') }}"></script>
+	<script src = "{{ asset('js/maskmoney.js') }}"></script>
+	<!-- jQuery UI -->
+	<script src="{{ asset('js/jquery-ui-1.12.0.custom/jquery-ui.min.js') }}"></script>
+
+	<script src = "{{ asset('js/bootstrap.js') }}"></script>
+	<script src = "{{ asset('js/scripts.js') }}"></script>
+>>>>>>> 2a8436c5de9d87ec2003925ab3ac935e1495223a
 </head>
 
 <body>
@@ -42,7 +54,10 @@
 
 	@yield('corpo')
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 2a8436c5de9d87ec2003925ab3ac935e1495223a
 </body>
 
 </html>

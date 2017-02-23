@@ -92,4 +92,28 @@
 					</div><!-- fim do accordion-->
 				</div>
 
+<<<<<<< HEAD
+=======
+
+	<script type="text/javascript">
+		$( function() {
+		    $( "#accordion" ).accordion({
+		      collapsible: true,
+		      heightStyle: "content"
+		    });
+		  } );
+
+
+		function excluirConta(id) {
+			if (confirm("Você realmente deseja se desfazer desta conta encerrada? Se você realizar esta operação, estes dados serão perdidos permanentemente.") == true) {
+				$.get("/excluirContaEncerrada", {"id": id}, function(data) {
+					alert(data);
+					location.reload();
+				});
+			}
+		}
+
+	</script>
+
+>>>>>>> 2a8436c5de9d87ec2003925ab3ac935e1495223a
 @endsection

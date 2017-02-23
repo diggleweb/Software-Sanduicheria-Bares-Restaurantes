@@ -101,7 +101,11 @@
 
 		function confirmarSenha() {
 			var senha = $("#password").val();
+<<<<<<< HEAD
 			if (senha == "123123") {
+=======
+			if (senha == "senhaBoleira") {
+>>>>>>> 2a8436c5de9d87ec2003925ab3ac935e1495223a
 				$.get( "/excluirGarcom", {"id": idFuncionario} , function( data ) {
 				  location.reload(true);
 				});	

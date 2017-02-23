@@ -76,6 +76,7 @@ dependendo da quantidade de itens que este produto tiver - ok
 
 -> Falta alterar na tabela, para pegar o preco do produto da tabela conta_produtos - ok
 
+<<<<<<< HEAD
 -> Mais um problema: Suponha que eu adicionei um sanduiche com adicional. O preco muda. Agora eu adicionei um sanduiche normal, ele ta juntando na tabela - ok
 
 -> Corrigido o seguinte problema: ao adicionar um sanduiche com adicional, nas contas encerradas o preço não está sendo modificado. Devemos buscar o preço da tabela 'contas_produtos'
@@ -86,3 +87,8 @@ dependendo da quantidade de itens que este produto tiver - ok
 
 
 -> Preço de venda e preço de compra alterados para 2 casas decimais - ok
+=======
+-> Mais um problema: Suponha que eu adicionei um sanduiche com adicional. O preco muda. Agora eu adicionei um sanduiche normal, ele ta juntando na tabela
+
+-> Btn detalhes nao funciona
+>>>>>>> 2a8436c5de9d87ec2003925ab3ac935e1495223a

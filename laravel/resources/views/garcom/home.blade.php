@@ -129,7 +129,11 @@ pela view:
 					
 				{{-- Botao detalhes --}}
 					<button class = "btn btn-primary" style = "float: left; margin-left: 15px" name = "btnDetalhes" data-toggle = "modal" data-target = "#myModal">Detalhes</button>
+<<<<<<< HEAD
 					<br><br>
+=======
+				
+>>>>>>> 2a8436c5de9d87ec2003925ab3ac935e1495223a
 				<style>
 					tbody {
 						font-family: Tahoma, Geneva, sans-serif;
@@ -333,7 +337,11 @@ pela view:
 
 
 
+<<<<<<< HEAD
 
+=======
+<script type="text/javascript" src = "js/garcom.js"></script>
+>>>>>>> 2a8436c5de9d87ec2003925ab3ac935e1495223a
 
 
 @endsection
