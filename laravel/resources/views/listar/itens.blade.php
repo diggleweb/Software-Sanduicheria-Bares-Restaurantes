@@ -91,13 +91,11 @@ $filtro
 					<tr>
 						<td style = "text-align: center; font-weight: bold; font-size: 16px"><img src = "/{{$item->urlImagem}}" width = "70" height = "70" alt = "imagem nao encontrada"></td>
 						<td style = "text-align: center; font-weight: bold">{{ucfirst($item->nome)}}</td>
-<<<<<<< HEAD
+
 						<td style = "text-align: center">R$ {{number_format($item->precoCompra, 2)}}</td>
 						<td style = "text-align: center">R$ {{number_format($item->precoVenda, 2)}}</td>
-=======
 						<td style = "text-align: center">R$ {{$item->precoCompra}}</td>
 						<td style = "text-align: center">R$ {{$item->precoVenda}}</td>
->>>>>>> 2a8436c5de9d87ec2003925ab3ac935e1495223a
 						<td style = "text-align: center">R$ {{$lucro}} ({{$porcentagemLucro}} %)</td>
 						<td style = "text-align: center">
 							{!! link_to_route('editarItem', 'Editar', array('id' => $item->id), array('class' => 'btn btn-primary')) !!}

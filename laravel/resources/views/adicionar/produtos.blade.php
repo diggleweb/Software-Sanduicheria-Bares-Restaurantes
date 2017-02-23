@@ -6,7 +6,6 @@
 
 @section('corpo')
 
-<<<<<<< HEAD
 	<div class="page-header">
 		<h1>Bem-vindo, administrador!</h1>
 	</div>
@@ -114,7 +113,6 @@
 	{!! Form::close()!!}
 	</div>
 
-=======
 <script>
 $(document).ready(
 	function() {
@@ -335,7 +333,6 @@ $(function() {
 	}
 
 </script>
->>>>>>> 2a8436c5de9d87ec2003925ab3ac935e1495223a
 
 @endsection
 
