@@ -17,6 +17,96 @@ $(document).ready(
 
 		});
 
+
+		//adicionado em: 28/01/2016
+			//assim que clicar em um ítem, altera a sua borda e coloca em um array o id do item 
+			$('.divCadaItem').click(
+				function() {
+
+					//verifica qual é o estado atual do item que foi clicado (já foi selecionado ou não?)
+					var clicked = $(this).attr("data-clicked");
+
+					//busca qual é o estado da borda do item que foi clicado
+					var borda = $(this).css("border");
+
+					//busca o ID do ítem clicado
+					var id = $(this).attr('val');
+
+					//caso eu esteja selecionando um novo item (pintar a borda e colocar o id do item no array)
+					if (clicked == 0) {		
+						$(this).css("border", "3px solid blue");	//adiciona a borda no ítem
+						$(this).css("box-shadow", "0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)");	//adiciona sombra
+						
+						produtos.push(id);		//adiciona o ítem no array
+						
+						//adiciona um botão embaixo do item para adicionar detalhes sobre ele
+						//$(this).after("<button name = 'btnDetalhes' class = 'btn btn-primary'>Detalhes</button>");
+					//	$(this).find("[name='btnDetalhes']").css('display', 'block');
+
+						//adicionado em: 27/7
+						//contador de produtos selecionados
+						// contadorProdutosSelecionados = $("#contadorProdutosSelecionados").html().split(" ")[0];
+						contadorProdutosSelecionados++; 	//adiciona um produto do contador
+						$("#contadorProdutosSelecionados").css("display", "initial");
+
+						$(this).attr("data-clicked", 1);
+
+						if (contadorProdutosSelecionados == 0)	{     //caso nenhum produto esteja selecionado
+							$("#contadorProdutosSelecionados").html("");	//desaparecer com o texto
+							$("#desselecionarProdutos").css("display", ""); //desaparecer com o ícone de desselecionar 
+						}
+
+						else if (contadorProdutosSelecionados == 1) {	//caso apenas um produto esteja selecionado
+							$("#contadorProdutosSelecionados").html(
+								contadorProdutosSelecionados + " produto selecionado" //atualizar o texto no singular
+							);
+							$("#desselecionarProdutos").css("display", "initial");	
+						}
+						else {					
+							$("#contadorProdutosSelecionados").html(
+								contadorProdutosSelecionados + " produtos selecionados" //atualizar o texto no plural
+							);
+							$("#desselecionarProdutos").css("display", "initial");
+						} 
+					
+
+					//caso o item esteja sendo deselecionado
+					} else {
+						
+						$(this).css("border", "0px none rgb(51, 51, 51)");	//retira a borda
+						$(this).css("box-shadow", "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)");	//retira a sombra
+
+						var index = produtos.indexOf(id);		//encontra o índice deste item no array
+						
+						//remove o botão de detalhes
+						$(this).next("[name='btnDetalhes']").remove();
+
+						//remove o ítem do array
+						if (index > -1)
+							produtos.splice(index, 1);		
+						
+						$(this).attr("data-clicked", 0);
+
+						//adicionado em: 27/7
+						//contador de produtos selecionados
+						contadorProdutosSelecionados--;		//retira um produto do contador
+						if (contadorProdutosSelecionados == 0) {	//caso nenhum produto esteja selecionado
+							$("#contadorProdutosSelecionados").html("");	//desaparecer com o texto
+							$("#desselecionarProdutos").css("display", "none"); //desaparecer com o ícone de desselecionar 
+						}
+						else if (contadorProdutosSelecionados == 1)	{//caso apenas um produto esteja selecionado
+							$("#contadorProdutosSelecionados").html(contadorProdutosSelecionados + " produto selecionado");	//atualizar o texto no singular
+							$("#desselecionarProdutos").css("display", "initial");
+						}
+						else {				
+							$("#contadorProdutosSelecionados").html(contadorProdutosSelecionados + " produtos selecionados"); //atualizar o texto no plural
+							$("#desselecionarProdutos").css("display", "initial");
+						}
+					}
+					
+				}
+			);
+
 		/* adicionado em 13/1/2017
 		Este JS está relacionado apenas ao modal de adicionar detalhes aos pedidos (é apenas a funcionalidade de + e -)
 		Creditos: http://bootsnipp.com/snippets/featured/buttons-minus-and-plus-in-input
@@ -328,92 +418,8 @@ $(document).ready(
 			});
 
 			var contadorProdutosSelecionados = 0;
-		//adicionado em: 28/01/2016
-			//assim que clicar em um ítem, altera a sua borda e coloca em um array o id do item 
-			$('.divCadaItem').click(
-				function() {
 
-					var clicked = $(this).attr("data-clicked");
-
-					//busca qual é o estado da borda do item que foi clicado
-					var borda = $(this).css("border");
-
-					//busca o ID do ítem clicado
-					var id = $(this).attr('val');
-
-					//caso eu esteja selecionando um novo item (pintar a borda e colocar o id do item no array)
-					if (clicked == 0) {		
-						$(this).css("border", "3px solid blue");	//adiciona a borda no ítem
-						$(this).css("box-shadow", "0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)");	//adiciona sombra
-						
-						produtos.push(id);		//adiciona o ítem no array
-						
-						//adiciona um botão embaixo do item para adicionar detalhes sobre ele
-						//$(this).after("<button name = 'btnDetalhes' class = 'btn btn-primary'>Detalhes</button>");
-					//	$(this).find("[name='btnDetalhes']").css('display', 'block');
-
-						//adicionado em: 27/7
-						//contador de produtos selecionados
-						// contadorProdutosSelecionados = $("#contadorProdutosSelecionados").html().split(" ")[0];
-						contadorProdutosSelecionados++; 	//adiciona um produto do contador
-						$("#contadorProdutosSelecionados").css("display", "initial");
-
-						$(this).attr("data-clicked", 1);
-
-						if (contadorProdutosSelecionados == 0)	{     //caso nenhum produto esteja selecionado
-							$("#contadorProdutosSelecionados").html("");	//desaparecer com o texto
-							$("#desselecionarProdutos").css("display", ""); //desaparecer com o ícone de desselecionar 
-						}
-
-						else if (contadorProdutosSelecionados == 1) {	//caso apenas um produto esteja selecionado
-							$("#contadorProdutosSelecionados").html(
-								contadorProdutosSelecionados + " produto selecionado" //atualizar o texto no singular
-							);
-							$("#desselecionarProdutos").css("display", "initial");	
-						}
-						else {					
-							$("#contadorProdutosSelecionados").html(
-								contadorProdutosSelecionados + " produtos selecionados" //atualizar o texto no plural
-							);
-							$("#desselecionarProdutos").css("display", "initial");
-						} 
-					
-
-					//caso o item esteja sendo deselecionado
-					} else {
-						$(this).css("border", "0px none rgb(51, 51, 51)");	//retira a borda
-						$(this).css("box-shadow", "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)");	//retira a sombra
-
-						var index = produtos.indexOf(id);		//encontra o índice deste item no array
-						
-						//remove o botão de detalhes
-						$(this).next("[name='btnDetalhes']").remove();
-
-						//remove o ítem do array
-						if (index > -1)
-							produtos.splice(index, 1);		
-						
-						$(this).attr("data-clicked", 0);
-
-						//adicionado em: 27/7
-						//contador de produtos selecionados
-						contadorProdutosSelecionados--;		//retira um produto do contador
-						if (contadorProdutosSelecionados == 0) {	//caso nenhum produto esteja selecionado
-							$("#contadorProdutosSelecionados").html("");	//desaparecer com o texto
-							$("#desselecionarProdutos").css("display", "none"); //desaparecer com o ícone de desselecionar 
-						}
-						else if (contadorProdutosSelecionados == 1)	{//caso apenas um produto esteja selecionado
-							$("#contadorProdutosSelecionados").html(contadorProdutosSelecionados + " produto selecionado");	//atualizar o texto no singular
-							$("#desselecionarProdutos").css("display", "initial");
-						}
-						else {				
-							$("#contadorProdutosSelecionados").html(contadorProdutosSelecionados + " produtos selecionados"); //atualizar o texto no plural
-							$("#desselecionarProdutos").css("display", "initial");
-						}
-					}
-					
-				}
-			);
+		
 
 			//ao clicar em 'detalhes', e após decidir a quantidade de cada produto, o usuário clica em adicionar
 			function adicionarItensAoPedido(obj) {

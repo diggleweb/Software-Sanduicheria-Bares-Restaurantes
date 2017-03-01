@@ -15,10 +15,6 @@
 	<script src="{{ asset('js/jquery-ui-1.12.0.custom/jquery-ui.min.js') }}"></script>
 	<script src = "{{ asset('js/maskmoney/maskmoney.min.js') }}"></script>
 	<script src = "{{ asset('js/bootstrap/bootstrap.min.js') }}"></script>
-	<script src = "{{ asset('js/garcom/garcom.js') }}" type="text/javascript"></script>
-	<script src = "{{ asset('js/contasEncerradas/contasEncerradas.js') }}" type="text/javascript" ></script>
-	<script src = "{{ asset('js/produtos/adicionarProdutos.js') }}" type="text/javascript"></script>
-	<script src = "{{ asset('js/produtos/listarProdutos.js') }}" type="text/javascript"></script>
 
 </head>
 
@@ -36,8 +32,6 @@
 	          </div><!-- /.navbar-collapse -->
 	  </div>
 	</nav>
-
-	
 
 	@yield('corpo')
 

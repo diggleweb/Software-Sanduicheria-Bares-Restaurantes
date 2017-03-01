@@ -333,8 +333,7 @@ pela view:
 </div>
 
 
-<script type="text/javascript" src = "js/garcom.js"></script>
-
+	<script src = "{{ asset('js/garcom/garcom.js') }}" type="text/javascript"></script>
 
 
 @endsection

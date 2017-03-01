@@ -57,7 +57,7 @@ return [
 			'host'      => 'localhost',
 			'database'  => 'sanduicheria2',
 			'username'  => 'root',
-			'password'  => '123123',
+			'password'  => '',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',

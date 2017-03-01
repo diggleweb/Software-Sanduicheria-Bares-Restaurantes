@@ -144,8 +144,6 @@ $arrayNumeroProdutosPorCategoria -> cada posicao refencia o numero de produtos p
 
 			</div> <!-- fim do accordion -->
 
-		
-
 	
 	<!-- Modal para confirmacao de senha ao excluir um produto -->
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
@@ -174,5 +172,6 @@ $arrayNumeroProdutosPorCategoria -> cada posicao refencia o numero de produtos p
 	  </div>
 	</div>
 
+	<script src = "{{ asset('js/produtos/listarProdutos.js') }}" type="text/javascript"></script>
 
 @endsection
