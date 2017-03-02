@@ -22,8 +22,7 @@
 		<div class = "container">
 			<h1>Todas as contas encerradas</h1>
 				<br>
-
-
+				
 	{{-- Por que utilizar esta variável? --}}
 	{{-- Primeiro: ContasController retorna um array (chamado $produtos), em que cada posição deste array
 	contém os nomes dos produtos, preços, etc, referentes a cada posição de outro array que vem do mesmo controller (chamado $contas).
@@ -35,6 +34,8 @@
 	A variável $posicaoArray inicia-se com -1, pois na primeira iteração queremos o valor 0, e a cada iteração 
 	queremos aumentar o seu valor, para percorrer o array $produtos e o array $contas com a mesma variável
 	--}}
+
+ 
 				<?php $posicaoArray = -1; ?>
 					<div id = "accordion">
 
@@ -83,6 +84,7 @@
 								<br>
 								<hr>
 
+								{!! link_to_route('excluirContaEncerrada', "") !!}
 								<button onclick = "excluirConta({{$conta->id}})" style = "float: right; height: 30px; width: 60px; background-color: red; color: white">Excluir</button>
 								<br>
 
@@ -105,8 +107,8 @@
 
 		function excluirConta(id) {
 		  if (confirm("Você realmente deseja se desfazer desta conta encerrada? Se você realizar esta operação, estes dados serão perdidos permanentemente.") == true) {
+		    
 		    $.get("/excluirContaEncerrada", {"id": id}, function(data) {
-		      alert(data);
 		      location.reload();
 		    });
 		  }

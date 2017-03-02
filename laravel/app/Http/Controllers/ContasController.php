@@ -107,7 +107,7 @@ class ContasController extends Controller {
 		$contas = new Conta();
 		$contas = $contas->where('id', '=', $id)->first()->delete();
 
-		return redirect()->back()->with("sucesso", "Deletado com sucesso!");
+		return "Excluído com sucesso!";
 	}
 
 }

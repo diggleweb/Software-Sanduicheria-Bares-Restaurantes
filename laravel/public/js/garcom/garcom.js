@@ -141,13 +141,13 @@ Creditos: http://bootsnipp.com/snippets/featured/buttons-minus-and-plus-in-input
             //caso atinja o valor zero
             if(parseInt(input.val()) == input.attr('min')) {
                 $(this).attr('disabled', true);
-                //desabilitar a checkbox correspondente a este item
-                $(this).parents().eq(5).find("[name='checkboxItens']").prop('checked', '');
+                //desabilita o icone check
+                $(this).parents().eq(5).find("[name='ok']").css('visibility', 'hidden');
             }
 
         //botão mais
         } else if(type == 'plus') {
-        	//adiciona
+        	
             if(currentVal < input.attr('max')) {
             	input.val(currentVal + 1).change();
                 // var id = $(this).parents().eq(4).attr('data-id');
@@ -160,15 +160,13 @@ Creditos: http://bootsnipp.com/snippets/featured/buttons-minus-and-plus-in-input
             	//altera o preço total
             	$(".preco").html("R$" + precoAtual.toFixed(2));
 
-            	//ativar novamente a checkbox correspondente a este item
-            	$(this).parents().eq(5).find("[name='checkboxItens']").prop('checked', 'checked');
+            	//habilita o icone check
+            	$(this).parents().eq(5).find("[name='ok']").css('visibility', 'visible');
             }
 
             if(parseInt(input.val()) == input.attr('max')) {
                 $(this).attr('disabled', true);
-
             }
-
         }
     } else {
         input.val(0);
@@ -576,21 +574,35 @@ var arrayProdutosAlterados = [];		//variável que contém objetos de produtos qu
 				//e = object referente ao item atual
 				//idItem = id referente ao item atual
 				//cada um desses números aqui são ids dos itens que compõem o sanduíche
-				$("[name='checkboxItens']").each(
-					function(idCheckbox) {
-						// console.log(e + " . " + $(this).val());
-						//habilita todos os botões +
-						$(this).parents().eq(1).next().find('.btn-success').eq(0).attr('disabled', false);
-						//verifica se o ID do checkbox atual é igual ao id do item que estamos percorrendo
-						if (itemId == $(this).val()) {
+				// $("[name='checkboxItens']").each(
+				// 	function(idCheckbox) {
+				// 		// console.log(e + " . " + $(this).val());
+				// 		//habilita todos os botões +
+				// 		$(this).parents().eq(1).next().find('.btn-success').eq(0).attr('disabled', false);
+				// 		//verifica se o ID do checkbox atual é igual ao id do item que estamos percorrendo
+				// 		if (itemId == $(this).val()) {
+				// 			$(this).parents().eq(1).next().find(".input-number").val(1);
+				// 			//checkbox marcado
+				// 			$(this).prop('checked', 'checked');
+				// 			//desabilita os botões - daqueles que tem zero itens
+				// 			$(this).parents().eq(1).next().find(".btn-number").eq(0).attr('disabled', false);
+				// 		}
+				// 	}				
+				// );		
+
+				$("[name='ok']").each(
+					function() {
+						var id = $(this).attr('data-id');
+						//console.log($(this).attr('data-id'));
+						if (itemId == id) {
+							$(this).css('visibility', 'visible');
 							$(this).parents().eq(1).next().find(".input-number").val(1);
-							//checkbox marcado
-							$(this).prop('checked', 'checked');
-							//desabilita os botões - daqueles que tem zero itens
 							$(this).parents().eq(1).next().find(".btn-number").eq(0).attr('disabled', false);
 						}
-					}				
-				);		
+
+					}
+				);
+
 			});
 		});
 

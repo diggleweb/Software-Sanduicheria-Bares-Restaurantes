@@ -252,9 +252,8 @@ pela view:
 		        	<div class="row">
 		        		<div class = "col-md-5">
 					        <div style = "float: left">	
-					        	 {{-- checkbox --}}
-						        <input type = "checkbox" name = "checkboxItens" onclick = "return false;" value = "{{$item->id}}">
-						        	<span style = "font-weight: bold; font-size: 20px">&nbsp;{{ucfirst($item->nome)}}</span>
+					       			<span name="ok" class = "glyphicon glyphicon-ok" style ="color: green; visibility: hidden" data-id={{$item->id}}></span>
+					        		<span style = "font-weight: bold; font-size: 20px">&nbsp;{{ucfirst($item->nome)}}</span> &nbsp; 
 						        	<br>
 						        	<label class = "precoVendaItem" style = "margin-left: 30px">Preço por unidade: R$ {{number_format($item->precoVenda, 2)}}</label>
 					        </div>
@@ -308,29 +307,6 @@ pela view:
 {{-- fim do modal --}}
 
 
-{{-- Excluir --}}
-<div class="modal fade" id="modalDetalhesPedido" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content" style = "height: 900px">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel" class = "titulo" style = "font-weight: bold">Detalhes do Pedido (Nome do pedido)</h4>
-      </div>
-      <div class="modal-body" style = "height: 195px;">
-        <h1 class = "nome">Nome</h1>
-        <h2>Preco: <div class = 'preco'>R$ 20,00</div></h2>
-
-        <input type = "checkbox" name = "" value = "bacon"><span>&nbsp;Bacon</span><br>
-        <input type = "checkbox" name = "" value = "bacon">Mussarela<br>
-        <input type = "checkbox" name = "" value = "bacon">Tomate<br>
-        <input type = "checkbox" name = "" value = "bacon">Alface<br>
-        <input type = "checkbox" name = "" value = "bacon">Salsicha<br>
-        <input type = "checkbox" name = "" value = "bacon">Presunto<br>
-
-      </div>
-    </div>
-  </div>
-</div>
 
 
 	<script src = "{{ asset('js/garcom/garcom.js') }}" type="text/javascript"></script>
