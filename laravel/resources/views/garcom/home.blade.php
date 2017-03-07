@@ -24,6 +24,11 @@ pela view:
 
 @section('corpo')
 
+	
+	<div class="row">
+		
+	</div>
+
 	<div class = "row">
 	<!-- Ítens -->		
 

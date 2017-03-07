@@ -8,6 +8,7 @@ use App\ContasProdutos;
 use App\Produto;
 use App\Funcionario;
 use DB;
+use Input;
 
 class AdministradorController extends Controller {
 
@@ -46,7 +47,8 @@ class AdministradorController extends Controller {
 		//faz apenas uma pequena conversão
 		$unidadesProdutoMaisVendido = $unidadesProdutoMaisVendido[0]->vendidos;
 
-	//busca o lucro total (baseado em todos os produtos que foram vendidos)
+
+		//busca o lucro total (baseado em todos os produtos que foram vendidos)
 		$produtosVendidos = DB::select(
 		'SELECT produto_id, count(*) AS quantidade
 		 FROM conta_produtos
@@ -102,6 +104,76 @@ class AdministradorController extends Controller {
 				->with('urlMaisLucrativo', $urlMaisLucrativo)
 				->with('lucroProdutoMaisLucrativo', $maiorLucro)
 				->with('unidadesProdutoMaisVendido', $unidadesProdutoMaisVendido);
+	}
+// WHERE updated_at BETWEEN DATE_SUB(NOW(), INTERVAL 30 DAY) AND CURRENT_TIMESTAMP
+
+	/* filtra e retorna o SQL referente a um determinado período */
+	public function filtrar() {
+		$periodo = Input::get('filtrarPor');
+		
+		switch($periodo) {
+			
+			case 'total':
+				return redirect('administrador');
+			break;
+
+			case 'ultimoMes':
+				//busca no banco o nome do produto mais vendido dentro dos últimos 30 dias
+				$produtoMaisVendido = DB::select(
+					"SELECT nome, urlImagem
+					FROM produtos
+					WHERE id = (
+						SELECT produto_id
+						FROM conta_produtos
+						WHERE updated_at BETWEEN DATE_SUB(NOW(), INTERVAL 30 DAY) AND CURRENT_TIMESTAMP
+						GROUP BY produto_id
+						ORDER BY count(*) DESC
+						LIMIT 1
+					);"
+				);
+
+				$nomeProduto = $produtoMaisVendido[0]->nome; //faz apenas uma pequena conversão porque vem do banco como um array
+				$urlMaisVendido = $produtoMaisVendido[0]->urlImagem;
+
+				//busca quantas unidades foram vendidas do produto que mais vendeu
+				$unidadesProdutoMaisVendido = DB::select(
+					'SELECT count(*) AS vendidos
+					 FROM conta_produtos
+					 WHERE updated_at BETWEEN DATE_SUB(NOW(), INTERVAL 30 DAY) AND CURRENT_TIMESTAMP
+					 GROUP BY produto_id
+					 ORDER BY count(*) DESC
+					 LIMIT 1');
+				//faz apenas uma pequena conversão
+				$unidadesProdutoMaisVendido = $unidadesProdutoMaisVendido[0]->vendidos;
+
+
+				//busca o lucro total (baseado em todos os produtos que foram vendidos)
+				$produtosVendidos = DB::select(
+				'SELECT produto_id, count(*) AS quantidade
+				 FROM conta_produtos
+				 WHERE updated_at BETWEEN DATE_SUB(NOW(), INTERVAL 30 DAY) AND CURRENT_TIMESTAMP
+				 GROUP BY produto_id');		//retorna duas colunas: a primeira com ids dos produtos vendidos
+									//a segunda com a quantidade de cada produto vendido		
+
+				$produtos = new Produto();
+				$lucroTotal = 0;	//variável que irá incrementar a cada iteração de produtos vendidos e trará no final o valor de lucro total	
+				$maiorLucro = 0;	//variávle que irá verificar qual é o produto mais lucrativo
+				$produtoMaisLucrativo = '';
+				$urlMaisLucrativo = '';
+
+
+
+			break;
+
+
+
+			case 'Janeiro':
+
+			break;
+
+			
+		}
+		
 	}
 
 	/**

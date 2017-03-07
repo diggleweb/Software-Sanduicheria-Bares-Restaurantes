@@ -64,7 +64,7 @@ $filtro
 					<th class = "tituloTabela">Preço de Compra</th>
 					<th class = "tituloTabela">Preço de Venda</th>
 					<th class = "tituloTabela">Lucro</th>
-					<th class = "tituloTabela">Ação</th>
+					
 				</tr>
 			</thead>
 
@@ -94,8 +94,6 @@ $filtro
 
 						<td style = "text-align: center">R$ {{number_format($item->precoCompra, 2)}}</td>
 						<td style = "text-align: center">R$ {{number_format($item->precoVenda, 2)}}</td>
-						<td style = "text-align: center">R$ {{$item->precoCompra}}</td>
-						<td style = "text-align: center">R$ {{$item->precoVenda}}</td>
 						<td style = "text-align: center">R$ {{$lucro}} ({{$porcentagemLucro}} %)</td>
 						<td style = "text-align: center">
 							{!! link_to_route('editarItem', 'Editar', array('id' => $item->id), array('class' => 'btn btn-primary')) !!}

@@ -21,6 +21,20 @@
 
 	<div class = "container">
 
+	<div class="form-group">
+		<label for = "selectPeriodo">Determine um período para buscar os dados:</label>
+
+		{!! Form::open(array('method' => 'GET', 'route' => 'filtrarPorPeriodo')) !!}
+			{!! Form::select('filtrarPor', 
+				array('total' => 'Buscar desde o início',
+				 'ultimoMes' => 'Últimos trinta dias',
+				 'Janeiro' => 'Janeiro'
+				 ), null, array("class" => "form-control")) !!}
+			{{-- {!! Form::submit('Filtrar', array('class' => 'btn btn-primary', 'style' => 'width: 100px')) !!} --}}
+		{!! Form::close() !!}
+
+	</div>
+
 	{{-- Produto mais vendido --}}
 		<div class = "opcoes" style = "background-color: #519251">
 			<h2 class = "tituloDasOpcoes" >Produto mais vendido</h2>
@@ -79,5 +93,11 @@
 			<h2 class = "tituloOpcoesPequeno">Itens</h2>
 		</div>
 	</div>
+
+	<script type="text/javascript">
+		$("[name='filtrarPor']").on('change', function() {
+			$(this).parent().submit();
+		});
+	</script>
 
 @endsection

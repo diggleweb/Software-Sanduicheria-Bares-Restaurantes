@@ -16,11 +16,18 @@ Route::get('auth/logout', 'Auth\AuthController@getLogout');
 Route::get('auth/register', 'Auth\AuthController@getRegister');
 Route::post('auth/register', 'Auth\AuthController@postRegister');
 
+Route::get('/garcom', 'HomeController@index');
+
+
 Route::get('/', 'HomeController@index');
 
 //rotas agrupadas pois utilizam o mesmo prefixo /administrador/ ... e porque são rotas restritas a usuários autenticados
 Route::group(['prefix' => 'administrador'], function() {
 	Route::get('/', 'AdministradorController@index');
+
+	//página inicial de administrador, mas com filtros diferentes
+	Route::get('/filtrarPeriodo{periodo}', ['as' => 'filtrarPorPeriodo', 'uses' => 'AdministradorController@filtrar']);
+
 	Route::get('/listarProdutos', 'ProdutosController@index');
 	Route::get('/listarProdutos/novoProduto', 'ProdutosController@create');	
 	Route::get('/listarProdutos/editarProduto{id}', ['as' => 'editarProduto', 'uses' => 'ProdutosController@edit']);
