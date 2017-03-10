@@ -46,12 +46,12 @@
 
 			<p id = "paragrafoExplicativo">OBS: O preço de compra e o preço de venda deste sanduíche será determinado pelos preços de compra e de venda dos itens adicionados a este sanduíche.</p>
 
-			<br>
 			<!-- Irá aparecer os nomes dos ítens selecionados aqui -->
 			<div id = "tituloItensSelecionados" style = "text-size: 30px; font-weight: bold; color: black">Ítens que compõem o sanduíche: </div>
 			<div id = "itensSelecionados" style = "text-size: 20px; font-weight: bold; color: green"></div>
 
 		<div id = "divPrecos">
+			<br>
 			{!! Form::label('labelPrecoCompra', 'Preço de Compra: ') !!}
 			{!! Form::text('precoCompra', '', array('class' => 'form-control', 'style' => 'width: 150px', 'maxlength' => '15')) !!}
 			<br>
@@ -113,9 +113,7 @@
 	{!! Form::close()!!}
 	</div>
 
-
 	<script src = "{{ asset('js/produtos/adicionarProdutos.js') }}" type="text/javascript"></script>
-
 
 @endsection
 

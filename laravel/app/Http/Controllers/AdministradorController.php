@@ -21,7 +21,52 @@ class AdministradorController extends Controller {
 	 */
 	public function index()
 	{
-	//busca no banco o nome do produto mais vendido
+
+		//Caso tenhamos que filtrar os dados por algum período
+		$periodo = Input::get('filtrarPor');
+
+		//busca no banco o nome do produto mais vendido
+		$sqlProdutoMaisVendido = "SELECT nome, urlImagem
+		FROM produtos
+		WHERE id = (
+			SELECT produto_id
+			FROM conta_produtos
+			GROUP BY produto_id
+			ORDER BY count(*) DESC
+			LIMIT 1
+		);";
+
+		//busca quantas unidades foram vendidas do produto que mais vendeu
+		$sqlUnidadesProdutoMaisVendido = "SELECT count(*) AS vendidos
+			 FROM conta_produtos
+			 GROUP BY produto_id
+			 ORDER BY count(*) DESC
+			 LIMIT 1";
+
+		//quantos produtos foram vendidos em um determinado perídoo
+		$qtdeVendidos = "SELECT produto_id, count(*) AS quantidade
+		 FROM conta_produtos
+		 GROUP BY produto_id";
+
+
+
+		switch($periodo) {
+			//'total' significa que pegaremos desde a data de criação do banco de dados até hoje
+			case 'total':
+				//portanto usaremos as querys nativas (sem clausula where)
+				
+			break;
+
+			//pegaremos apenas dados dos últimos 30 dias
+			case 'ultimoMes':
+				//precisamos adicionar a cláusula where em cada um dos SQL acima
+				//o que podemos fazer é concatenar a string e colocar essa cláusula where para não repetirmos código
+				//portanto, primeiro encontramos 'FROM conta_produtos' e concatenamos após isso
+
+			break;
+		}
+
+		//busca no banco o nome do produto mais vendido
 		$produtoMaisVendido = DB::select(
 		'SELECT nome, urlImagem
 		FROM produtos
@@ -37,7 +82,7 @@ class AdministradorController extends Controller {
 		$urlMaisVendido = $produtoMaisVendido[0]->urlImagem;
 
 		
-	//busca quantas unidades foram vendidas do produto que mais vendeu
+		//busca quantas unidades foram vendidas do produto que mais vendeu
 		$unidadesProdutoMaisVendido = DB::select(
 			'SELECT count(*) AS vendidos
 			 FROM conta_produtos
