@@ -61,8 +61,9 @@ Route::get('/addPedidoComItens', function() {
 	//busca os dados da view
 	$input = Input::only('idConta', 'produtos', 'produtosAlterados');
 	$idConta = $input['idConta'];
-	$produtosAlterados = $input['produtosAlterados'];	//produtos que nao foram adicionados itens
-	$produtosNaoAlterados = $input['produtos'];	//produtos para o qual foram adicionados itens, portanto seu valor final sera alterado
+	$produtosAlterados = $input['produtosAlterados'];	//produtos para o qual foram adicionados itens, portanto seu valor final sera alterado
+	$produtosNaoAlterados = $input['produtos'];	
+
 												//obs: isso eh um array de obj, contendo o id do produto e o preco final
 
 	/* observacao importante: em $produtosNaoAlterados vem tambem os ids dos produtos alterados, preciso retirar estes ids para nao repetir no banco */
@@ -84,6 +85,12 @@ Route::get('/addPedidoComItens', function() {
 		$contasProdutos['produto_id'] = $idProduto;
 		$contasProdutos->save();						//salva no banco
 
+		//adiciona o valor na tabela conta
+		$contas = new App\Conta();
+		$contaAtual = $contas->where('id', '=', $idConta)->first();
+		$precoContaAtual = $contaAtual->valor;
+		$contaAtual->valor = $precoContaAtual + $precoProduto;
+		$contaAtual->save();
 	}
 
 	/* agora que adicionamos os produtos alterados, devemos adicionar os produtos nao alterados */
@@ -131,6 +138,13 @@ Route::get('/addPedido', function() {
 		$contasProdutos['precoFinal'] = $precoFinal;	//obs: o preco final deste produto eh igual ao preco de venda dele, diferente de quando se adiciona 
 		
 		$contasProdutos->save();
+
+		//adiciona o valor na tabela conta
+		$contas = new App\Conta();
+		$contaAtual = $contas->where('id', '=', $idConta)->first();
+		$precoContaAtual = $contaAtual->valor;
+		$contaAtual->valor = $precoContaAtual + $precoFinal;
+		$contaAtual->save();
 	}
 
 	atualizarProdutosDoGarcom($idConta, $contadorProdutos);
@@ -301,6 +315,7 @@ Route::get('/cancelarProduto', function() {
 
 	//cria uma nova instância de 'contas'
 	$contas = new App\Conta();
+
 	//pega o ID do funcionário relacionado a esta conta (para aumentar o número de produtos vendidos)
 	$idFuncionario = $contas->select('funcionario_id')->where('id', '=', $idConta)->first();
 	//apenas uma conversão
@@ -317,8 +332,22 @@ Route::get('/cancelarProduto', function() {
 	$funcionario = $funcionarios->where('id', '=', $idFuncionario)->first();
 	$funcionario['produtosVendidos'] = $produtosVendidos;
 	$funcionario->update();
-	
+
 	$cp = new App\ContasProdutos();	
+	
+	//pega o objeto conta 
+	$objConta = $contas->where('id', '=', $idConta)->first();
+	//pega o preço do item que está sendo excluído para que eu possa descontar na tabela contas
+	$precoDescontado = $cp->where('id', '=', $idContasProdutos)->first()->precoFinal;
+	//pega o preço anterior desta conta
+	$precoAnterior = $objConta->valor;
+	//desconta e atualiza a tabela
+	$precoFuturo = $precoAnterior - $precoDescontado;
+	//Atualiza o valor na tabela
+	$objConta->valor = $precoFuturo;
+	//atualiza a tabela
+	$objConta->save();
+
 	$cp->where('id', '=', $idContasProdutos)->first()->delete();	//deleta o produto da tabela conta_produtos
 
 });

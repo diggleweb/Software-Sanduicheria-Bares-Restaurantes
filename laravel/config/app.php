@@ -135,7 +135,6 @@ return [
 		'Illuminate\Translation\TranslationServiceProvider',
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
-
 		'Illuminate\Html\HtmlServiceProvider',
 
 		/*
@@ -146,6 +145,8 @@ return [
 		'App\Providers\ConfigServiceProvider',
 		'App\Providers\EventServiceProvider',
 		'App\Providers\RouteServiceProvider',
+		'Zizaco\Entrust\EntrustServiceProvider',
+		App\Providers\AgentServiceProvider::class
 
 	],
 
@@ -195,7 +196,8 @@ return [
 		'Validator' => 'Illuminate\Support\Facades\Validator',
 		'View'      => 'Illuminate\Support\Facades\View',
 		'HTML'=> 'Illuminate\Html\HtmlFacade',
-		'Form'		=> 'Illuminate\Html\FormFacade'
+		'Form'		=> 'Illuminate\Html\FormFacade',
+		'Entrust'   => 'Zizaco\Entrust\EntrustFacade',
 
 	],
 

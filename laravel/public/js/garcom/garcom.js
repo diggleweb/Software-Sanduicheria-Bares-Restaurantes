@@ -465,7 +465,6 @@ var arrayProdutosAlterados = [];		//variável que contém objetos de produtos qu
 					$.get('addPedidoComItens/', json, function(data) {
 						atualizar();		//forca um trigger no botao da mesa atual para atualizar a tabela
 						desselecionarProdutos();
-						console.log(data);
 					});
 				} else {
 					//criar um objeto json com o id da conta e os ids dos produtos 
@@ -555,6 +554,7 @@ var arrayProdutosAlterados = [];		//variável que contém objetos de produtos qu
 	//adicionbado em 12/1/2017
 	/* abre o modal de detalhes para pedidos relacionados a sanduiches */
 	function abrirModalSanduiches(id, nome, preco, urlImagem) {
+		
 		var modal = $("#modalDetalhesPedidoSanduiches");
 		//altera a url da imagem, nome e preço
 		modal.find('.imagem').attr('src', urlImagem);

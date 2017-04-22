@@ -1,36 +1,53 @@
-@extends('comum')
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
 
-<style type="text/css">
-	.wrapper {
-		position: relative;
-		margin-top: 150px;
-		margin-left: 650px;
-		width: 30%;
-	}
-</style>
 
-<form method="POST" action="/auth/login">
-    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+	<link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
+	<link href="{{ asset('css/style.css') }}" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="{{asset('js/jquery-ui-1.12.0.custom/jquery-ui.min.css')}}">
 
-    <div class="wrapper">
-    	<h2>Área Restrita: Realize o login para entrar nesta sessão</h2>
-    	<br>
-	    <div>
-	        {!!Form::label('Email')!!}
-	        <input class = "form-control" autofocus type="email" name="email" value="{{ old('email') }}">
-	    </div>
+</head>
+<body>
 
-	    <div>
-	        Password
-	        <input type="password" class = "form-control" name="password" id="password">
-	    </div>
+</body>
+</html>
 
-	    <div>
-	        <input type="checkbox" name="remember"> Remember Me
-	    </div>
+	<div class="container">
+		<div class="row">
+			<div class = "col-md-6">
 
-	    <div>
-	        <button type="submit" class = "btn btn-primary" style = "float: right">Login</button>
-	    </div>
-    </div>
-</form>
+
+				<form method="POST" action="/auth/login">
+				    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
+				    <div>
+				    	<h2>Área Restrita: Realize o login para entrar nesta sessão</h2>
+				    	<br>
+						{!! HTML::ul($errors->all(), array('class'=>'alert alert-danger errors')) !!}
+						<br>
+					    <div>
+					        {!!Form::label('login')!!}
+					        <input class = "form-control" autofocus autofocus name="login" value="{{ old('login') }}">
+					    </div>
+
+					    <br>
+
+					    <div>
+					        Senha
+					        <input type="password" class = "form-control" name="password" id="password">
+					    </div>
+
+					    <div class = "checkbox">
+					        <label><input type="checkbox" name="remember"> Lembrar </label>
+					    </div>
+
+					    <div>
+					        <button type="submit" class = "btn btn-primary btn-lg" style = "float: right">Login</button>
+					    </div>
+				    </div>
+				</form>
+			</div>
+		</div>
+	</div>

@@ -1,27 +1,35 @@
-<form method="POST" action="/auth/register">
-    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-    
-    <div>
-        <label>Name</label>
-        <input type="text" name="name" value="{{ old('name') }}" class = "form-control">
-    </div>
+@extends('auth.comum')
 
-    <div>
-        Email
-        <input type="email" name="email" value="{{ old('email') }}" class = "form-control">
-    </div>
+@section('titulo')
+Registrar novo usuário
+@endsection
 
-    <div>
-        Password
-        <input type="password" name="password" class = "form-control">
-    </div>
+@section('corpo')
+    <br>
+    <h2>cadastre-se</h2>
+    <br>
 
-    <div>
-        Confirm Password
-        <input type="password" name="password_confirmation" class = "form-control">
-    </div>
+    <form method="POST" action="/auth/register">
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+        
+        <div>
+            <label>Login</label>
+            <input type="text" name="login" value="{{ old('login') }}" class = "form-control">
+        </div>
+        <br>
+        <div>
+            Senha
+            <input type="password" name="password" class = "form-control">
+        </div>
+        <br>
+        <div>
+            Confirmar senha
+            <input type="password" name="password_confirmation" class = "form-control">
+        </div>
+        <br>
+        <div>
+            <button type="submit" class = "btn btn-primary" class = "btn btn-primary btn-lg" style = "float: right">Registrar</button>
+        </div>
+    </form>
+@endsection
 
-    <div>
-        <button type="submit" class = "btn btn-primary">Register</button>
-    </div>
-</form>

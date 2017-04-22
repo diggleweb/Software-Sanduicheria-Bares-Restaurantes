@@ -5,6 +5,8 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
+	<meta name="mobile-web-app-capable" content="yes">
+	
 	<title> @yield('titulo') </title>
 	<link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
 	<link href="{{ asset('css/style.css') }}" rel="stylesheet">
@@ -36,5 +38,6 @@
 	@yield('corpo')
 
 </body>
+
 
 </html>
