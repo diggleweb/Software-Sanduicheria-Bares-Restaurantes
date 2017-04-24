@@ -60,20 +60,23 @@
       <div class="container">
 
         <div class="row">
-          <div class="card">
+        {{-- ir para: Administrador --}}
+          <div class="card" onclick="location.href='/administrador';">
             <img class = "img-circle" src="/imagens/icones/administrador.jpg" alt="Card image cap">
             <p class="card-text">Administrador</p>
           </div>
-          <div class="card">
+          {{-- Ir para: Garçom --}}
+          <div class="card" onclick="location.href='/garcom';">
             <img class = "img-circle" src="/imagens/icones/garcom.jpg" alt="Card image cap">
             <p class="card-text">Garçom</p>
           </div>
-          <div class="card">
+          {{-- Ir para: atendente --}}
+          <div class="card" onclick="location.href='/atendente';">
             <img class = "img-circle" src="/imagens/icones/atendente.jpg" alt="Card image cap">
             <p class="card-text">Atendente</p>
           </div>
-
-          <div class="card">
+          {{-- Ir para: cozinha --}}
+          <div class="card" onclick="location.href='/cozinha';">
             <img class = "img-circle" src="/imagens/icones/cozinha.jpg" alt="Card image cap">
             <p class="card-text">Cozinha</p>
           </div>
