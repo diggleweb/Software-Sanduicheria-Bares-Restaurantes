@@ -14,7 +14,7 @@
 	
 	{{-- Barra de navegações --}}
 	<ol class="breadcrumb">
-	 	<li><a href="/">Garçom</a></li>
+	 	<li><a href="/garcom">Garçom</a></li>
 	  	<li class="active">Administrador</li>
 	  	<a style = "float: right" href = "/auth/logout">Logout</a>
 	</ol>

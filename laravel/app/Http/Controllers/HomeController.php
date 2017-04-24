@@ -2,12 +2,7 @@
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Produto;
-use App\ProdutosItens;
-use App\Funcionario;
-use App\Item;
-use Illuminate\Http\Request;
-use DB;
+
 
 class HomeController extends Controller {
 
@@ -18,34 +13,7 @@ class HomeController extends Controller {
 	 */
 	public function index()
 	{
-		//Faz uma busca por todos os produtos cadastrados antes de entrar na página
-		$produto = new Produto();
-
-		//pega todos os produtos cuja categoria seja 'sanduiche'
-		$sanduiches = $produto->where('idCategoria', '=', 1)->where('ativo', '=', true)->get();
-
-		//pega todos os produtos cuja categoria seja 'porção'
-		$porcoes = $produto->where('idCategoria', '=', 3)->where('ativo', '=', true)->get();
-
-		//pega todos os produtos cuja categoria seja 'bebidas'
-		$bebidas = $produto->where('idCategoria', '=', 2)->where('ativo', '=', true)->get();
-
-		//pega todos os produtos cuja categoria seja 'pratos'
-		$pratos = $produto->where('idCategoria', '=', 4)->where('ativo', '=', true)->get();
-
-		$funcionarios = new Funcionario();
-		$funcionarios = $funcionarios->where('ativo', '=', true)->get();
-
-		$itens = new Item();
-		$itens = $itens->orderBy('nome', 'asc')->get();
-
-		return view('garcom/home')->
-		with('sanduiches', $sanduiches)->
-		with('porcoes', $porcoes)->
-		with('funcionarios', $funcionarios)->
-		with('bebidas', $bebidas)->
-		with('itens', $itens)->
-		with('pratos', $pratos);
+		return view('home.home');
 	}
 
 	/**
