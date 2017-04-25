@@ -146,8 +146,7 @@ return [
 		'App\Providers\EventServiceProvider',
 		'App\Providers\RouteServiceProvider',
 		'Zizaco\Entrust\EntrustServiceProvider',
-		App\Providers\AgentServiceProvider::class
-
+		App\Providers\AgentServiceProvider::class,
 	],
 
 	/*

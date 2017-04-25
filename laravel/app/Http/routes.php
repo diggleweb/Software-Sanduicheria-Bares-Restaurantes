@@ -19,16 +19,16 @@ Route::post('auth/register', 'Auth\AuthController@postRegister');
 Route::get('/garcom', 'GarcomController@index');
 
 
-Route::get('/', 'HomeController@index');
+Route::get('/', ['as' => 'home', 'uses' => 'HomeController@index']);
 
 //rotas agrupadas pois utilizam o mesmo prefixo /administrador/ ... e porque são rotas restritas a usuários autenticados
 Route::group(['prefix' => 'administrador'], function() {
-	Route::get('/', 'AdministradorController@index');
+	Route::get('/', ['as' => 'administrador', 'uses' => 'AdministradorController@index']);
 
 	//página inicial de administrador, mas com filtros diferentes
 	Route::get('/filtrarPeriodo{periodo}', ['as' => 'filtrarPorPeriodo', 'uses' => 'AdministradorController@filtrar']);
 
-	Route::get('/listarProdutos', 'ProdutosController@index');
+	Route::get('/listarProdutos', ['as' => 'listarProdutos', 'uses' => 'ProdutosController@index']);
 	Route::get('/listarProdutos/novoProduto', 'ProdutosController@create');	
 	Route::get('/listarProdutos/editarProduto{id}', ['as' => 'editarProduto', 'uses' => 'ProdutosController@edit']);
 	Route::put('/listarprodutos/updateProduto{id}', ['as' => 'updateProduto', 'uses' => 'ProdutosController@update']);
@@ -52,7 +52,7 @@ Route::group(['prefix' => 'administrador'], function() {
 
 	Route::get('/listarUsuarios', 'UsersController@index');
 	Route::put('/listarUsuarios/updateUsuario{id}', ['as' => 'updateUsuario', 'uses' => 'UsersController@update']);
-	Route::get('/editarUsuario', 'UsersController@edit');
+	Route::get('/listarUsuarios/editarUsuario{id}', ['as' => 'editarUsuario', 'uses'=>'UsersController@edit']);
 });
 
 

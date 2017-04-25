@@ -12,8 +12,8 @@
 	</div>
 	
 	<ol class="breadcrumb">
-	 	 <li><a href="/">Garçom</a></li>
-	  	<li class="active"><a href="/administrador">Administrador</a></li>
+	 	<li><a href="/">Home</a></li>
+	  	<li><a href="/administrador">Administrador</a></li>
 	  	<li class="active">Listar Funcionários</li>
 	  	<a style = "float: right" href = "/auth/logout">Logout</a>
 	</ol>

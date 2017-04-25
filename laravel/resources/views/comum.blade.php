@@ -16,25 +16,10 @@
 
 <body>
 	
-	<!-- navbar  --> 
-	<nav class="navbar navbar-default">
-	  <div class="container-fluid">
-	    <div class="navbar-header">
-	          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-	                <ul class="nav navbar-nav">
-	                  <li class="active">
-	                  	<a id = "tabGarcom" href="/">Garçom <span class="sr-only">(current)</span></a>
-	                  </li>
-	                  <li>
-	                  	<a id = "tabAdministrador" href="/administrador">Administrador</a>
-	                  </li>
-	                </ul>
-	          </div><!-- /.navbar-collapse -->
-	  </div>
-	</nav>
 
 	<!-- jQuery -->
 	<script src = "{{ asset('js/jquery/jquery-2.2.0.min.js') }}"></script>
+
 
 	@yield('corpo')
 	

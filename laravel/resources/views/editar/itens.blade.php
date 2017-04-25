@@ -31,7 +31,7 @@ $(function() {
 </div>
 
 <ol class="breadcrumb">
- 	 <li><a href="/">Garçom</a></li>
+ 	 <li><a href="/">Home</a></li>
   	<li class="active"><a href="/administrador">Administrador</a></li>
   	<li class="active"><a href = "/administrador/listarItens">Listar Itens</a></li>
   	<li class="active">Editar Itens</li>

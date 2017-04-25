@@ -11,7 +11,7 @@
 	</div>
 
 	<ol class="breadcrumb">
-	 	 <li><a href="/">Garçom</a></li>
+	 	 <li><a href="/">Home</a></li>
 	  	<li class="active"><a href="/administrador">Administrador</a></li>
 	  	<li class="active"><a href = "/administrador/listarProdutos">Listar Produtos</a></li>
 	  	<li class="active">Novo Produto</li>

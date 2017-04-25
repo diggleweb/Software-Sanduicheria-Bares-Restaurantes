@@ -12,9 +12,10 @@
 		<h1>Bem-vindo, administrador!</h1>
 	</div>
 	
+
 	{{-- Barra de navegações --}}
 	<ol class="breadcrumb">
-	 	<li><a href="/garcom">Garçom</a></li>
+	 	<li><a href="/">Home</a></li>
 	  	<li class="active">Administrador</li>
 	  	<a style = "float: right" href = "/auth/logout">Logout</a>
 	</ol>

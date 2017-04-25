@@ -11,7 +11,8 @@
 		"laracasts/testdummy": "~2.1",
 		"intervention/image": "^2.3",
 		"zizaco/entrust": "1.4.1",
-		"jenssegers/agent": "^2.5"
+		"jenssegers/agent": "^2.5",
+		"davejamesmiller/laravel-breadcrumbs": "^3.0"
 		
 	},
 	"require-dev": {

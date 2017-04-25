@@ -12,6 +12,8 @@ use App\Produto;
 use App\ContasProdutos;
 use App\Categoria;
 use App\ProdutosItens;
+use App\User;
+use App\Role;
 
 
 
@@ -33,6 +35,8 @@ class DatabaseSeeder extends Seeder {
         $this->call('ProdutosTableSeeder');
         $this->call('ItensTableSeeder');
         $this->call('ProdutosItensTableSeeder');
+        $this->call('RolesTableSeeder');
+        $this->call('UsersTableSeeder');
 	}
 
 }
@@ -55,6 +59,56 @@ class CategoriasTableSeeder extends Seeder {
 
         Categoria::create(array(
             'nome' => 'pratos'
+        ));
+
+    }
+}
+
+class RolesTableSeeder extends Seeder {
+    public function run() {
+        DB::table('roles')->delete();
+        
+        Role::create(array(
+            'name' => 'nenhum',
+            'display_name' => 'Nenhum',
+            'description' => 'Não faz nada'
+        ));
+
+        Role::create(array(
+            'name' => 'cozinha',
+            'display_name' => 'Cozinha',
+            'description' => 'Trabalha na cozinha'
+        ));
+
+        Role::create(array(
+            'name' => 'administrador',
+            'display_name' => 'Administrador',
+            'description' => 'Chefe ou gerente'
+        ));
+
+        Role::create(array(
+            'name' => 'garcom',
+            'display_name' => 'Garçom',
+            'description' => 'Acesso à área de garçom'
+        ));
+
+        Role::create(array(
+            'name' => 'atendente',
+            'display_name' => 'Atendente',
+            'description' => 'Acesso à área de atendentes'
+        ));
+
+    }
+}
+
+
+class UsersTableSeeder extends Seeder {
+    public function run() {
+        DB::table('users')->delete();
+        
+        User::create(array(
+            'login' => 'admin',
+            'password' => bcrypt('admin')
         ));
 
     }

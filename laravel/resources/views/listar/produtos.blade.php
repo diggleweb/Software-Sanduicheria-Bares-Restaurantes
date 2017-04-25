@@ -19,7 +19,7 @@ $arrayNumeroProdutosPorCategoria -> cada posicao refencia o numero de produtos p
 	</div>
 	
 	<ol class="breadcrumb">
-	 	 <li><a href="/">Garçom</a></li>
+	 	 <li><a href="/">Home</a></li>
 	  	<li class="active"><a href="/administrador">Administrador</a></li>
 	  	<li class="active">Listar Produtos</li>
 	  	<a style = "float: right" href = "/auth/logout">Logout</a>

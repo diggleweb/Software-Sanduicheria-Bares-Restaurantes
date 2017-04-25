@@ -4,6 +4,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Http\Request;
+use Input;
 
 class UsersController extends Controller {
 
@@ -74,6 +75,9 @@ class UsersController extends Controller {
 		if (Input::has('login')) {	//verifica se os campos 'nome' e 'salario' foram preenchidos
 			$input = Input::all();	//busca os dados
 
+			//qual é o papel deste usuário no sistema? Nenhum, cozinha, atendente, administrador, garcom
+			$role = $input['role'];
+			
 			//cria um novo funcionario e preenche os dados
 			$usuario = new User();
 			
