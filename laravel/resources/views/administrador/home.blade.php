@@ -94,6 +94,12 @@
 		</div>
 	</div>
 
+	{{-- Usuários --}}
+		<div class = "opcoes reduzido" onclick = "location.href = '/administrador/listarUsuarios';"  style = "cursor: pointer; background-color: #33A08A">
+			<h2 class = "tituloOpcoesPequeno">Usuários</h2>
+		</div>
+	</div>
+
 	<script type="text/javascript">
 		$("[name='filtrarPor']").on('change', function() {
 			$(this).parent().submit();

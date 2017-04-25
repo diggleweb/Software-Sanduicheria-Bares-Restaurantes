@@ -2,8 +2,10 @@
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\User;
+use Illuminate\Http\Request;
 
-class HomeController extends Controller {
+class UsersController extends Controller {
 
 	/**
 	 * Display a listing of the resource.
@@ -12,7 +14,9 @@ class HomeController extends Controller {
 	 */
 	public function index()
 	{
-		return view('home.home');
+		$usuarios = new User();
+		$usuarios = $usuarios->get();
+		return view('listar.usuarios')->with('usuarios', $usuarios);
 	}
 
 	/**
@@ -54,7 +58,9 @@ class HomeController extends Controller {
 	 */
 	public function edit($id)
 	{
-		//
+		$usuario = new User();
+		$usuario = $usuario->find($id);
+		return view('editar.usuarios')->with('usuario', $usuario);		
 	}
 
 	/**
@@ -65,7 +71,20 @@ class HomeController extends Controller {
 	 */
 	public function update($id)
 	{
-		//
+		if (Input::has('login')) {	//verifica se os campos 'nome' e 'salario' foram preenchidos
+			$input = Input::all();	//busca os dados
+
+			//cria um novo funcionario e preenche os dados
+			$usuario = new User();
+			
+			//salva
+			$usuario->save();
+			//redireciona
+			return Redirect()->to('/administrador/listarUsuarios');
+
+		} else {
+			return Redirect()->back()->withErrors(['Campos incorretos!']);
+		}
 	}
 
 	/**

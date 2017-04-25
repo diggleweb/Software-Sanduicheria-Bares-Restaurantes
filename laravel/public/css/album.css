@@ -41,6 +41,10 @@ body {
   text-align: center;
 }
 
+.card:hover {
+  cursor: pointer;
+}
+
 .card > img {
   margin-bottom: .75rem;
 }
@@ -49,7 +53,7 @@ body {
   font-size: 30px;
   font-weight: bold;
   margin: 0 auto;
-  color: #2F12EC;
+  color: #918383;
 }
 
 footer {

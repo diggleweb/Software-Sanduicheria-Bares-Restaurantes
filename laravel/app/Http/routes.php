@@ -50,7 +50,9 @@ Route::group(['prefix' => 'administrador'], function() {
 	Route::get('/listarFuncionarios/editarFuncionario{id}', ['as' => 'editarFuncionario', 'uses'=>'FuncionariosController@edit']);
 	Route::put('/listarFuncionarios/updateFuncionario{id}', ['as' => 'updateFuncionario', 'uses' => 'FuncionariosController@update']);
 
-	
+	Route::get('/listarUsuarios', 'UsersController@index');
+	Route::put('/listarUsuarios/updateUsuario{id}', ['as' => 'updateUsuario', 'uses' => 'UsersController@update']);
+	Route::get('/editarUsuario', 'UsersController@edit');
 });
 
 

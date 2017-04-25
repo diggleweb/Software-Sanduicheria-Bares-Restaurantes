@@ -33,8 +33,8 @@ Registrar novo usuário
         <br>
 
         <select>
-            <option></option>
-            <option></option>
+            <option>Atendente</option>
+            <option>Garçom</option>
             <option></option>
         </select>
 

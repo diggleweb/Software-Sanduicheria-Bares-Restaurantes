@@ -20,7 +20,7 @@ class AuthController extends Controller {
 
 	use AuthenticatesAndRegistersUsers;
 
-	protected $redirectTo = '/';
+	protected $redirectPath = '/';
 	protected $loginPath = '/auth/login';
 
 	/**
@@ -37,5 +37,7 @@ class AuthController extends Controller {
 
 		$this->middleware('guest', ['except' => 'getLogout']);
 	}
+
+
 
 }
