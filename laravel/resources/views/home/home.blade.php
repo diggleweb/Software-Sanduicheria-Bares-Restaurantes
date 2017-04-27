@@ -23,6 +23,7 @@
 
   <body>
 
+  
 
     <div class="collapse bg-inverse" id="navbarHeader">
       <div class="container">
@@ -49,6 +50,8 @@
         </button>
       </div>
     </div>
+
+    
 
     <section class="jumbotron text-center">
       <div class="container">

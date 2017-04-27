@@ -11,12 +11,14 @@
 		<h1>Bem-vindo, administrador!</h1>
 	</div>
 	
-	<ol class="breadcrumb">
-	 	 <li><a href="/">Garçom</a></li>
+	{{-- <ol class="breadcrumb">
+	 	 <li><a href="/">Home</a></li>
 	  	<li class="active"><a href="/administrador">Administrador</a></li>
 	  	<li class="active">Listar Usuários</li>
 	  	<a style = "float: right" href = "/auth/logout">Logout</a>
 	</ol>
+ --}}
+ 	{!! Breadcrumbs::render('listarUsuarios') !!}
 
 	<div class = "container">
 		<h1>Lista de Usuários</h1>
@@ -30,6 +32,7 @@
 				<tr>
 					<th style = "text-align: center">id</th>
 					<th style = "text-align: center">Login</th>
+					<th style = "text-align: center">Tipo de acesso</th>
 				</tr>
 			</thead>
 
@@ -38,8 +41,10 @@
 				<tr>
 					<td style = "text-align: center">{{$usuario->id}}</td>
 					<td style = "text-align: center">{{$usuario->login}}</td>
+					{{-- <td style = "text-align: center">{{$usuario->login}}</td> --}}
+
 					<td style = "text-align: center">
-						{!! link_to_route('editarUsuario', 'Editar Permissão', array('id' => $usuario->id), array('class' => 'btn btn-primary')) !!}
+						{!! link_to_route('editarUsuario', 'Editar Acesso', array('id' => $usuario->id), array('class' => 'btn btn-primary')) !!}
 						<button class = "btn btn-danger" id = "{{$usuario->id}}" name = "botaoExcluir" onclick = "excluirUsuario(this.id)">Excluir</button>
 					</td>
 				</tr>

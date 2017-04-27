@@ -31,13 +31,14 @@ $(function() {
 </div>
 
 {{-- BreadCrumb --}}
-<ol class="breadcrumb">
+{{-- <ol class="breadcrumb">
  	 <li><a href="/">Garçom</a></li>
   	<li class="active"><a href="/administrador">Administrador</a></li>
   	<li class="active"><a href = "/administrador/listarItens">Listar Itens</a></li>
   	<li class="active">Novo Item</li>
-</ol>
+</ol> --}}
 
+	{!! Breadcrumbs::render('novoItem') !!} 
 
 <div class = "container">
 <h1>Adicionar um novo Item</h1>

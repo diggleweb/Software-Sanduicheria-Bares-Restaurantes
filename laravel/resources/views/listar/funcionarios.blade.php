@@ -11,12 +11,15 @@
 		<h1>Bem-vindo, administrador!</h1>
 	</div>
 	
-	<ol class="breadcrumb">
+	{{-- <ol class="breadcrumb">
 	 	<li><a href="/">Home</a></li>
 	  	<li><a href="/administrador">Administrador</a></li>
 	  	<li class="active">Listar Funcionários</li>
 	  	<a style = "float: right" href = "/auth/logout">Logout</a>
 	</ol>
+ --}}
+
+ 	{!! Breadcrumbs::render('listarFuncionarios') !!}
 
 	<div class = "container">
 		<h1>Lista de Funcionários</h1>

@@ -37,6 +37,7 @@ class DatabaseSeeder extends Seeder {
         $this->call('ProdutosItensTableSeeder');
         $this->call('RolesTableSeeder');
         $this->call('UsersTableSeeder');
+        $this->call('UsersRolesTableSeeder');
 	}
 
 }
@@ -113,6 +114,17 @@ class UsersTableSeeder extends Seeder {
 
     }
 }
+
+class UsersRolesTableSeeder extends Seeder {
+    public function run() {
+        DB::table('role_user')->delete();
+        
+        $user = DB::table('users')->first();
+        $role = DB::table('roles')->where('name', '=', 'administrador')->first();
+        $user->attachRole($role);
+    }
+}
+
 
 class MesasTableSeeder extends Seeder {
 

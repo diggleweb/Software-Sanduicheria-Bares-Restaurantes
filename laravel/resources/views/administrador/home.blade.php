@@ -11,16 +11,23 @@
 	<div class="page-header">
 		<h1>Bem-vindo, administrador!</h1>
 	</div>
-	
 
 	{{-- Barra de navegações --}}
-	<ol class="breadcrumb">
+	{{-- <ol class="breadcrumb">
 	 	<li><a href="/">Home</a></li>
 	  	<li class="active">Administrador</li>
 	  	<a style = "float: right" href = "/auth/logout">Logout</a>
 	</ol>
+ --}}
+	{!! Breadcrumbs::render('administrador') !!} 
 
 	<div class = "container">
+
+		@if(count($errors) > 0)
+			@foreach($errors->all() as $error)
+				{{$error}}
+			@endforeach
+		@endif
 
 	<div class="form-group">
 		<label for = "selectPeriodo">Determine um período para buscar os dados:</label>

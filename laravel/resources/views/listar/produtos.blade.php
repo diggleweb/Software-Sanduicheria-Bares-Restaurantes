@@ -18,12 +18,14 @@ $arrayNumeroProdutosPorCategoria -> cada posicao refencia o numero de produtos p
 		<h1>Bem-vindo, administrador!</h1>
 	</div>
 	
-	<ol class="breadcrumb">
+	{{-- <ol class="breadcrumb">
 	 	 <li><a href="/">Home</a></li>
 	  	<li class="active"><a href="/administrador">Administrador</a></li>
 	  	<li class="active">Listar Produtos</li>
 	  	<a style = "float: right" href = "/auth/logout">Logout</a>
-	</ol>
+	</ol> --}}
+
+	{!! Breadcrumbs::render('listarProdutos') !!} 
 
 	<div class = "container">
 		<h1>Lista de Produtos</h1>

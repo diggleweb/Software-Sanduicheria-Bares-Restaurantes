@@ -29,13 +29,13 @@ Route::group(['prefix' => 'administrador'], function() {
 	Route::get('/filtrarPeriodo{periodo}', ['as' => 'filtrarPorPeriodo', 'uses' => 'AdministradorController@filtrar']);
 
 	Route::get('/listarProdutos', ['as' => 'listarProdutos', 'uses' => 'ProdutosController@index']);
-	Route::get('/listarProdutos/novoProduto', 'ProdutosController@create');	
+	Route::get('/listarProdutos/novoProduto', ['as' => 'novoProduto', 'uses' => 'ProdutosController@create']);	
 	Route::get('/listarProdutos/editarProduto{id}', ['as' => 'editarProduto', 'uses' => 'ProdutosController@edit']);
 	Route::put('/listarprodutos/updateProduto{id}', ['as' => 'updateProduto', 'uses' => 'ProdutosController@update']);
 	Route::get('/listarProdutos/filtrar/', ['as' => 'filtrarProduto', 'uses' => 'ProdutosController@filtrar']);
 	
 	Route::get('/listarItens', ['as' =>'listarItens', 'uses' => 'ItensController@index']);
-	Route::get('/listarItens/novoItem', 'ItensController@create');
+	Route::get('/listarItens/novoItem', ['as' =>'novoItem', 'uses' => 'ItensController@create']);
 	Route::get('/listarItens/editarItem{id}', ['as' => 'editarItem', 'uses' => 'ItensController@edit']);
 
 	Route::get('/listarItens/filtrar/', ['as' => 'filtrarItem', 'uses' => 'ItensController@filtrar']);
@@ -43,14 +43,14 @@ Route::group(['prefix' => 'administrador'], function() {
 	Route::post('/salvarItem', 'ItensController@store');
 	Route::put('/listarItens/updateItem{id}', ['as' => 'updateItem', 'uses' => 'ItensController@update']);
 	
-	Route::get('/contasEncerradas', 'ContasController@index');
+	Route::get('/contasEncerradas', ['as' => 'contasEncerradas', 'uses' => 'ContasController@index']);
 
-	Route::get('/listarFuncionarios', 'FuncionariosController@index');
-	Route::get('/listarFuncionarios/novoFuncionario', 'FuncionariosController@create');
+	Route::get('/listarFuncionarios', ['as' => 'listarFuncionarios', 'uses' => 'FuncionariosController@index']);
+	Route::get('/listarFuncionarios/novoFuncionario', ['as' => 'novoFuncionario', 'uses' => 'FuncionariosController@create']);
 	Route::get('/listarFuncionarios/editarFuncionario{id}', ['as' => 'editarFuncionario', 'uses'=>'FuncionariosController@edit']);
 	Route::put('/listarFuncionarios/updateFuncionario{id}', ['as' => 'updateFuncionario', 'uses' => 'FuncionariosController@update']);
 
-	Route::get('/listarUsuarios', 'UsersController@index');
+	Route::get('/listarUsuarios', ['as' => 'listarUsuarios', 'uses' => 'UsersController@index']);
 	Route::put('/listarUsuarios/updateUsuario{id}', ['as' => 'updateUsuario', 'uses' => 'UsersController@update']);
 	Route::get('/listarUsuarios/editarUsuario{id}', ['as' => 'editarUsuario', 'uses'=>'UsersController@edit']);
 });

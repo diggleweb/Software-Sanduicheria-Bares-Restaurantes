@@ -10,12 +10,14 @@
 	<h1>Bem-vindo, administrador!</h1>
 </div>
 
-<ol class="breadcrumb">
+{{-- <ol class="breadcrumb">
  	 <li><a href="/">Home</a></li>
   	<li class="active"><a href="/administrador">Administrador</a></li>
   	<li class="active"><a href = "/administrador/listarFuncionarios">Listar Funcionários</a></li>
   	<li class="active">Editar Funcionário</li>
-</ol>
+</ol> --}}
+
+{!! Breadcrumbs::render('editarFuncionario') !!}
 
 <script>
 $(document).ready(

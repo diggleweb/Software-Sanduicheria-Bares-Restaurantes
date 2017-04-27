@@ -10,13 +10,14 @@
 		<h1>Bem-vindo, administrador!</h1>
 	</div>
 
-	<ol class="breadcrumb">
+	{{-- <ol class="breadcrumb">
 	 	 <li><a href="/">Home</a></li>
 	  	<li class="active"><a href="/administrador">Administrador</a></li>
 	  	<li class="active"><a href = "/administrador/listarProdutos">Listar Produtos</a></li>
 	  	<li class="active">Novo Produto</li>
-	</ol>
+	</ol> --}}
 
+	{!! Breadcrumbs::render('novoProduto') !!} 
 
 	<div class = "container">
 	<h1>Adicionar um novo Produto</h1>

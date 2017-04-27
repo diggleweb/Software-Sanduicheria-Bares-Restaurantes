@@ -147,6 +147,7 @@ return [
 		'App\Providers\RouteServiceProvider',
 		'Zizaco\Entrust\EntrustServiceProvider',
 		App\Providers\AgentServiceProvider::class,
+		DaveJamesMiller\Breadcrumbs\ServiceProvider::class,
 	],
 
 	/*
@@ -197,6 +198,7 @@ return [
 		'HTML'=> 'Illuminate\Html\HtmlFacade',
 		'Form'		=> 'Illuminate\Html\FormFacade',
 		'Entrust'   => 'Zizaco\Entrust\EntrustFacade',
+		'Breadcrumbs' => DaveJamesMiller\Breadcrumbs\Facade::class,
 
 	],
 
