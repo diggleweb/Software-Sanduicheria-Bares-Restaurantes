@@ -5,6 +5,9 @@ use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Http\Request;
 use Input;
+use DB;
+use App\Role;
+use App\Role_User;
 
 class UsersController extends Controller {
 
@@ -17,7 +20,18 @@ class UsersController extends Controller {
 	{
 		$usuarios = new User();
 		$usuarios = $usuarios->get();
-		return view('listar.usuarios')->with('usuarios', $usuarios);
+
+		$role_names = [];
+		
+		//para cada usuario encontrado
+		foreach($usuarios as $usuario) {
+			//na mesma posicao do array, devemos encontrar o nome do papel
+			$role_id = DB::table('role_user')->where('user_id', '=', $usuario->id)->first()->role_id;
+			$role_name = DB::table('roles')->where('id', '=', $role_id)->first()->display_name;
+			array_push($role_names, $role_name);
+		}
+		
+		return view('listar.usuarios')->with('usuarios', $usuarios)->with('role_names', $role_names);
 	}
 
 	/**
@@ -61,7 +75,16 @@ class UsersController extends Controller {
 	{
 		$usuario = new User();
 		$usuario = $usuario->find($id);
-		return view('editar.usuarios')->with('usuario', $usuario);		
+
+		//busca o ID do papel deste usuário
+		$role_user = DB::table('role_user')->select('role_id')->where('user_id', '=', $id)->first();
+		$role_id = $role_user->role_id;
+
+		//busca o nome do papel deste usu[ario
+		$role = DB::table('roles')->where('id', '=', $role_id)->first();
+		$role_name = $role->name;
+
+		return view('editar.usuarios')->with('usuario', $usuario)->with('roleName', $role_name);		
 	}
 
 	/**
@@ -70,19 +93,27 @@ class UsersController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
+	public function Update($id)
 	{
 		if (Input::has('login')) {	//verifica se os campos 'nome' e 'salario' foram preenchidos
 			$input = Input::all();	//busca os dados
 
-			//qual é o papel deste usuário no sistema? Nenhum, cozinha, atendente, administrador, garcom
-			$role = $input['role'];
-			
+			//nome do papel que este usuário possui no sistema
+			$role_name = $input['role']; 
+			//nome do login
+			$login = $input['login'];
+
+			$role_id = DB::table('roles')->where('name', '=', $role_name)->first()->id;
+
 			//cria um novo funcionario e preenche os dados
-			$usuario = new User();
+			$usuarios = new User();
+			//busca o ID do usuário
+			$usuario = $usuarios->where('login', '=', $login)->first();
+			$usuario_id = $usuario->id;
+
+			/* realiza o update */
+			DB::table('role_user')->where('user_id', '=', $usuario_id)->update(['role_id' => $role_id]);
 			
-			//salva
-			$usuario->save();
 			//redireciona
 			return Redirect()->to('/administrador/listarUsuarios');
 
@@ -97,9 +128,12 @@ class UsersController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function destroy($id)
+	public function destroy()
 	{
-		//
+		$id = Input::get('id');
+		$user = new User();
+		$user->destroy($id);
+		return Redirect()->back();
 	}
 
 }

@@ -37,17 +37,26 @@
 			</thead>
 
 			<tbody>
+				<?php
+					$i = 0;
+				?>
+
 				@foreach($usuarios as $usuario)
 				<tr>
 					<td style = "text-align: center">{{$usuario->id}}</td>
 					<td style = "text-align: center">{{$usuario->login}}</td>
-					{{-- <td style = "text-align: center">{{$usuario->login}}</td> --}}
+					<td style = "text-align: center">{{$role_names[$i]}}</td>
 
 					<td style = "text-align: center">
 						{!! link_to_route('editarUsuario', 'Editar Acesso', array('id' => $usuario->id), array('class' => 'btn btn-primary')) !!}
 						<button class = "btn btn-danger" id = "{{$usuario->id}}" name = "botaoExcluir" onclick = "excluirUsuario(this.id)">Excluir</button>
 					</td>
 				</tr>
+
+				<?php
+					$i++;
+				?>
+
 				@endforeach
 			</tbody>
 		</table>
@@ -87,22 +96,19 @@
 
 		function excluirUsuario(id) {
 			$("#myModal").modal('show');
-			idFuncionario = id;
+			idUsuario = id;
 		}	
 
-		// function confirmarSenha() {
-		// 	var senha = $("#password").val();
-
-		// 	if (senha == "123123") {
-
-		// 	if (senha == "senhaBoleira") {
-		// 		$.get( "/excluirGarcom", {"id": idFuncionario} , function( data ) {
-		// 		  location.reload(true);
-		// 		});	
-		// 	} else {
-		// 		$("#mensagem").text("Senha incorreta! Funcionário não excluído!");
-		// 	}
-		// }
+		function confirmarSenha() {
+			var senha = $("#password").val();
+			if (senha == "123123") {
+				$.get( "/excluirUsuario", {"id": idUsuario} , function( data ) {
+				  location.reload(true);
+				});	
+			} else {
+				$("#mensagem").text("Senha incorreta! Usuário não excluído!");
+			}
+		}
 	</script>
 
 @endsection

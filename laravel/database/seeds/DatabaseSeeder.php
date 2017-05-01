@@ -119,9 +119,13 @@ class UsersRolesTableSeeder extends Seeder {
     public function run() {
         DB::table('role_user')->delete();
         
-        $user = DB::table('users')->first();
-        $role = DB::table('roles')->where('name', '=', 'administrador')->first();
-        $user->attachRole($role);
+        DB::table('role_user')->insert([
+            'user_id' => 1,
+            'role_id' => 1
+        ]);
+        // $user = User::all()->first();
+        // $role = DB::table('roles')->where('name', '=', 'administrador')->first();
+        // $user->attachRole($role);
     }
 }
 
@@ -131,14 +135,11 @@ class MesasTableSeeder extends Seeder {
     public function run()
     {
         DB::table('mesas')->delete();
-
         //preenche as mesas (de 1 até 8)
         for ($i = 1 ; $i <= 8 ; $i++) {
         	Mesa::create(array('numero' => $i));
         }
-
     }
-
 }
 
 class ClientesTableSeeder extends Seeder {

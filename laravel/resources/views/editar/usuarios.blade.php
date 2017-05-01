@@ -28,11 +28,11 @@
 
 
 {!! Form::model($usuario, array('id' => 'formulario','route' => array('updateUsuario', $usuario->id), 'method' => 'PUT')) !!}
-	{!! Form::label('Nome: ') !!}
-	{!! Form::text('login', null, array('class' => 'form-control', 'style' => 'width: 500px', 'maxlength' => '200')) !!}
+	{!! Form::label('Login: ') !!}
+	{!! Form::text('login', null, array('class' => 'form-control', 'readonly'=>'readonly','style' => 'width: 500px', 'maxlength' => '200')) !!}
 	<br>
 	{!! Form::label('Tipo de acesso') !!}
-	{!! Form::select('role', ['nenhum' => 'Nenhum', 'cozinha' => 'Cozinha', 'garcom' => 'Garcom', 'atendente' => 'Atendente', 'administracao' => 'Administração'], 'nenhum' , ['class' => 'form-control', 'style' => 'width: 250px']) !!}
+	{!! Form::select('role', ['nenhum' => 'Nenhum', 'cozinha' => 'Cozinha', 'garcom' => 'Garçom', 'atendente' => 'Atendente', 'administrador' => 'Administração'], $roleName , ['class' => 'form-control', 'style' => 'width: 250px']) !!}
 
 	<a href = "/administrador/listarUsuarios" style= "margin-left: 300px; width: 100px" class = "btn btn-default">Cancelar</a>
 	{!! Form::submit('Salvar', array('class' => 'btn btn-primary', 'style' => 'margin-left: 30px; width: 100px')) !!}
