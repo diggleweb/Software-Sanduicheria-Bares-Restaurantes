@@ -27,34 +27,39 @@
 
 		<br>
 
-		{{-- Avisos --}}
-		<div class="alert alert-danger" role = "alert">
-			<?php 
-				$j = 0;
-			 	$arrayUsuariosSemAcesso = [];		//armazena os nomes dos usuários que não possuem acesso
-			 ?>
+		<?php 
+			$j = 0;
+		 	$arrayUsuariosSemAcesso = [];		//armazena os nomes dos usuários que não possuem acesso
+		 ?>
 
+		{{-- Verifica se pelo menos um usuário está sem acesso --}}
+		@foreach ($role_names as $roleName)
+			<?php
+				if ($roleName == "Nenhum") {
+					array_push($arrayUsuariosSemAcesso, $usuarios[$j]->login);
+				}
+				$j++;
+			?>
+		@endforeach
 
-			 Atenção: Os seguintes usuários não possuem nenhum tipo de acesso:
+		
 
-			@foreach ($role_names as $roleName)
-				<?php
-					if ($roleName == "Nenhum") {
-						array_push($arrayUsuariosSemAcesso, $usuarios[$j]->login);
-					}
-					$j++;
-				?>
-			@endforeach
+		@if(!empty($arrayUsuariosSemAcesso))
+			{{-- verifica se pelo menos algum usuário está sem acesso para que enviemos a mensagem. Caso contrário, nenhuma mensagem precisa ser exibida. --}}
 
-			<ul>
-				@foreach($arrayUsuariosSemAcesso as $login)
-					<li>{{$login}}</li>
-				@endforeach
-			</ul>
-			
-			<br>
-			Clique em "Editar Acesso" para lhe conceder um.
-		</div>
+			{{-- Avisos --}}
+			<div class="alert alert-danger" role = "alert">
+				Atenção: Os seguintes usuários não possuem nenhum tipo de acesso:
+				<ul>
+					@foreach($arrayUsuariosSemAcesso as $login)
+						<li>{{$login}}</li>
+					@endforeach
+				</ul>
+				<br>
+				
+				Clique em "Editar Acesso" para lhe conceder um.
+			</div>
+		@endif
 
 		<br>
 
