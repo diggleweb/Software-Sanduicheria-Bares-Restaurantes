@@ -25,11 +25,43 @@
 
 		<br>
 
-		<br><br>
+		<br>
+
+		{{-- Avisos --}}
+		<div class="alert alert-danger" role = "alert">
+			<?php 
+				$j = 0;
+			 	$arrayUsuariosSemAcesso = [];		//armazena os nomes dos usuários que não possuem acesso
+			 ?>
+
+
+			 Atenção: Os seguintes usuários não possuem nenhum tipo de acesso:
+
+			@foreach ($role_names as $roleName)
+				<?php
+					if ($roleName == "Nenhum") {
+						array_push($arrayUsuariosSemAcesso, $usuarios[$j]->login);
+					}
+					$j++;
+				?>
+			@endforeach
+
+			<ul>
+				@foreach($arrayUsuariosSemAcesso as $login)
+					<li>{{$login}}</li>
+				@endforeach
+			</ul>
+			
+			<br>
+			Clique em "Editar Acesso" para lhe conceder um.
+		</div>
+
+		<br>
 
 		<table class = "table">
 			<thead>
 				<tr>
+					<th style = "text-align: center"></th>
 					<th style = "text-align: center">id</th>
 					<th style = "text-align: center">Login</th>
 					<th style = "text-align: center">Tipo de acesso</th>
@@ -42,21 +74,21 @@
 				?>
 
 				@foreach($usuarios as $usuario)
-				<tr>
-					<td style = "text-align: center">{{$usuario->id}}</td>
-					<td style = "text-align: center">{{$usuario->login}}</td>
-					<td style = "text-align: center">{{$role_names[$i]}}</td>
+					<tr>
+						<td style = "text-align: center"><?=($role_names[$i] == "Nenhum") ? "*" : ""?></td> {{--verifica que algum dos usuários está sem nenhum tipo de acesso e avisa ao usuário --}}
+						<td style = "text-align: center">{{$usuario->id}}</td>
+						<td style = "text-align: center">{{$usuario->login}}</td>
+						<td style = "text-align: center">{{$role_names[$i]}}</td>
 
-					<td style = "text-align: center">
-						{!! link_to_route('editarUsuario', 'Editar Acesso', array('id' => $usuario->id), array('class' => 'btn btn-primary')) !!}
-						<button class = "btn btn-danger" id = "{{$usuario->id}}" name = "botaoExcluir" onclick = "excluirUsuario(this.id)">Excluir</button>
-					</td>
-				</tr>
+						<td style = "text-align: center">
+							{!! link_to_route('editarUsuario', 'Editar Acesso', array('id' => $usuario->id), array('class' => 'btn btn-primary')) !!}
+							<button class = "btn btn-danger" id = "{{$usuario->id}}" name = "botaoExcluir" onclick = "excluirUsuario(this.id)">Excluir</button>
+						</td>
+					</tr>
 
-				<?php
-					$i++;
-				?>
-
+					<?php
+						$i++;
+					?>
 				@endforeach
 			</tbody>
 		</table>

@@ -72,10 +72,11 @@
 
 
 	{{-- Lucro Total --}}
-		<div class = "opcoes" style = "background-color: #FF7800">
+		<div class = "opcoes reduzido2" style = "background-color: #FF7800">
 			<h2 class = "tituloDasOpcoes">Lucro Total</h2>
 			<br>
-			<p class = "valorOpcoes" style = "font-size: 40px">R$ {{$lucroTotal}}</p>
+			<p class = "valorOpcoes" style = "font-size: 40px; margin-top: 1px">R$ {{$lucroTotal}}</p>
+
 		</div>
 
 
@@ -100,13 +101,18 @@
 		<div class = "opcoes reduzido" onclick = "location.href = '/administrador/listarItens';"  style = "cursor: pointer; background-color: #33A08A">
 			<h2 class = "tituloOpcoesPequeno">Itens</h2>
 		</div>
-	</div>
 
-	{{-- Usuários --}}
-		<div class = "opcoes reduzido" onclick = "location.href = '/administrador/listarUsuarios';"  style = "cursor: pointer; background-color: #33A08A">
+		{{-- Usuários --}}
+		<div class = "opcoes reduzido" onclick = "location.href = '/administrador/listarUsuarios';"  style = "cursor: pointer; background-color: #CE8585">
 			<h2 class = "tituloOpcoesPequeno">Usuários</h2>
 		</div>
+
+
+
 	</div>
+
+	
+	
 
 	<script type="text/javascript">
 		$("[name='filtrarPor']").on('change', function() {
