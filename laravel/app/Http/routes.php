@@ -13,8 +13,8 @@ Route::post('auth/login', 'Auth\AuthController@postLogin');
 Route::get('auth/logout', 'Auth\AuthController@getLogout');
 
 // Registration routes...
-Route::get('auth/register', 'Auth\AuthController@getRegister');
-Route::post('auth/register', 'Auth\AuthController@postRegister');
+// Route::get('auth/register', 'Auth\AuthController@getRegister');
+// Route::post('auth/register', 'Auth\AuthController@postRegister');
 Route::get('/excluirUsuario/', ['as' => 'excluirUsuario', 'uses' => 'UsersController@destroy']);
 
 
@@ -55,6 +55,8 @@ Route::group(['prefix' => 'administrador'], function() {
 	Route::get('/listarUsuarios', ['as' => 'listarUsuarios', 'uses' => 'UsersController@index']);
 	Route::put('/listarUsuarios/updateUsuario{id}', ['as' => 'updateUsuario', 'uses' => 'UsersController@update']);
 	Route::get('/listarUsuarios/editarUsuario{id}', ['as' => 'editarUsuario', 'uses'=>'UsersController@edit']);
+	Route::get('/listarUsuarios/novoUsuario', ['as' => 'novoUsuario', 'uses'=>'UsersController@create']);
+	Route::post('/listarUsuarios/novoUsuario', ['as' => 'novoUsuarioPost', 'uses'=>'UsersController@store']);
 });
 
 

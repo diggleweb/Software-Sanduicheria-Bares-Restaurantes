@@ -8,6 +8,7 @@ use Input;
 use DB;
 use App\Role;
 use App\Role_User;
+use Redirect;
 
 class UsersController extends Controller {
 
@@ -41,7 +42,7 @@ class UsersController extends Controller {
 	 */
 	public function create()
 	{
-		//
+		return view('adicionar.usuarios');
 	}
 
 	/**
@@ -51,7 +52,30 @@ class UsersController extends Controller {
 	 */
 	public function store()
 	{
-		//
+		$input = Input::all();
+		$login = $input['login'];
+		$senha = $input['password'];
+		$confirmarSenha = $input['password_confirmation'];
+
+		if ($senha != $confirmarSenha)
+			return Redirect::back()->withErrors(['msg' => 'Senha e confirmar senha devem possuir os mesmos caracteres'])->withInput();
+		else {
+
+			//Insere o usuário no banco de dados
+			$user = new User();
+			$user->login = $login;
+			$user->password = bcrypt($senha);
+			//salva o usuário
+			$user->save();
+
+			//armazena o id do novo usuário adicionado
+			$user_id = DB::table('users')->where('login', '=', $login)->first()->id;
+			
+			//adiciona este novo usuário a um role ('nenhum')
+			DB::table('role_user')->insert(['user_id' => $user_id, 'role_id' => '1']);
+			
+			return Redirect::route('listarUsuarios');
+		}
 	}
 
 	/**

@@ -90,6 +90,11 @@ Breadcrumbs::register('editarUsuario', function($breadcrumbs)
     $breadcrumbs->push('Editar Usuário', route('editarUsuario'));
 });
 
+Breadcrumbs::register('novoUsuario', function($breadcrumbs)
+{
+    $breadcrumbs->parent('listarUsuarios');
+    $breadcrumbs->push('Novo Usuário', route('novoUsuario'));
+});
 
 
 

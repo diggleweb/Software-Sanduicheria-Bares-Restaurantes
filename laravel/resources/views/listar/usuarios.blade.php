@@ -20,13 +20,8 @@
  --}}
  	{!! Breadcrumbs::render('listarUsuarios') !!}
 
-	<div class = "container">
-		<h1>Lista de Usuários</h1>
-
-		<br>
-
-		<br>
-
+ 	<div class = "container">
+	
 		<?php 
 			$j = 0;
 		 	$arrayUsuariosSemAcesso = [];		//armazena os nomes dos usuários que não possuem acesso
@@ -43,7 +38,6 @@
 		@endforeach
 
 		
-
 		@if(!empty($arrayUsuariosSemAcesso))
 			{{-- verifica se pelo menos algum usuário está sem acesso para que enviemos a mensagem. Caso contrário, nenhuma mensagem precisa ser exibida. --}}
 
@@ -62,7 +56,16 @@
 		@endif
 
 		<br>
+		
+		<h1>Lista de Usuários</h1>
 
+		<br>
+
+		{{-- Novo --}}
+		<a href = "/administrador/listarUsuarios/novoUsuario" class = "btn btn-primary" style = "width: 200px;">Novo</a>
+
+		<br>
+		<br><br>
 		<table class = "table">
 			<thead>
 				<tr>

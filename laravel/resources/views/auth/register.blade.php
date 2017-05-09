@@ -9,7 +9,17 @@ Registrar novo usuário
     <h2>cadastre-se</h2>
     <br>
 
-    <form method="POST" action="/auth/register">
+    @if($errors->any())
+        <div class="row collapse">
+            <ul class="alert-box warning radius">
+                @foreach($errors->all() as $error)
+                    <li> {{ $error }} </li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+    <form action="/auth/register" method="POST">
         <input type="hidden" name="_token" value="{{ csrf_token() }}">
     
         <div>
@@ -24,19 +34,19 @@ Registrar novo usuário
         </div>
         
         <br>
-        
+      {{--   
         <div>
             Confirmar senha
             <input type="password" name="password_confirmation" class = "form-control">
-        </div>
+        </div> --}}
         
         <br>
 
-        <select>
+      {{--   <select>
             <option>Atendente</option>
             <option>Garçom</option>
             <option></option>
-        </select>
+        </select> --}}
 
         <div>
             <button type="submit" class = "btn btn-primary" class = "btn btn-primary btn-lg" style = "float: right">Registrar</button>
