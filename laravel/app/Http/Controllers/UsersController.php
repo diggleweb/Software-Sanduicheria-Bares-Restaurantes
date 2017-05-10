@@ -12,6 +12,9 @@ use Redirect;
 
 class UsersController extends Controller {
 
+
+
+
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -50,9 +53,17 @@ class UsersController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function store()
+	public function store(Request $request)
 	{
+
 		$input = Input::all();
+			
+		$this->validate($request, 
+			['login' => 'required|max:100',
+			'password' => 'required|max:100',
+			'password_confirmation' => 'required|max:100']
+		);
+
 		$login = $input['login'];
 		$senha = $input['password'];
 		$confirmarSenha = $input['password_confirmation'];
@@ -65,8 +76,13 @@ class UsersController extends Controller {
 			$user = new User();
 			$user->login = $login;
 			$user->password = bcrypt($senha);
-			//salva o usuário
-			$user->save();
+
+			try {
+				//salva o usuário
+				$user->save();
+			} catch (\Illuminate\Database\QueryException $e) {
+				return Redirect::back()->withErrors(['msg' => 'Este login já existe em nosso banco de dados. Por favor, cadastre outro.']);
+			}
 
 			//armazena o id do novo usuário adicionado
 			$user_id = DB::table('users')->where('login', '=', $login)->first()->id;

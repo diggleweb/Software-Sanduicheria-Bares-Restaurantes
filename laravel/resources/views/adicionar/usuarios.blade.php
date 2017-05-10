@@ -14,17 +14,19 @@ Registrar novo usuário
    
     
         @if($errors->any())
-            <div class="alert alert-danger">
-                <ul class="alert-box warning radius">
-                    <li>{{$errors->first('msg')}}</li>
-                </ul>
+            <div class="container">
+                <div class="alert alert-danger">
+                    <ul class="alert-box warning radius">
+                        <li>{{$errors->first()}}</li>
+                    </ul>
+                </div>
             </div>
         @endif    
 
 
     <div class="container" style = "width: 600px">
 
-    <br><br><br><br>
+    <br><br>
 
         {!! Form::open(array('route' => 'novoUsuarioPost', 'method' => 'POST')) !!}
         
