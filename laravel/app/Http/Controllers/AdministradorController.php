@@ -147,7 +147,7 @@ class AdministradorController extends Controller {
 				->with('lucroTotal', $lucroTotal)
 				->with('produtoMaisLucrativo', $produtoMaisLucrativo)
 				->with('urlMaisLucrativo', $urlMaisLucrativo)
-				->with('lucroProdutoMaisLucrativo', $maiorLucro)
+				->with('lucroProdutoMaisLucrativo', number_format($maiorLucro, 2))
 				->with('unidadesProdutoMaisVendido', $unidadesProdutoMaisVendido);
 	}
 // WHERE updated_at BETWEEN DATE_SUB(NOW(), INTERVAL 30 DAY) AND CURRENT_TIMESTAMP
