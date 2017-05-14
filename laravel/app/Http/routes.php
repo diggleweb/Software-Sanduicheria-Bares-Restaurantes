@@ -6,6 +6,7 @@ use App\ProdutosItens;
 use App\Produto;
 use App\Conta;
 use App\ContasProdutos;
+use App\Cliente;
 
 // Authentication routes...
 Route::get('auth/login', 'Auth\AuthController@getLogin');
@@ -19,6 +20,23 @@ Route::get('/excluirUsuario/', ['as' => 'excluirUsuario', 'uses' => 'UsersContro
 
 
 Route::get('/garcom', 'GarcomController@index');
+
+
+Route::get('/pesquisarCliente',  function() {
+	$input = Input::only('telefone');
+	$telefone = $input['telefone'];
+	
+	$cliente = new App\Cliente();
+	$cliente = $cliente->where('telefone', 'LIKE', $telefone)->first();
+
+	return $cliente;
+
+});
+
+Route::group(['prefix' => 'atendente'], function() {
+	Route::get('/', 'AtendenteController@index');
+});
+
 
 
 Route::get('/', ['as' => 'home', 'uses' => 'HomeController@index']);

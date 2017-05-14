@@ -107,7 +107,8 @@
 		<br><br>
 
 		{!! Form::label('Imagem: ') !!} <br>
-		<input type = "file" name = "urlImagem" accept="image/*"/>
+		
+		<input type = "file" name = "urlImagem" id = "abrirArquivo" accept="image/*"/>
 		<br><br>
 		<a href = "/administrador/listarProdutos" style = "margin-left: 300px; width: 100px" class = "btn btn-default">Cancelar</a>
 		{!! Form::submit('Salvar', array('class' => 'btn btn-primary', 'style' => 'margin-left: 30px; width: 100px')) !!}
