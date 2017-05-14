@@ -2,6 +2,8 @@
 $(document).ready(
 	function() {
 		$("#1").click();
+		$('#telefone').mask('(00) 00000-0000');
+		$('#novoTelefone').mask('(00) 00000-0000');
 	}
 );
 
@@ -14,10 +16,50 @@ $(document).keyup(function(e) {
 
 //caso o usuario aperte ENTER, adicionar todos os produtos selecionados
 $(document).keyup(function(e) {
-	if (e.keyCode == 13 || e.keyCode == 32)
+	if (e.keyCode == 13)
 		pesquisarCliente();
 });
 
+function abrirModalCadastrarClientes() {
+	//transmite o valor do telefone digitado na primeira tela para o modal
+	$("#novoTelefone").val($("#telefone").val());
+	//zera os demais campos
+	$("#novoNome").val("");
+	$("#novoCep").val("");
+	$("#novoEndereco").val("");
+	//foca o campo nome
+	$("#novoNome").focus();
+	//abre o modal
+	$("#modalNovoCliente").modal('toggle');
+}
+
+function cadastrarNovoCliente() {
+	var telefone = (document.forms[1].novoTelefone.value);
+	var nome = document.forms[1].novoNome.value;
+	var endereco = document.forms[1].novoEndereco.value;
+	var cep = document.forms[1].novoCep.value;
+
+	var json = {
+		'telefone': telefone,
+		'nome': nome,
+		'endereco': endereco,
+		'cep': cep
+	};
+
+	$.get('/cadastrarNovoCliente', json, function(id) {
+		//imprime msg ok ou erro ao cadastrar cliente
+		alert("Cadastrado com sucesso!");
+		
+		//seleciona o novo cliente cadastrado
+		$("#idCliente").val(id);
+		$("#endereco").val($("#novoEndereco").val());
+		$("#nome").val($("#novoNome").val());
+		$("#cep").val($("#novoCep").val());
+
+		//fecha o modal
+		$("#modalNovoCliente").modal('toggle');
+	});
+}
 
 function pesquisarCliente() {
 	var telefone = (document.forms[0].telefone.value);

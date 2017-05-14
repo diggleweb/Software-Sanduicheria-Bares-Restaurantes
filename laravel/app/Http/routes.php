@@ -33,6 +33,20 @@ Route::get('/pesquisarCliente',  function() {
 
 });
 
+Route::get('/cadastrarNovoCliente', function() {
+	$input = Input::only('telefone', 'cep', 'endereco', 'nome');
+
+	$cliente = new App\Cliente();
+	$cliente->telefone = $input['telefone'];
+	$cliente->nome = $input['nome'];
+	$cliente->endereco = $input['endereco'];
+	$cliente->cep = $input['cep'];
+	$affectedRows = $cliente->save();
+
+	$id = $cliente->id;
+	return $id;
+});
+
 Route::group(['prefix' => 'atendente'], function() {
 	Route::get('/', 'AtendenteController@index');
 });
