@@ -15,11 +15,39 @@ $(document).keyup(function(e) {
 });
 
 //caso o usuario aperte ENTER, adicionar todos os produtos selecionados
-$(document).keyup(function(e) {
-	if (e.keyCode == 13)
+$("#telefone").keypress(function(e) {
+	if (e.keyCode == 13) {
 		pesquisarCliente();
+	}
 });
 
+$("#txtFiltrar").keyup(function() {
+	filtrarCliente();
+});
+
+function filtrarCliente() {
+	var filtro = $("#txtFiltrar").val();
+	var filtrarPor = $("#selectFiltrar").find(':selected').val();
+	
+	var json = {
+		'filtro': filtro,
+		'filtrarPor': filtrarPor
+	};
+
+	$.get('/filtrarCliente', json, function(data) {
+		$("#bodyTabelaClientes").empty();
+		
+		data.forEach(function(item) {
+			$("#bodyTabelaClientes").append(
+				"<tr><td style = 'text-align: center'>" + item.nome 
+				+ "</td> <td style = 'text-align: center'> " + item.telefone 
+				+ "</td> <td style = 'text-align: center'> " + item.cep 
+				+ "</td> <td style = 'text-align: center'>" + item.endereco 
+				+ "</td> <td style = 'text-align: center'><button class = 'btn btn-success btnSelecionarCliente' onclick='selecionarCliente(\"" + encodeURIComponent(JSON.stringify(item)) + "\");'>Selecionar</button></tr>");
+		});
+
+	});
+}
 
 function abrirModalCadastrarClientes() {
 	//transmite o valor do telefone digitado na primeira tela para o modal

@@ -37,6 +37,17 @@ Route::get('/listarTodosClientes', function() {
 	return $cliente->all();
 });
 
+Route::get('/filtrarCliente', function() {
+	$input = Input::all();
+	$filtro = $input['filtro'];
+	$filtrarPor = $input['filtrarPor'];
+	
+	$cliente = new App\Cliente();
+	$clientes = $cliente->where($filtrarPor, "LIKE", "%" . $filtro . "%")->get();
+
+	return $clientes;
+});
+
 Route::get('/cadastrarNovoCliente', function() {
 	$input = Input::only('telefone', 'cep', 'endereco', 'nome');
 

@@ -442,6 +442,31 @@ pela view:
 	        <h4 class="modal-title" id="myModalLabel2">Listar Clientes</h4>
 	      </div>
 	      <div class="modal-body">
+
+	      <div class="form-inline">
+
+	      	  <div class="form-group">
+	      	    <label for = "selectFiltrar" style = "font-size: 18px">Filtrar por: </label>
+	      	    <select class = "form-control" style = "width: 300px" id = "selectFiltrar">
+			      	<option value = "telefone">Telefone</option>
+			      	<option value = "nome">Nome</option>
+			      	<option value = "cep">CEP</option>
+			      	<option value = "endereco">Endereço</option>
+		     	 </select>
+	      	  </div>
+
+	      	  &nbsp;&nbsp;&nbsp;
+
+	      	  <div class="form-group">
+	      	     <label for="txtFiltrar" style = "font-size: 18px">Filtro: </label>
+		      	<input type="text" class = "form-control" id="txtFiltrar" autofocus onchange="filtrarCliente()" style = "width: 300px">
+		      	{{-- <button type = "button" onclick="filtrarCliente()" class = "btn btn-primary" style = "width: 100px">Filtrar</button> --}}
+	      	  </div>
+		      	 
+	      </div>
+
+	      <br>
+
 	        <table class = "table table-bordered table-striped" id = "tabelaClientes">
 	        <thead>
 	            <tr>
