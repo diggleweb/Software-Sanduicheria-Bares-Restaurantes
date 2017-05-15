@@ -38,7 +38,7 @@ class GarcomController extends Controller {
 		$funcionarios = $funcionarios->where('ativo', '=', true)->get();
 
 		$itens = new Item();
-		$itens = $itens->orderBy('nome', 'asc')->get();
+		$itens = $itens->where('ativo', '=', '1')->orderBy('nome', 'asc')->get();
 
 		return view('garcom/home')->
 		with('sanduiches', $sanduiches)->

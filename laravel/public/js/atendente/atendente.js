@@ -20,6 +20,7 @@ $(document).keyup(function(e) {
 		pesquisarCliente();
 });
 
+
 function abrirModalCadastrarClientes() {
 	//transmite o valor do telefone digitado na primeira tela para o modal
 	$("#novoTelefone").val($("#telefone").val());
@@ -31,6 +32,37 @@ function abrirModalCadastrarClientes() {
 	$("#novoNome").focus();
 	//abre o modal
 	$("#modalNovoCliente").modal('toggle');
+}
+
+function abrirModalListarClientes() {
+	$("#modalListarClientes").modal('toggle');
+	//busca no banco de dados todos os clientes cadastrados com seus respectivos dados
+	$.get('/listarTodosClientes', '', function(data) {
+
+		//remove as linhas que já possuiam na tabela (para evitar duplicação ao clicar 2x)
+		$("#bodyTabelaClientes").empty();
+		//Para cada cliente, adicionar uma linha
+		data.forEach(function(item) {
+			$("#bodyTabelaClientes").append(
+				"<tr><td style = 'text-align: center'>" + item.nome 
+				+ "</td> <td style = 'text-align: center'> " + item.telefone 
+				+ "</td> <td style = 'text-align: center'> " + item.cep 
+				+ "</td> <td style = 'text-align: center'>" + item.endereco 
+				+ "</td> <td style = 'text-align: center'><button class = 'btn btn-success btnSelecionarCliente' onclick='selecionarCliente(\"" + encodeURIComponent(JSON.stringify(item)) + "\");'>Selecionar</button></tr>");
+		});
+	});
+}
+
+function selecionarCliente(item) {
+	var item = JSON.parse(decodeURIComponent(item));
+	
+	//seleciona o novo cliente cadastrado
+	$("#idCliente").val(item.id);
+	$("#telefone").val(item.telefone);
+	$("#endereco").val(item.endereco);
+	$("#nome").val(item.nome);
+	$("#cep").val(item.cep);
+	$("#modalListarClientes").modal('toggle');
 }
 
 function cadastrarNovoCliente() {

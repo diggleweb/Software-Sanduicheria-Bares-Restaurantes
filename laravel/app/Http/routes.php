@@ -30,7 +30,11 @@ Route::get('/pesquisarCliente',  function() {
 	$cliente = $cliente->where('telefone', 'LIKE', $telefone)->first();
 
 	return $cliente;
+});
 
+Route::get('/listarTodosClientes', function() {
+	$cliente = new App\Cliente();
+	return $cliente->all();
 });
 
 Route::get('/cadastrarNovoCliente', function() {

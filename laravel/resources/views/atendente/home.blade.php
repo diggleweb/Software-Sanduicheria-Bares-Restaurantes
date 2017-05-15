@@ -60,6 +60,7 @@ pela view:
 		}
 
 
+
 	</style>
 	<div class="container">
 		{{-- Mesas --}}
@@ -297,17 +298,21 @@ pela view:
 						{!! Form::label('telefone', 'Telefone: ', array('class' => 'control-label')) !!}
 						<div class="input-append">
 							{!! Form::text('telefone', '62', array('id'=>'telefone', 'class' => 'form-control', 'autofocus', 'style' => 'width: 250px', 'onkeypress' => 'return event.charCode >= 48 && event.charCode <= 57')) !!}
-							{!! Form::submit('Buscar', array('class' => 'btn btn-primary', 'style' => 'margin-top: 10px; margin-bottom: 10px', 'type'=>'button')) !!}
+							{!! Form::submit('Busca rápida', array('class' => 'btn btn-primary', 'style' => 'margin-top: 10px; margin-bottom: 10px', 'type'=>'button')) !!}
 
 							<button class = "btn btn-success" type = "button" onclick="abrirModalCadastrarClientes()">Cadastrar</button>
+							<button class = "btn" type = "button" onclick="abrirModalListarClientes()">Listar Todos</button>
 						</div>
-					
+						<br>
+
 						{!! Form::label('nome', 'Nome: ') !!}
 						{!! Form::text('nome', '', array('id'=>'nome', 'class' => 'form-control', 'style' => 'width: 1000px', 'readonly' => 'readonly')) !!}
-					
+						<br>
+
 						{!! Form::label('cep', 'CEP: ') !!}
 						{!! Form::text('cep', '', array('id'=>'cep', 'class' => 'form-control', 'style' => 'width: 300px', 'readonly' => 'readonly')) !!}
-					
+						<br>
+
 						{!! Form::label('endereco', 'Endereço: ') !!}
 						{!! Form::textarea('endereco', '', array('id'=>'endereco', 'class' => 'form-control', 'style' => 'width: 1000px', 'readonly' => 'readonly')) !!}
 
@@ -418,6 +423,38 @@ pela view:
 	        </thead>
 
 	        <tbody id = "bodyTabelaDetalhes">
+
+	        </tbody>
+	    </table>
+
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+	<!-- Modal (listar clientes) -->
+	<!-- Modal -->
+	<div class="modal fade" id="modalListarClientes" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
+	  <div class="modal-dialog" role="document" style = " width: 1600px; margin: auto; margin-top: 50px">
+	    <div class="modal-content" >
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title" id="myModalLabel2">Listar Clientes</h4>
+	      </div>
+	      <div class="modal-body">
+	        <table class = "table table-bordered table-striped" id = "tabelaClientes">
+	        <thead>
+	            <tr>
+	                <th width="30%">Nome</th>
+	                <th width="10%">Telefone</th>
+	                <th width="10%">CEP</th>
+	                <th width = "40%">Endereço</th>
+	                <th width = "10%">Ação</th>
+	            </tr>
+
+	        </thead>
+
+	        <tbody id = "bodyTabelaClientes">
 
 	        </tbody>
 	    </table>
