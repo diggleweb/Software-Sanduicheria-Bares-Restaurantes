@@ -27,9 +27,9 @@ Route::get('/pesquisarCliente',  function() {
 	$telefone = $input['telefone'];
 	
 	$cliente = new App\Cliente();
-	$cliente = $cliente->where('telefone', 'LIKE', $telefone)->first();
+	$clientes = $cliente->where('telefone', 'LIKE', $telefone)->get();
 
-	return $cliente;
+	return $clientes;
 });
 
 Route::get('/listarTodosClientes', function() {

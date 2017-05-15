@@ -121,6 +121,7 @@ function cadastrarNovoCliente() {
 	});
 }
 
+//pesquisa rapida
 function pesquisarCliente() {
 	var telefone = (document.forms[0].telefone.value);
 	
@@ -130,15 +131,23 @@ function pesquisarCliente() {
 
 	//faz a requisição get e preenche os valores
 	$.get('/pesquisarCliente', json , function(data) {
+		console.log(data.length);
+		console.log(data);
 		//verifica se o cliente já foi cadastrado ou não
-		if (typeof(data) != 'object') {
+		if (data.length == 0) {
 			alert('Cliente não cadastrado.');
-		} else {
+		} else if (data.length == 1) {	
+			data = data[0];
+			//caso só encontre um registro, preencher os dados e escolher o funcionário
+			$("#idCliente").val(data.id);
 			$("#endereco").val(data.endereco);
 			$("#nome").val(data.nome);
 			$("#cep").val(data.cep);
-		}
-		
+		} else {
+			abrirModalListarClientes();		//abre o modal
+			$("#txtFiltrar").val(telefone);	//insere o texto de filtro
+			filtrarCliente();				//força uma filtragem
+		}	
 	});
 
 }
