@@ -314,7 +314,7 @@ pela view:
 						<br>
 
 						{!! Form::label('endereco', 'Endereço: ') !!}
-						{!! Form::textarea('endereco', '', array('id'=>'endereco', 'class' => 'form-control', 'style' => 'width: 1000px', 'readonly' => 'readonly')) !!}
+						{!! Form::textarea('endereco', '', array('id'=>'endereco', 'class' => 'form-control', 'style' => 'width: 1000px; height: 100px', 'readonly' => 'readonly')) !!}
 
 						<br>
 
