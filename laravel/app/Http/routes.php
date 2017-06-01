@@ -32,10 +32,6 @@ Route::get('/pesquisarCliente',  function() {
 	return $clientes;
 });
 
-Route::get('/listarTodosClientes', function() {
-	$cliente = new App\Cliente();
-	return $cliente->all();
-});
 
 Route::get('/filtrarCliente', function() {
 	$input = Input::all();
@@ -116,6 +112,7 @@ Route::get('/addPedidoComItens', function() {
 	$idConta = $input['idConta'];
 	$produtosAlterados = $input['produtosAlterados'];	//produtos para o qual foram adicionados itens, portanto seu valor final sera alterado
 	$produtosNaoAlterados = $input['produtos'];	
+	//$idCliente = $input['idCliente'];
 
 												//obs: isso eh um array de obj, contendo o id do produto e o preco final
 
@@ -164,6 +161,7 @@ Route::get('/addPedidoComItens', function() {
 
 	atualizarProdutosDoGarcom($idConta, $contadorProdutos);
 });
+
 
 
 //recebe uma requisição ajax da view do garçom e adiciona novos produtos na conta, baseado nos IDs dos ítens
@@ -339,6 +337,22 @@ Route::get('/criarNovaConta', function() {
 		$contaDesejada = $contas->where('mesa_numero', '=', $numeroMesa)->where('encerrada', '=', '0')->first();
 
 		return 0;
+});
+
+
+Route::get('/criarNovaContaAtendente', function() {
+	
+		$input = Input::only('idFuncionario');
+		$idFuncionario = $input['idFuncionario'];
+
+		//cria uma nova conta, seta os dados
+		$novaConta = new App\Conta();
+		$novaConta['valor'] = 0;
+		$novaConta['encerrada'] = false;
+		$novaConta['funcionario_id'] = $idFuncionario;
+		$novaConta->save();	//salva no banco
+		//busca novamente o id
+		return $novaConta;
 });
 
 

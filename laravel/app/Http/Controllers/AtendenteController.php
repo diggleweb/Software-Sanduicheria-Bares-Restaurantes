@@ -8,6 +8,7 @@ use App\Produto;
 use App\ProdutosItens;
 use App\Funcionario;
 use App\Item;
+use App\Cliente;
 use DB;
 
 
@@ -41,6 +42,8 @@ class AtendenteController extends Controller {
 		$itens = new Item();
 		$itens = $itens->where('ativo', '=', '1')->orderBy('nome', 'asc')->get();
 
+	
+
 		return view('atendente/home')->
 		with('sanduiches', $sanduiches)->
 		with('porcoes', $porcoes)->
@@ -48,10 +51,13 @@ class AtendenteController extends Controller {
 		with('bebidas', $bebidas)->
 		with('itens', $itens)->
 		with('pratos', $pratos);
+
+
 	}
 
-	public function pesquisarCliente() {
+	public function listarClientes() {
 		
+
 	}
 
 	/**

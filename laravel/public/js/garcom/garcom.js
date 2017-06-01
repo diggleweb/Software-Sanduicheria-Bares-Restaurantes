@@ -224,6 +224,7 @@ var produtos = [];		//array que armazenará os ids dos produtos
 var idConta = null;	//variável que armazenará o número da conta relacionado ao número da mesa
 var nomeFuncionario = null;	
 var arrayProdutosAlterados = [];		//variável que contém objetos de produtos que tiveram seus itens modificados
+var idCliente = null;
 
 	//função auxiliar que irá apagar as bordas de todos os números (para o usuário selecionar apenas
 	//uma mesa)
@@ -456,6 +457,7 @@ var arrayProdutosAlterados = [];		//variável que contém objetos de produtos qu
 					var json = {
 						"idConta": idConta,
 						"produtos": produtos,
+						"idCliente": idCliente,
 						"produtosAlterados": arrayProdutosAlterados
 					};
 
@@ -470,6 +472,7 @@ var arrayProdutosAlterados = [];		//variável que contém objetos de produtos qu
 					//criar um objeto json com o id da conta e os ids dos produtos 
 					var json = {
 						"idConta": idConta,
+						"idCliente": idCliente,
 						"produtos": produtos 
 					};
 

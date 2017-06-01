@@ -4,6 +4,8 @@ $(document).ready(
 		$("#1").click();
 		$('#telefone').mask('(00) 00000-0000');
 		$('#novoTelefone').mask('(00) 00000-0000');
+		
+
 	}
 );
 
@@ -21,32 +23,40 @@ $("#telefone").keypress(function(e) {
 	}
 });
 
-$("#txtFiltrar").keyup(function() {
-	filtrarCliente();
+$("#txtFiltrar").keypress(function(e) {
+	if (e.keyCode == 13) {
+		filtrarCliente();
+	}
 });
+
+
 
 function filtrarCliente() {
 	var filtro = $("#txtFiltrar").val();
 	var filtrarPor = $("#selectFiltrar").find(':selected').val();
-	
-	var json = {
-		'filtro': filtro,
-		'filtrarPor': filtrarPor
-	};
 
-	$.get('/filtrarCliente', json, function(data) {
-		$("#bodyTabelaClientes").empty();
-		
-		data.forEach(function(item) {
-			$("#bodyTabelaClientes").append(
-				"<tr><td style = 'text-align: center'>" + item.nome 
-				+ "</td> <td style = 'text-align: center'> " + item.telefone 
-				+ "</td> <td style = 'text-align: center'> " + item.cep 
-				+ "</td> <td style = 'text-align: center'>" + item.endereco 
-				+ "</td> <td style = 'text-align: center'><button class = 'btn btn-success btnSelecionarCliente' onclick='selecionarCliente(\"" + encodeURIComponent(JSON.stringify(item)) + "\");'>Selecionar</button></tr>");
+	if (filtro != "") {
+		var json = {
+			'filtro': filtro,
+			'filtrarPor': filtrarPor
+		};
+
+		$.get('/filtrarCliente', json, function(data) {
+			$("#bodyTabelaClientes").empty();
+			
+			data.forEach(function(item) {
+				$("#bodyTabelaClientes").append(
+					"<tr><td style = 'text-align: center'>" + item.nome 
+					+ "</td> <td style = 'text-align: center'> " + item.telefone 
+					+ "</td> <td style = 'text-align: center'> " + item.cep 
+					+ "</td> <td style = 'text-align: center'>" + item.endereco 
+					+ "</td> <td style = 'text-align: center'><button class = 'btn btn-success btnSelecionarCliente' onclick='selecionarCliente(\"" + encodeURIComponent(JSON.stringify(item)) + "\");'>Selecionar</button></tr>");
+			});
+
 		});
-
-	});
+	} else {
+		$("#bodyTabelaClientes").empty();
+	}
 }
 
 function abrirModalCadastrarClientes() {
@@ -64,21 +74,23 @@ function abrirModalCadastrarClientes() {
 
 function abrirModalListarClientes() {
 	$("#modalListarClientes").modal('toggle');
+	//$("#txtFiltrar").val('(62)');
 	//busca no banco de dados todos os clientes cadastrados com seus respectivos dados
-	$.get('/listarTodosClientes', '', function(data) {
+	// $.get('/listarTodosClientes', '', function(data) {
 
-		//remove as linhas que já possuiam na tabela (para evitar duplicação ao clicar 2x)
-		$("#bodyTabelaClientes").empty();
-		//Para cada cliente, adicionar uma linha
-		data.forEach(function(item) {
-			$("#bodyTabelaClientes").append(
-				"<tr><td style = 'text-align: center'>" + item.nome 
-				+ "</td> <td style = 'text-align: center'> " + item.telefone 
-				+ "</td> <td style = 'text-align: center'> " + item.cep 
-				+ "</td> <td style = 'text-align: center'>" + item.endereco 
-				+ "</td> <td style = 'text-align: center'><button class = 'btn btn-success btnSelecionarCliente' onclick='selecionarCliente(\"" + encodeURIComponent(JSON.stringify(item)) + "\");'>Selecionar</button></tr>");
-		});
-	});
+	// 	//remove as linhas que já possuiam na tabela (para evitar duplicação ao clicar 2x)
+	// 	$("#bodyTabelaClientes").empty();
+	// 	//Para cada cliente, adicionar uma linha
+	// 	data.forEach(function(item) {
+	// 		$("#bodyTabelaClientes").append(
+	// 			"<tr><td style = 'text-align: center'>" + item.nome 
+	// 			+ "</td> <td style = 'text-align: center'> " + item.telefone 
+	// 			+ "</td> <td style = 'text-align: center'> " + item.cep 
+	// 			+ "</td> <td style = 'text-align: center'>" + item.endereco 
+	// 			+ "</td> <td style = 'text-align: center'><button class = 'btn btn-success btnSelecionarCliente' onclick='selecionarCliente(\"" + encodeURIComponent(JSON.stringify(item)) + "\");'>Selecionar</button></tr>");
+	// 	});
+
+	// });
 }
 
 function selecionarCliente(item) {
@@ -356,6 +368,7 @@ var numeroMesa = null;	//variável que armazenará a mesa selecionada (para adic
 var produtos = [];		//array que armazenará os ids dos produtos 
 var idConta = null;	//variável que armazenará o número da conta relacionado ao número da mesa
 var nomeFuncionario = null;	
+var idCliente = null;
 var arrayProdutosAlterados = [];		//variável que contém objetos de produtos que tiveram seus itens modificados
 
 	//função auxiliar que irá apagar as bordas de todos os números (para o usuário selecionar apenas
@@ -458,67 +471,6 @@ var arrayProdutosAlterados = [];		//variável que contém objetos de produtos qu
 		
 	}
 
-	/* Assim que clicar em um número, alterar a sua borda para demonstrar que este número foi selecionado
-	Assim que clicar em um número já selecionado, alterar novamente a sua borda .
-	Também atribui à variável 'numeroMesa' o número dessa mesa */
-	$(".numeros").click(
-		function() {
-			
-			apagarBordasNumeros();
-			$(this).css("border", "3px solid red");
-
-			//busca o número
-			var id = $(this).attr("id");
-			//preenche a variável global 'número' com o id do número da mesa desejado
-			numeroMesa = id;		
-
-			var json = {
-				'numeroMesa': numeroMesa
-			};
-
-			//buscar o id da conta relacionada a este número de mesa
-			$.get('/buscarContaRelacionada', json, function(data) {
-
-				//se a mesa não tiver contas relacionadas, 
-				if (data == -1) {
-					$("#dadosDaConta").hide();	//esconder a tabela 
-					$("#botoesGarcons").show();	//opção de abrir uma nova conta
-					idConta = null;
-
-				} else {	//se a mesa tiver contas relacionadas
-					idConta = data.trim();
-
-					$("#dadosDaConta").show();	//mostra a tabela 
-					$("#botoesGarcons").hide();		//esconder opção de abrir uma nova conta
-					//armazena em um campo oculto o id da conta na mesa
-					$("#idConta").val(data.trim());
-					
-					var json = {
-						'idConta': data.trim()
-					};
-
-					//busca os produtos relacionados à conta
-					$.get('/buscarProdutos', json, function(data) {
-						atualizarTabela(data);
-					});
-
-					$.get('/buscarProdutosComDetalhes', json, function(data) {
-						atualizarTabelaComDetalhes(data);
-					});
-
-					//busca o nome do funcionário responsável pela conta
-					$.get('/buscaFuncionario', json, function(data) {
-						nomeFuncionario = data[0]['nome'];
-						//adiciona ao título o nome do funcionário
-						$("#tituloConta").text("Conta Aberta (Funcionário: " + nomeFuncionario + ")");
-					});
-				
-				}
-				
-			});
-		}
-	);
-
 
 	//adicionado em: 03/03/2016
 	//irá encerrar uma determinada conta. Busca o ID da conta na div oculta 'idConta'
@@ -544,8 +496,6 @@ var arrayProdutosAlterados = [];		//variável que contém objetos de produtos qu
 	});
 
 	var contadorProdutosSelecionados = 0;
-
-
 
 	//ao clicar em 'detalhes', e após decidir a quantidade de cada produto, o usuário clica em adicionar
 	function adicionarItensAoPedido(obj) {
@@ -587,7 +537,7 @@ var arrayProdutosAlterados = [];		//variável que contém objetos de produtos qu
 				//verifica se foi adicionado algum item a algum produto. Em caso positivo, devemos alterar o valor do preço do item
 				if (arrayProdutosAlterados.length != 0) {
 					var json = {
-						"idConta": idConta,
+						"idCliente": idCliente,
 						"produtos": produtos,
 						"produtosAlterados": arrayProdutosAlterados
 					};
@@ -602,7 +552,7 @@ var arrayProdutosAlterados = [];		//variável que contém objetos de produtos qu
 				} else {
 					//criar um objeto json com o id da conta e os ids dos produtos 
 					var json = {
-						"idConta": idConta,
+						"idCliente": idCliente,
 						"produtos": produtos 
 					};
 
@@ -614,8 +564,6 @@ var arrayProdutosAlterados = [];		//variável que contém objetos de produtos qu
 						desselecionarProdutos();
 					});	
 				}
-
-				
 
 			}
 	}
@@ -645,28 +593,9 @@ var arrayProdutosAlterados = [];		//variável que contém objetos de produtos qu
 	}
 
 
-
-	//ao clicar no nome de um garçom, para adicionar uma nova conta à mesa
-	$('[name="adicionarConta"]').click(
-		function() {
-			var idFuncionario = $(this).attr("id");		//busca o id do funcionario
-
-			var json = {
-				"idFuncionario": idFuncionario,
-				"numeroMesa": numeroMesa
-			};
-			
-			//faz uma requisição para a rota criar uma nova conta relacionada a este funcionário
-			$.get('/criarNovaConta', json, function(data) {
-				$("#" + numeroMesa).click();
-			});
-
-		}
-	);
-
 	//abre o modal de detalhes de uma determinada conta
 	function abrirDetalhes() {
-		//$("#myModal").modal('show');
+		$("#myModal").modal('show');
 	}
 
 	//abre o modal relacionado aos detalhes do pedido
@@ -704,25 +633,6 @@ var arrayProdutosAlterados = [];		//variável que contém objetos de produtos qu
 			$.each(data, function(e, objItem) {
 				var itemId = objItem['item_id'];
 				
-				//e = object referente ao item atual
-				//idItem = id referente ao item atual
-				//cada um desses números aqui são ids dos itens que compõem o sanduíche
-				// $("[name='checkboxItens']").each(
-				// 	function(idCheckbox) {
-				// 		// console.log(e + " . " + $(this).val());
-				// 		//habilita todos os botões +
-				// 		$(this).parents().eq(1).next().find('.btn-success').eq(0).attr('disabled', false);
-				// 		//verifica se o ID do checkbox atual é igual ao id do item que estamos percorrendo
-				// 		if (itemId == $(this).val()) {
-				// 			$(this).parents().eq(1).next().find(".input-number").val(1);
-				// 			//checkbox marcado
-				// 			$(this).prop('checked', 'checked');
-				// 			//desabilita os botões - daqueles que tem zero itens
-				// 			$(this).parents().eq(1).next().find(".btn-number").eq(0).attr('disabled', false);
-				// 		}
-				// 	}				
-				// );		
-
 				$("[name='ok']").each(
 					function() {
 						var id = $(this).attr('data-id');
@@ -738,12 +648,6 @@ var arrayProdutosAlterados = [];		//variável que contém objetos de produtos qu
 
 			});
 		});
-
-
-		//precisamos sempre voltar para '1' o número de itens
-		// $.each(modal.find('.input-number'), function(index, value) {
-		// 	$(this).val(1);
-		// });
 
 		//abre o modal
 		modal.modal('toggle');
