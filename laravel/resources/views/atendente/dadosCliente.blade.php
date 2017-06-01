@@ -1,7 +1,6 @@
 <div class="row">
 	<h1>Dados do cliente</h1>
 	
-	
 	<form action = "javascript:pesquisarCliente()">
 
 		<div class="control-group">
@@ -32,7 +31,5 @@
 		<br>
 
 		</div>
-
 	</form>
-
 </div>

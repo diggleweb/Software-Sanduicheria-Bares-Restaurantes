@@ -233,9 +233,6 @@ var idCliente = null;
 	}
 
 	
-
-
-	
 //utilizada em .numeros.click
 	function atualizarTabela(data) { //data = vetor que vem do banco de dados, com todos os produtos relacionados a esta conta
 		var totalConta = 0;	//contador para verificar quanto é o total da conta
@@ -414,7 +411,6 @@ var idCliente = null;
 	var contadorProdutosSelecionados = 0;
 
 
-
 	//ao clicar em 'detalhes', e após decidir a quantidade de cada produto, o usuário clica em adicionar
 	function adicionarItensAoPedido(obj) {
 		//o que a função deve fazer?
@@ -484,9 +480,6 @@ var idCliente = null;
 						desselecionarProdutos();
 					});	
 				}
-
-				
-
 			}
 	}
 
@@ -574,25 +567,6 @@ var idCliente = null;
 			$.each(data, function(e, objItem) {
 				var itemId = objItem['item_id'];
 				
-				//e = object referente ao item atual
-				//idItem = id referente ao item atual
-				//cada um desses números aqui são ids dos itens que compõem o sanduíche
-				// $("[name='checkboxItens']").each(
-				// 	function(idCheckbox) {
-				// 		// console.log(e + " . " + $(this).val());
-				// 		//habilita todos os botões +
-				// 		$(this).parents().eq(1).next().find('.btn-success').eq(0).attr('disabled', false);
-				// 		//verifica se o ID do checkbox atual é igual ao id do item que estamos percorrendo
-				// 		if (itemId == $(this).val()) {
-				// 			$(this).parents().eq(1).next().find(".input-number").val(1);
-				// 			//checkbox marcado
-				// 			$(this).prop('checked', 'checked');
-				// 			//desabilita os botões - daqueles que tem zero itens
-				// 			$(this).parents().eq(1).next().find(".btn-number").eq(0).attr('disabled', false);
-				// 		}
-				// 	}				
-				// );		
-
 				$("[name='ok']").each(
 					function() {
 						var id = $(this).attr('data-id');
@@ -609,11 +583,6 @@ var idCliente = null;
 			});
 		});
 
-
-		//precisamos sempre voltar para '1' o número de itens
-		// $.each(modal.find('.input-number'), function(index, value) {
-		// 	$(this).val(1);
-		// });
 
 		//abre o modal
 		modal.modal('toggle');

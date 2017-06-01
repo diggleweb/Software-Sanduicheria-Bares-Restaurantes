@@ -1,0 +1,30 @@
+.numeros {
+	float: left;
+	margin-left: 20px;
+	margin-top: 10px;
+	width: 40px;
+	height: 40px;
+}
+
+.divCadaItem {
+	width: 80px;
+	height: 130px;
+	margin-bottom: 30px;
+}
+
+.imagemItem {
+	width: 70px;
+	height: 45px;
+}
+
+[name="btnAbrirDetalhes"] {
+	width: 80px;
+	font-size: 15px;
+}
+
+.container {
+	padding-right: 15px;
+	padding-left: 15px;
+	margin-right: 20px;
+	margin-left: 20px;
+}

@@ -24,43 +24,33 @@ pela view:
 
 @section('corpo')
 
-	<style type="text/css">
-		tr th {
-			text-align: center;
-		}
+	<link rel="stylesheet" type="text/css" href="css/atendente.css">
 
-		tbody {
-			font-family: Tahoma, Geneva, sans-serif;
-			font-weight: bold;
-		}
-	</style>
+	<div class = "row">
+	<!-- Ítens -->		
+		<div class="col-md-7" id = "div1">
+			@include('componentes.itens')
+		</div>
 
-
-		<div class = "row">
-		<!-- Ítens -->		
-			<div class="col-md-7" id = "div1">
-				@include('atendente.itens')
+		
+		<div class="col-md-5" id = "div2">
+			@include('atendente.dadosCliente')
 		
 
-			
-			<div class="col-md-5" id = "div2">
-				@include('atendente.dadosCliente')
-
-
-			<!-- TABELA  -->
-				<div class="row" id = "dadosDaConta">
-					@include('atendente.tabela')
-				</div>
-			<!-- FIM DA TABELA -->	
-
+		<!-- TABELA  -->
+		<div class="row" id = "dadosDaConta">
+			@include('atendente.tabela')
 		</div>
-	
+		<!-- FIM DA TABELA -->	
+
+	</div>
+
 
 	@include('componentes.modalDetalhesContas')
 
 	@include('atendente.modalListarClientes')
 
-	@include('atendente.modalDetalhesPedidos')
+	@include('componentes.modalDetalhesPedidos')
 
 	@include('atendente.modalNovoCliente')
 

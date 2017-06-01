@@ -40,7 +40,7 @@
 					<h5 class = "nomeItem">{{$porcao->nome}}</h5>
 					<h4 style = "color: red; text-align: center">R$ {{number_format($porcao->precoVenda, 2, ".", "")}}</h4>
 					{{-- <button name="btnAbrirDetalhes" onclick = "abrirModalDetalhes({{$porcao->id}})" data-toggle = "modal" data-target = "#modalDetalhesPedido" class = "btn btn-primary">Detalhes</button> --}}
-					<button name="btnAbrirDetalhes" data-toggle = "modal" data-target = "#modalDetalhesPedido" class = "btn btn-primary">Detalhes</button>
+					{{-- <button name="btnAbrirDetalhes" data-toggle = "modal" data-target = "#modalDetalhesPedido" class = "btn btn-primary">Detalhes</button> --}}
 				</div>
 			@endforeach
 		</div>
@@ -54,9 +54,8 @@
 					<img src="{{$prato->urlImagem}}" class = "imagemItem">
 					<h5 class = "nomeItem">{{$prato->nome}}</h5>
 					<h4 style = "color: red; text-align: center">R$ {{number_format($prato->precoVenda, 2, ".", "")}}</h4>
-					<button name = "btnAbrirDetalhes" data-toggle = "modal" data-target = "#modalDetalhesPedido" class = "btn btn-primary">Detalhes</button>
+					{{-- <button name = "btnAbrirDetalhes" data-toggle = "modal" data-target = "#modalDetalhesPedido" class = "btn btn-primary">Detalhes</button> --}}
 				</div>
 			@endforeach
 		</div>
 	<hr>
-</div>
