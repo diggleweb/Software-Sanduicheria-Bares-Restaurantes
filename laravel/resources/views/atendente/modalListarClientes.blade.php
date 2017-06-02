@@ -27,7 +27,7 @@
 	      	     <label for="txtFiltrar" style = "font-size: 18px" value="">Filtro: </label>
 		      	{{-- <input type="text" class = "form-control" id="txtFiltrar" autofocus onchange="filtrarCliente()" style = "width: 300px" value = "(62"> --}}
 		      	{!! Form::text('filtrartel', '', array('id'=>'txtFiltrar', 'class' => 'form-control', 'autofocus', 'style' => 'width: 300px')) !!}
-		      	<button type = "button" onclick="filtrarCliente()" class = "btn btn-primary" style = "width: 100px">Filtrar</button>
+		      	<button type = "button" id="btnFiltrarCliente" onclick="filtrarCliente()" class = "btn btn-primary" style = "width: 100px">Filtrar</button>
 	      	  </div>
 		      	 
 	      </div>

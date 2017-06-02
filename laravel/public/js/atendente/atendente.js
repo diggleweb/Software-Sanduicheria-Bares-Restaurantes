@@ -52,7 +52,7 @@ function filtrarCliente() {
 					+ "</td> <td style = 'text-align: center'>" + item.endereco 
 					+ "</td> <td style = 'text-align: center'>"
 					+"<button class = 'btn btn-default glyphicon glyphicon-edit' style = 'width: 50px; display: inline-block'></button>"
-					+"&nbsp;&nbsp;<button class = 'btn btn-danger glyphicon glyphicon-trash' style = 'width: 50px; display: inline-block'></button></td>"
+					+"&nbsp;&nbsp;<button class = 'btn btn-danger glyphicon glyphicon-trash' onclick='excluirCliente("+item.id+");' style = 'width: 50px; display: inline-block'></button></td>"
 					+ "<td style = 'text-align: center'><button class = 'btn btn-success btnSelecionarCliente' style = 'display: inline-block' onclick='selecionarCliente(\"" + encodeURIComponent(JSON.stringify(item)) + "\");'>Selecionar</button></td></tr>");
 			});
 
@@ -60,6 +60,19 @@ function filtrarCliente() {
 	} else {
 		$("#bodyTabelaClientes").empty();
 	}
+}
+
+function excluirCliente(id) {
+
+	if (confirm("Deseja realmente excluir este registro?")) {
+		var json = {"idCliente": id};
+
+		$.get('/excluirCliente', json, function(data) {
+			//refresh na tabela
+			alert("Registro excluído com sucesso!");
+			$("#btnFiltrarCliente").click();
+		});
+	} 
 }
 
 function abrirModalCadastrarClientes() {
@@ -129,8 +142,7 @@ function pesquisarCliente() {
 
 	//faz a requisição get e preenche os valores
 	$.get('/pesquisarCliente', json , function(data) {
-		console.log(data.length);
-		console.log(data);
+		
 		//verifica se o cliente já foi cadastrado ou não
 		if (data.length == 0) {
 			alert('Cliente não cadastrado.');

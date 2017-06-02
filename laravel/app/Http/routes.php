@@ -32,6 +32,13 @@ Route::get('/pesquisarCliente',  function() {
 	return $clientes;
 });
 
+Route::get('/excluirCliente', function() {
+	$input = Input::all();
+	$id = $input['idCliente'];
+	
+	$cliente = new App\Cliente();
+	$cliente->where('id', '=', $id)->first()->delete();
+});
 
 Route::get('/filtrarCliente', function() {
 	$input = Input::all();

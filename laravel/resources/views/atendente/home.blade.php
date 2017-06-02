@@ -54,6 +54,7 @@ pela view:
 
 	@include('atendente.modalNovoCliente')
 
+	@include('atendente.modalExcluirCliente')
 
 	
 	<script src = "{{ asset('js/atendente/atendente.js') }}" type="text/javascript"></script>

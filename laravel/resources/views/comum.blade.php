@@ -23,7 +23,7 @@
 
 	@yield('corpo')
 	
-
+	<script src="{{ asset('js/geral.js') }}"></script>
 	<script src="{{ asset('js/jquery-ui-1.12.0.custom/jquery-ui.min.js') }}"></script>
 	<script src = "{{ asset('js/maskmoney/maskmoney.min.js') }}"></script>
 	<script src = "{{ asset('js/bootstrap/bootstrap.min.js') }}"></script>
