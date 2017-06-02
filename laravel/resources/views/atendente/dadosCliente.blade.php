@@ -12,8 +12,8 @@
 			{!! Form::text('telefone', '62', array('id'=>'telefone', 'class' => 'form-control', 'autofocus', 'style' => 'width: 250px', 'onkeypress' => 'return event.charCode >= 48 && event.charCode <= 57')) !!}
 			{!! Form::submit('Busca rápida', array('class' => 'btn btn-primary', 'style' => 'margin-top: 10px; margin-bottom: 10px', 'type'=>'button')) !!}
 
-			<button class = "btn btn-success" type = "button" onclick="abrirModalCadastrarClientes()">Cadastrar</button>
 			<button class = "btn" type = "button" onclick="abrirModalListarClientes()">Listar Todos</button>
+			<button class = "btn btn-success" type = "button" onclick="abrirModalCadastrarClientes()">Novo Cliente</button>
 		</div>
 		<br>
 

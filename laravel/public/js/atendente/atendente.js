@@ -50,7 +50,10 @@ function filtrarCliente() {
 					+ "</td> <td style = 'text-align: center'> " + item.telefone 
 					+ "</td> <td style = 'text-align: center'> " + item.cep 
 					+ "</td> <td style = 'text-align: center'>" + item.endereco 
-					+ "</td> <td style = 'text-align: center'><button class = 'btn btn-success btnSelecionarCliente' onclick='selecionarCliente(\"" + encodeURIComponent(JSON.stringify(item)) + "\");'>Selecionar</button></tr>");
+					+ "</td> <td style = 'text-align: center'>"
+					+"<button class = 'btn btn-default glyphicon glyphicon-edit' style = 'width: 50px; display: inline-block'></button>"
+					+"&nbsp;&nbsp;<button class = 'btn btn-danger glyphicon glyphicon-trash' style = 'width: 50px; display: inline-block'></button></td>"
+					+ "<td style = 'text-align: center'><button class = 'btn btn-success btnSelecionarCliente' style = 'display: inline-block' onclick='selecionarCliente(\"" + encodeURIComponent(JSON.stringify(item)) + "\");'>Selecionar</button></td></tr>");
 			});
 
 		});
@@ -74,23 +77,6 @@ function abrirModalCadastrarClientes() {
 
 function abrirModalListarClientes() {
 	$("#modalListarClientes").modal('toggle');
-	//$("#txtFiltrar").val('(62)');
-	//busca no banco de dados todos os clientes cadastrados com seus respectivos dados
-	// $.get('/listarTodosClientes', '', function(data) {
-
-	// 	//remove as linhas que já possuiam na tabela (para evitar duplicação ao clicar 2x)
-	// 	$("#bodyTabelaClientes").empty();
-	// 	//Para cada cliente, adicionar uma linha
-	// 	data.forEach(function(item) {
-	// 		$("#bodyTabelaClientes").append(
-	// 			"<tr><td style = 'text-align: center'>" + item.nome 
-	// 			+ "</td> <td style = 'text-align: center'> " + item.telefone 
-	// 			+ "</td> <td style = 'text-align: center'> " + item.cep 
-	// 			+ "</td> <td style = 'text-align: center'>" + item.endereco 
-	// 			+ "</td> <td style = 'text-align: center'><button class = 'btn btn-success btnSelecionarCliente' onclick='selecionarCliente(\"" + encodeURIComponent(JSON.stringify(item)) + "\");'>Selecionar</button></tr>");
-	// 	});
-
-	// });
 }
 
 function selecionarCliente(item) {

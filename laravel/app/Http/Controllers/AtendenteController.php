@@ -12,6 +12,7 @@ use Input;
 use App\Cliente;
 use App\User;
 use DB;
+use Auth;
 
 
 class AtendenteController extends Controller {
@@ -44,17 +45,14 @@ class AtendenteController extends Controller {
 		$itens = new Item();
 		$itens = $itens->where('ativo', '=', '1')->orderBy('nome', 'asc')->get();
 
-	
-
-		return view('atendente/home')->
+		return view('atendente.home')->
 		with('sanduiches', $sanduiches)->
 		with('porcoes', $porcoes)->
 		with('funcionarios', $funcionarios)->
 		with('bebidas', $bebidas)->
 		with('itens', $itens)->
 		with('pratos', $pratos);
-
-
+		
 	}
 
 	public function login() {
@@ -86,8 +84,6 @@ class AtendenteController extends Controller {
 				} else {
 					return Redirect()->back()->withErrors(['Você não possui permissão de atendente ou superior.']);
 				}
-
-				
 			} else {
 				return Redirect()->back()->withErrors(['Login ou senha incorretos!']);
 			}

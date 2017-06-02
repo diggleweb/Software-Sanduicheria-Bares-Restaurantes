@@ -37,11 +37,12 @@
 	        <table class = "table table-bordered table-striped" id = "tabelaClientes">
 	        <thead>
 	            <tr>
-	                <th width="30%">Nome</th>
+	                <th width="25%">Nome</th>
 	                <th width="10%">Telefone</th>
 	                <th width="10%">CEP</th>
-	                <th width = "40%">Endereço</th>
-	                <th width = "10%">Ação</th>
+	                <th width = "35%">Endereço</th>
+	                <th width = "10%">Edit/Excluir</th>
+	                <th width = "15%">Selecionar</th>
 	            </tr>
 
 	        </thead>

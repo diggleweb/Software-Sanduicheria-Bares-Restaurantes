@@ -21,6 +21,8 @@ class AuthController extends Controller
     |
     */
 
+    
+
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 
     /**
@@ -60,4 +62,5 @@ class AuthController extends Controller
             'password' => bcrypt($data['password']),
         ]);
     }
+
 }
