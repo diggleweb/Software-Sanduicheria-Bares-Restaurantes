@@ -8,7 +8,9 @@ use App\Produto;
 use App\ProdutosItens;
 use App\Funcionario;
 use App\Item;
+use Input;
 use App\Cliente;
+use App\User;
 use DB;
 
 
@@ -55,9 +57,41 @@ class AtendenteController extends Controller {
 
 	}
 
-	public function listarClientes() {
-		
+	public function login() {
+		return view('atendente.login');
+	}
 
+	public function postLogin() {
+		$input = Input::only('login', 'password');
+		
+		$login = $input['login'];
+		$senhaDigitada = $input['password'];
+
+		$usuarios = new User();
+		$usuario = $usuarios->where('login', '=', $login)->first();
+		
+		if (empty($usuario)) {
+			return Redirect()->back()->withErrors(['Login inexistente.']);
+		} else {
+			$senhaBanco = $usuario->password;
+
+			if (crypt($senhaDigitada, $senhaBanco) === $senhaBanco) {
+
+				//verificar se o usuário possui 'papel' = 'atendente' ou 'administrador'
+				$id_role = DB::table('role_user')->where('user_id', '=', $usuario->id)->first()->role_id;
+				$name_role = DB::table('roles')->where('id', '=', $id_role)->first()->name;
+
+				if ($name_role == "atendente" || $name_role == "administrador") {
+					return Redirect()->to('atendente/home');
+				} else {
+					return Redirect()->back()->withErrors(['Você não possui permissão de atendente ou superior.']);
+				}
+
+				
+			} else {
+				return Redirect()->back()->withErrors(['Login ou senha incorretos!']);
+			}
+		}
 	}
 
 	/**
