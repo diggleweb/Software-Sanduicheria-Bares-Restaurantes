@@ -52,6 +52,8 @@ pela view:
 
 	@include('componentes.modalDetalhesPedidos')
 
+	@include('atendente.modalEditarCliente')
+	
 	@include('atendente.modalNovoCliente')
 
 	@include('atendente.modalExcluirCliente')

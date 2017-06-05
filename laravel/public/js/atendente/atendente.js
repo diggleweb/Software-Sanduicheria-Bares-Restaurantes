@@ -110,7 +110,7 @@ function filtrarCliente() {
 					+ "</td> <td style = 'text-align: center'> " + item.cep 
 					+ "</td> <td style = 'text-align: center'>" + item.endereco 
 					+ "</td> <td style = 'text-align: center'>"
-					+"<button class = 'btn btn-default glyphicon glyphicon-edit' style = 'width: 50px; display: inline-block'></button>"
+					+"<button class = 'btn btn-default glyphicon glyphicon-edit' style = 'width: 50px; display: inline-block' onclick='abrirModalEditarCliente(\"" + encodeURIComponent(JSON.stringify(item)) + "\")'></button>"
 					+"&nbsp;&nbsp;<button class = 'btn btn-danger glyphicon glyphicon-trash' onclick='excluirCliente("+item.id+");' style = 'width: 50px; display: inline-block'></button></td>"
 					+ "<td style = 'text-align: center'><button class = 'btn btn-success btnSelecionarCliente' style = 'display: inline-block' onclick='selecionarCliente(\"" + encodeURIComponent(JSON.stringify(item)) + "\");'>Selecionar</button></td></tr>");
 			});
@@ -188,6 +188,48 @@ function cadastrarNovoCliente() {
 
 		//fecha o modal
 		$("#modalNovoCliente").modal('toggle');
+	});
+}
+
+
+function abrirModalEditarCliente(item) {
+	var item = JSON.parse(decodeURIComponent(item));
+	
+	//fecha o modal atual pois não pode ter dois modais juntos
+	$("#modalListarClientes").modal('toggle');
+	$("#modalEditarClientes").modal('toggle');
+
+	//passa os dados da tabela para o form
+	$("#idClienteEdit").val(item.id);
+	$("#telefoneEdit").val(item.telefone);
+	$("#enderecoEdit").val(item.endereco);
+	$("#nomeEdit").val(item.nome);
+	$("#cepEdit").val(item.cep);
+}
+
+function editarCliente() {
+	
+	var telefone = $("#telefoneEdit").val();
+	var endereco = $("#enderecoEdit").val();
+	var nome = $("#nomeEdit").val();
+	var cep = $("#cepEdit").val();
+	var idCliente = $("#idClienteEdit").val();
+
+	var json = {
+		'telefone': telefone,
+		'nome': nome,
+		'idCliente': idCliente,
+		'endereco': endereco,
+		'cep': cep
+	};
+
+	$.get('/editarCliente', json, function(id) {
+		//imprime msg ok ou erro ao cadastrar cliente
+		alert("Alterado com sucesso!");
+		//fecha o modal
+		$("#modalEditarClientes").modal('toggle');
+		abrirModalListarClientes();
+		$("#btnFiltrarCliente").click();
 	});
 }
 
@@ -617,10 +659,7 @@ var arrayProdutosAlterados = [];		//variável que contém objetos de produtos qu
 			}
 	}
 
-	//apenas clica novamente na mesma mesa, para atualizar a tabela
-	function atualizar() {
-		$("#" + numeroMesa).trigger('click');
-	}
+	
 
 	//desseleciona todos os produtos (para facilitar para o usuário que selecionou vários itens e deseja cancelar a operação)
 	function desselecionarProdutos() {

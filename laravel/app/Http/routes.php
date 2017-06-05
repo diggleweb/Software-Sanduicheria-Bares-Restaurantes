@@ -65,6 +65,23 @@ Route::get('/cadastrarNovoCliente', function() {
 	return $id;
 });
 
+Route::get('/editarCliente', function() {
+	$input = Input::only('telefone', 'cep', 'endereco', 'nome', 'idCliente');
+
+	$idCliente = $input['idCliente'];
+
+	$cliente = App\Cliente::where('id', '=', $idCliente)->first();
+	$cliente->telefone = $input['telefone'];
+	$cliente->nome = $input['nome'];
+	$cliente->endereco = $input['endereco'];
+	$cliente->cep = $input['cep'];
+	$affectedRows = $cliente->save();
+
+	$id = $cliente->id;
+	return $id;
+});
+
+
 Route::group(['prefix' => 'atendente'], function() {
 	// Route::get('/', 'AtendenteController@login');
 	// Route::post('/postLogin', 'AtendenteController@postLogin');
