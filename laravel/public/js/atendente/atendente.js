@@ -4,8 +4,6 @@ $(document).ready(
 		$("#1").click();
 		$('#telefone').mask('(00) 00000-0000');
 		$('#novoTelefone').mask('(00) 00000-0000');
-		
-
 	}
 );
 
@@ -30,6 +28,67 @@ $("#txtFiltrar").keypress(function(e) {
 });
 
 
+
+function abrirConta() {
+	//busca o id do cliente
+	var idCliente = $("#idCliente").val();
+
+	var json = {'idCliente': idCliente};
+
+	//cria uma nova conta e busca o ID desta conta
+	$.get('/criarNovaContaCliente', json, function(data) {
+		/* data = id da nova conta */
+		//armazena o ID da conta em algum lugar
+		$("#idConta").val(data);
+		
+		//função responsável por fazer a troca de divs
+		removerDivPesquisarCliente();
+	});
+}
+
+function zerarFormulario() {
+	$("#telefone").val("(62)");
+	$("#nome").val("");
+	$("#cep").val("");
+	$("#endereco").val("");
+	$("#idConta").val("");
+}
+
+function removerDivPesquisarCliente() {
+	var nome = $("#nome").val();
+	var telefone = $("#telefone").val();
+	var id = $("#idCliente").val();
+
+	/* apaga a parte que permite o usuário procurar novo cliente */
+	$("#dadosClientePesquisado").css('display', 'none');
+	$("#btnAdicionarCliente").css('display', 'none');
+	$("#dadosCliente").css('display', 'none');
+	$("#ContasAbertas").css('display', 'initial');
+
+	/* mostra os dados do cliente selecionado */
+	$("#dadosClienteSelecionado").css('display', 'initial');
+	$("#nomeClienteSelecionado").html(nome);
+	$("#telClienteSelecionado").html(telefone);
+	$("#idClienteSelecionado").html(id);
+}
+
+function escolherOutroCliente() {
+	zerarFormulario();
+	
+	/* volta ao normal as configurações iniciais */
+	$("#dadosClientePesquisado").css('display', 'initial');
+	$("#btnAdicionarCliente").css('display', 'initial');
+	$("#dadosCliente").css('display', 'initial');
+	$("#ContasAbertas").css('display', 'none');
+
+	/* zera os dados do cliente selecionado */
+	$("#dadosClienteSelecionado").css('display', 'none');
+	$("#nomeClienteSelecionado").html("");
+	$("#telClienteSelecionado").html("");
+	$("#idClienteSelecionado").html("");
+
+	$("#telefone").focus();
+}
 
 function filtrarCliente() {
 	var filtro = $("#txtFiltrar").val();
@@ -369,16 +428,7 @@ var nomeFuncionario = null;
 var idCliente = null;
 var arrayProdutosAlterados = [];		//variável que contém objetos de produtos que tiveram seus itens modificados
 
-	//função auxiliar que irá apagar as bordas de todos os números (para o usuário selecionar apenas
-	//uma mesa)
-	function apagarBordasNumeros() {
-		$(".numeros").css("border", "0px solid black");
-	}
 
-	
-
-
-	
 //utilizada em .numeros.click
 	function atualizarTabela(data) { //data = vetor que vem do banco de dados, com todos os produtos relacionados a esta conta
 		var totalConta = 0;	//contador para verificar quanto é o total da conta
@@ -386,7 +436,6 @@ var arrayProdutosAlterados = [];		//variável que contém objetos de produtos qu
 
 		//remove as linhas da tabela 
 		$("#tabela tr").remove();		//evita que os produtos de uma mesa sejam colocados na mesma tabela que outra
-
 
 		data.forEach(function(entry) {		//percorre cada produto
 			var idContaProdutos = entry['id'];
@@ -526,7 +575,9 @@ var arrayProdutosAlterados = [];		//variável que contém objetos de produtos qu
 	//ao clicar no botão verde 'adicionar produtos'
 	function adicionarProdutos() {
 		//verifica se pelo menos uma mesa foi escolhida
-		
+			
+			var idConta = $("#idConta").val();
+
 			//verifica se pelo menos um produto foi escolhido
 			if (produtos.length == 0) {
 				alert("Escolha pelo menos um produto antes de adicionar um pedido!");
@@ -535,7 +586,7 @@ var arrayProdutosAlterados = [];		//variável que contém objetos de produtos qu
 				//verifica se foi adicionado algum item a algum produto. Em caso positivo, devemos alterar o valor do preço do item
 				if (arrayProdutosAlterados.length != 0) {
 					var json = {
-						"idCliente": idCliente,
+						"idConta": idConta,
 						"produtos": produtos,
 						"produtosAlterados": arrayProdutosAlterados
 					};
@@ -550,7 +601,7 @@ var arrayProdutosAlterados = [];		//variável que contém objetos de produtos qu
 				} else {
 					//criar um objeto json com o id da conta e os ids dos produtos 
 					var json = {
-						"idCliente": idCliente,
+						"idConta": idConta,
 						"produtos": produtos 
 					};
 

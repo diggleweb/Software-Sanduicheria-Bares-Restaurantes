@@ -348,6 +348,23 @@ Route::get('/criarNovaConta', function() {
 });
 
 
+//função utilizada em atendente.js, cria uma nova conta e relaciona esta conta a um id de um cliente
+Route::get('/criarNovaContaCliente', function() {
+	$input = Input::only('idCliente');
+	$idCliente = $input['idCliente'];
+
+	$novaConta = new App\Conta();
+	$novaConta->cliente_id = $idCliente;
+	$novaConta->funcionario_id = 1;
+	$novaConta->valor = 0;
+	$novaConta->encerrada = 0;
+
+	$novaConta->save();
+
+	return $novaConta->id;
+
+});
+
 Route::get('/criarNovaContaAtendente', function() {
 	
 		$input = Input::only('idFuncionario');
