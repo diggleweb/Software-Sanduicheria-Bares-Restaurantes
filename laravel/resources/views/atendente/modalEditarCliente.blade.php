@@ -37,7 +37,7 @@
 
 	      		<br>
 
-	      		{!! Form::submit('Editar', array('class' => 'btn btn-success', 'style' => 'margin-top: 10px; margin-bottom: 10px; float: right; margin-right: 30px', 'type'=>'button')) !!}
+	      		{!! Form::submit('Editar', array('class' => 'btn btn-success', 'style' => 'margin-top: 10px; margin-bottom: 10px; float: right; margin-right: 30px; width: 100px', 'type'=>'button')) !!}
 	      		<br>
 
 	      		</div>

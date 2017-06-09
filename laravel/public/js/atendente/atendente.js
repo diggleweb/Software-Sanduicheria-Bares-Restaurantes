@@ -29,21 +29,31 @@ $("#txtFiltrar").keypress(function(e) {
 
 
 
+
+
 function abrirConta() {
-	//busca o id do cliente
-	var idCliente = $("#idCliente").val();
 
-	var json = {'idCliente': idCliente};
+	//verifica se ao menos um cliente foi selecionado
+	var nome = $("#nome").val();
 
-	//cria uma nova conta e busca o ID desta conta
-	$.get('/criarNovaContaCliente', json, function(data) {
-		/* data = id da nova conta */
-		//armazena o ID da conta em algum lugar
-		$("#idConta").val(data);
-		
-		//função responsável por fazer a troca de divs
-		removerDivPesquisarCliente();
-	});
+	if (nome == "") {
+		alert('Você precisa primeiramente buscar um cliente.');
+	} else {
+		//busca o id do cliente
+		var idCliente = $("#idCliente").val();
+
+		var json = {'idCliente': idCliente};
+
+		//cria uma nova conta e busca o ID desta conta
+		$.get('/criarNovaContaCliente', json, function(data) {
+			/* data = id da nova conta */
+			//armazena o ID da conta em algum lugar
+			$("#idConta").val(data);
+			
+			//função responsável por fazer a troca de divs
+			removerDivPesquisarCliente();
+		});
+	}	
 }
 
 function zerarFormulario() {
@@ -730,7 +740,6 @@ var arrayProdutosAlterados = [];		//variável que contém objetos de produtos qu
 							$(this).parents().eq(1).next().find(".input-number").val(1);
 							$(this).parents().eq(1).next().find(".btn-number").eq(0).attr('disabled', false);
 						}
-
 					}
 				);
 
@@ -740,6 +749,16 @@ var arrayProdutosAlterados = [];		//variável que contém objetos de produtos qu
 		//abre o modal
 		modal.modal('toggle');
 	}
+
+	$("#modalDetalhesPedidoSanduiches").on('hidden.bs.modal', function(e) {
+		$("[name='ok']").each(
+			function() {
+				$(this).css('visibility', 'hidden');
+				$(this).parents().eq(1).next().find(".input-number").val(0);
+				$(this).parents().eq(1).next().find(".btn-number").eq(0).attr('disabled', true);
+			}
+		);
+	});
 
 	//acionado ao clicar em "+" no modal de detalhes do sanduíche
 	//

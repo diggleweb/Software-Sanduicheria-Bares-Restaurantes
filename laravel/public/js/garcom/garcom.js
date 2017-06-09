@@ -588,6 +588,16 @@ var idCliente = null;
 		modal.modal('toggle');
 	}
 
+	$("#modalDetalhesPedidoSanduiches").on('hidden.bs.modal', function(e) {
+		$("[name='ok']").each(
+			function() {
+				$(this).css('visibility', 'hidden');
+				$(this).parents().eq(1).next().find(".input-number").val(0);
+				$(this).parents().eq(1).next().find(".btn-number").eq(0).attr('disabled', true);
+			}
+		);
+	});
+
 	//acionado ao clicar em "+" no modal de detalhes do sanduíche
 	//
 	function adicionarItemAoPedido(nome, precoVenda) {
