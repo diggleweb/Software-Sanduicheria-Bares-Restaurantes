@@ -51,11 +51,12 @@ function abrirConta() {
 	//verifica se ao menos um cliente foi selecionado
 	var nome = $("#nome").val();
 
+
 	if (nome == "") {
 		alert('Você precisa primeiramente buscar um cliente.');
 	} else {
 		//busca o id do cliente
-		var idCliente = $("#idCliente").val();
+		var idCliente = $("#idCliente").val().trim();
 
 		var json = {'idCliente': idCliente};
 
@@ -195,10 +196,11 @@ function selecionarCliente(item) {
 }
 
 function cadastrarNovoCliente() {
-	var telefone = (document.forms[1].novoTelefone.value);
-	var nome = document.forms[1].novoNome.value;
-	var endereco = document.forms[1].novoEndereco.value;
-	var cep = document.forms[1].novoCep.value;
+	console.log(document.forms);
+	var telefone = (document.forms[2].novoTelefone.value);
+	var nome = document.forms[2].novoNome.value;
+	var endereco = document.forms[2].novoEndereco.value;
+	var cep = document.forms[2].novoCep.value;
 
 	var json = {
 		'telefone': telefone,
@@ -208,6 +210,7 @@ function cadastrarNovoCliente() {
 	};
 
 	$.get('/cadastrarNovoCliente', json, function(id) {
+		console.log(id);
 		//imprime msg ok ou erro ao cadastrar cliente
 		alert("Cadastrado com sucesso!");
 		
