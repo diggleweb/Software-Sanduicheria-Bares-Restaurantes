@@ -4,8 +4,26 @@ $(document).ready(
 		$("#1").click();
 		$('#telefone').mask('(00) 00000-0000');
 		$('#novoTelefone').mask('(00) 00000-0000');
+
+		//desabilita inicialmente os itens
+		desabilitarItens();
 	}
 );
+
+/* desabilita todos os itens (o usuário não consegue clicar em nenhum) */
+function desabilitarItens() {
+	$(".divCadaItem").removeClass('enabledbutton');
+	$(".divCadaItem").addClass('disabledbutton');
+	$(".tituloCategoria").removeClass('enabledbutton');
+	$(".tituloCategoria").addClass('disabledbutton');
+}
+
+function habilitarItens() {
+	$(".divCadaItem").removeClass('disabledButton');
+	$(".divCadaItem").addClass('enabledbutton');
+	$(".tituloCategoria").removeClass('disabledbutton');
+	$(".tituloCategoria").addClass('enabledbutton');
+}
 
 //caso o usuario aperte ESC, cancelar todos os produtos selecionados
 $(document).keyup(function(e) {
@@ -26,9 +44,6 @@ $("#txtFiltrar").keypress(function(e) {
 		filtrarCliente();
 	}
 });
-
-
-
 
 
 function abrirConta() {
@@ -53,6 +68,9 @@ function abrirConta() {
 			//função responsável por fazer a troca de divs
 			removerDivPesquisarCliente();
 		});
+
+		habilitarItens();
+
 	}	
 }
 
@@ -98,6 +116,9 @@ function escolherOutroCliente() {
 	$("#idClienteSelecionado").html("");
 
 	$("#telefone").focus();
+
+	desabilitarItens();
+
 }
 
 function filtrarCliente() {

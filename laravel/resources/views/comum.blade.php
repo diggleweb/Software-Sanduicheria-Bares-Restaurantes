@@ -16,6 +16,17 @@
 
 <body>
 	
+	<style type="text/css">
+		.disabledbutton {
+		    pointer-events: none;
+		    opacity: 0.4;
+		}
+
+		.enabledbutton {
+			pointer-events: auto;
+			opacity: 1;
+		}
+	</style>
 
 	<!-- jQuery -->
 	<script src = "{{ asset('js/jquery/jquery-2.2.0.min.js') }}"></script>
