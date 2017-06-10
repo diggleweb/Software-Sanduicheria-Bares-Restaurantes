@@ -27,13 +27,14 @@ pela view:
 	<link rel="stylesheet" type="text/css" href="css/atendente.css">
 
 	<div class = "row">
+
 	<!-- Ítens -->		
 		<div class="col-md-7" id = "div1">
 			@include('componentes.itens')
 		</div>
 
 		
-		<div class="col-md-5" id = "div2">
+		<div class="col-md-4" id = "div2">
 			@include('atendente.dadosCliente')
 		
 

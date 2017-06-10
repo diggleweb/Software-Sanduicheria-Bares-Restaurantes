@@ -1,303 +1,312 @@
-//clicar automaticamente na primeira mesa ao inicializar a página
-$(document).ready(
-	function() {
-		$("#1").click();
-		$('#telefone').mask('(00) 00000-0000');
-		$('#novoTelefone').mask('(00) 00000-0000');
+	//Adicionado em: 26/01/2016
+	var numeroMesa = null;	//variável que armazenará a mesa selecionada (para adicionar um pedido)
+	var produtos = [];		//array que armazenará os ids dos produtos 
+	var idConta = null;	//variável que armazenará o número da conta relacionado ao número da mesa
+	var nomeFuncionario = null;	
+	var idCliente = null;
+	var arrayProdutosAlterados = [];		//variável que contém objetos de produtos que tiveram seus itens modificados
+	var contadorProdutosSelecionados = 0;
+	
+	//clicar automaticamente na primeira mesa ao inicializar a página
+	$(document).ready(
+		function() {
+			$("#1").click();
+			$('#telefone').mask('(00) 00000-0000');
+			$('#novoTelefone').mask('(00) 00000-0000');
 
-		//desabilita inicialmente os itens
+			//desabilita inicialmente os itens
+			desabilitarItens();
+		}
+	);
+
+	/* desabilita todos os itens (o usuário não consegue clicar em nenhum) */
+	function desabilitarItens() {
+		$(".divCadaItem").removeClass('enabledbutton');
+		$(".divCadaItem").addClass('disabledbutton');
+		$(".tituloCategoria").removeClass('enabledbutton');
+		$(".tituloCategoria").addClass('disabledbutton');
+	}
+
+	function habilitarItens() {
+		$(".divCadaItem").removeClass('disabledButton');
+		$(".divCadaItem").addClass('enabledbutton');
+		$(".tituloCategoria").removeClass('disabledbutton');
+		$(".tituloCategoria").addClass('enabledbutton');
+	}
+
+	//caso o usuario aperte ESC, cancelar todos os produtos selecionados
+	$(document).keyup(function(e) {
+		if (e.keyCode == 27) {
+			desselecionarProdutos();
+		}
+	});
+
+	//caso o usuario aperte ENTER, adicionar todos os produtos selecionados
+	$("#telefone").keypress(function(e) {
+		if (e.keyCode == 13) {
+			pesquisarCliente();
+		}
+	});
+
+	$("#txtFiltrar").keypress(function(e) {
+		if (e.keyCode == 13) {
+			filtrarCliente();
+		}
+	});
+
+
+	function abrirConta() {
+		//verifica se ao menos um cliente foi selecionado
+		var nome = $("#nome").val();
+
+		if (nome == "") {
+			alert('Você precisa primeiramente buscar um cliente.');
+		} else {
+			//busca o id do cliente
+			var idCliente = $("#idCliente").val().trim();
+
+			var json = {'idCliente': idCliente};
+
+			//cria uma nova conta e busca o ID desta conta
+			$.get('/criarNovaContaCliente', json, function(data) {
+				/* data = id da nova conta */
+				//armazena o ID da conta em algum lugar
+				$("#idConta").val(data);
+				
+				//função responsável por fazer a troca de divs
+				removerDivPesquisarCliente();
+			});
+			habilitarItens();
+		}	
+	}
+
+	function zerarFormulario() {
+		$("#telefone").val("(62)");
+		$("#nome").val("");
+		$("#cep").val("");
+		$("#endereco").val("");
+		$("#idConta").val("");
+	}
+
+	function removerDivPesquisarCliente() {
+		var nome = $("#nome").val();
+		var telefone = $("#telefone").val();
+		var id = $("#idCliente").val();
+
+		/* apaga a parte que permite o usuário procurar novo cliente */
+		$("#dadosClientePesquisado").css('display', 'none');
+		$("#btnAdicionarCliente").css('display', 'none');
+		$("#dadosCliente").css('display', 'none');
+		$("#ContasAbertas").css('display', 'initial');
+
+		/* mostra os dados do cliente selecionado */
+		$("#dadosClienteSelecionado").css('display', 'initial');
+		$("#nomeClienteSelecionado").html(nome);
+		$("#telClienteSelecionado").html(telefone);
+		$("#idClienteSelecionado").html(id);
+	}
+
+	function escolherOutroCliente() {
+		zerarFormulario();
+		
+		/* volta ao normal as configurações iniciais */
+		$("#dadosClientePesquisado").css('display', 'initial');
+		$("#btnAdicionarCliente").css('display', 'initial');
+		$("#dadosCliente").css('display', 'initial');
+		$("#ContasAbertas").css('display', 'none');
+
+		/* zera os dados do cliente selecionado */
+		$("#dadosClienteSelecionado").css('display', 'none');
+		$("#nomeClienteSelecionado").html("");
+		$("#telClienteSelecionado").html("");
+		$("#idClienteSelecionado").html("");
+
+		$("#telefone").focus();
+
 		desabilitarItens();
 	}
-);
-
-/* desabilita todos os itens (o usuário não consegue clicar em nenhum) */
-function desabilitarItens() {
-	$(".divCadaItem").removeClass('enabledbutton');
-	$(".divCadaItem").addClass('disabledbutton');
-	$(".tituloCategoria").removeClass('enabledbutton');
-	$(".tituloCategoria").addClass('disabledbutton');
-}
-
-function habilitarItens() {
-	$(".divCadaItem").removeClass('disabledButton');
-	$(".divCadaItem").addClass('enabledbutton');
-	$(".tituloCategoria").removeClass('disabledbutton');
-	$(".tituloCategoria").addClass('enabledbutton');
-}
-
-//caso o usuario aperte ESC, cancelar todos os produtos selecionados
-$(document).keyup(function(e) {
-	if (e.keyCode == 27) {
-		desselecionarProdutos();
-	}
-});
-
-//caso o usuario aperte ENTER, adicionar todos os produtos selecionados
-$("#telefone").keypress(function(e) {
-	if (e.keyCode == 13) {
-		pesquisarCliente();
-	}
-});
-
-$("#txtFiltrar").keypress(function(e) {
-	if (e.keyCode == 13) {
-		filtrarCliente();
-	}
-});
 
 
-function abrirConta() {
+	function filtrarCliente() {
+		var filtro = $("#txtFiltrar").val();
+		var filtrarPor = $("#selectFiltrar").find(':selected').val();
 
-	//verifica se ao menos um cliente foi selecionado
-	var nome = $("#nome").val();
+		if (filtro != "") {
+			var json = {
+				'filtro': filtro,
+				'filtrarPor': filtrarPor
+			};
 
+			$.get('/filtrarCliente', json, function(data) {
+				$("#bodyTabelaClientes").empty();
+				
+				data.forEach(function(item) {
+					$("#bodyTabelaClientes").append(
+						"<tr><td style = 'text-align: center'>" + item.nome 
+						+ "</td> <td style = 'text-align: center'> " + item.telefone 
+						+ "</td> <td style = 'text-align: center'> " + item.cep 
+						+ "</td> <td style = 'text-align: center'>" + item.endereco 
+						+ "</td> <td style = 'text-align: center'>"
+						+"<button class = 'btn btn-default glyphicon glyphicon-edit' style = 'width: 50px; display: inline-block' onclick='abrirModalEditarCliente(\"" + encodeURIComponent(JSON.stringify(item)) + "\")'></button>"
+						+"&nbsp;&nbsp;<button class = 'btn btn-danger glyphicon glyphicon-trash' onclick='excluirCliente("+item.id+");' style = 'width: 50px; display: inline-block'></button></td>"
+						+ "<td style = 'text-align: center'><button class = 'btn btn-success btnSelecionarCliente' style = 'display: inline-block' onclick='selecionarCliente(\"" + encodeURIComponent(JSON.stringify(item)) + "\");'>Selecionar</button></td></tr>");
+				});
 
-	if (nome == "") {
-		alert('Você precisa primeiramente buscar um cliente.');
-	} else {
-		//busca o id do cliente
-		var idCliente = $("#idCliente").val().trim();
-
-		var json = {'idCliente': idCliente};
-
-		//cria uma nova conta e busca o ID desta conta
-		$.get('/criarNovaContaCliente', json, function(data) {
-			/* data = id da nova conta */
-			//armazena o ID da conta em algum lugar
-			$("#idConta").val(data);
-			
-			//função responsável por fazer a troca de divs
-			removerDivPesquisarCliente();
-		});
-
-		habilitarItens();
-
-	}	
-}
-
-function zerarFormulario() {
-	$("#telefone").val("(62)");
-	$("#nome").val("");
-	$("#cep").val("");
-	$("#endereco").val("");
-	$("#idConta").val("");
-}
-
-function removerDivPesquisarCliente() {
-	var nome = $("#nome").val();
-	var telefone = $("#telefone").val();
-	var id = $("#idCliente").val();
-
-	/* apaga a parte que permite o usuário procurar novo cliente */
-	$("#dadosClientePesquisado").css('display', 'none');
-	$("#btnAdicionarCliente").css('display', 'none');
-	$("#dadosCliente").css('display', 'none');
-	$("#ContasAbertas").css('display', 'initial');
-
-	/* mostra os dados do cliente selecionado */
-	$("#dadosClienteSelecionado").css('display', 'initial');
-	$("#nomeClienteSelecionado").html(nome);
-	$("#telClienteSelecionado").html(telefone);
-	$("#idClienteSelecionado").html(id);
-}
-
-function escolherOutroCliente() {
-	zerarFormulario();
-	
-	/* volta ao normal as configurações iniciais */
-	$("#dadosClientePesquisado").css('display', 'initial');
-	$("#btnAdicionarCliente").css('display', 'initial');
-	$("#dadosCliente").css('display', 'initial');
-	$("#ContasAbertas").css('display', 'none');
-
-	/* zera os dados do cliente selecionado */
-	$("#dadosClienteSelecionado").css('display', 'none');
-	$("#nomeClienteSelecionado").html("");
-	$("#telClienteSelecionado").html("");
-	$("#idClienteSelecionado").html("");
-
-	$("#telefone").focus();
-
-	desabilitarItens();
-
-}
-
-function filtrarCliente() {
-	var filtro = $("#txtFiltrar").val();
-	var filtrarPor = $("#selectFiltrar").find(':selected').val();
-
-	if (filtro != "") {
-		var json = {
-			'filtro': filtro,
-			'filtrarPor': filtrarPor
-		};
-
-		$.get('/filtrarCliente', json, function(data) {
-			$("#bodyTabelaClientes").empty();
-			
-			data.forEach(function(item) {
-				$("#bodyTabelaClientes").append(
-					"<tr><td style = 'text-align: center'>" + item.nome 
-					+ "</td> <td style = 'text-align: center'> " + item.telefone 
-					+ "</td> <td style = 'text-align: center'> " + item.cep 
-					+ "</td> <td style = 'text-align: center'>" + item.endereco 
-					+ "</td> <td style = 'text-align: center'>"
-					+"<button class = 'btn btn-default glyphicon glyphicon-edit' style = 'width: 50px; display: inline-block' onclick='abrirModalEditarCliente(\"" + encodeURIComponent(JSON.stringify(item)) + "\")'></button>"
-					+"&nbsp;&nbsp;<button class = 'btn btn-danger glyphicon glyphicon-trash' onclick='excluirCliente("+item.id+");' style = 'width: 50px; display: inline-block'></button></td>"
-					+ "<td style = 'text-align: center'><button class = 'btn btn-success btnSelecionarCliente' style = 'display: inline-block' onclick='selecionarCliente(\"" + encodeURIComponent(JSON.stringify(item)) + "\");'>Selecionar</button></td></tr>");
 			});
-
-		});
-	} else {
-		$("#bodyTabelaClientes").empty();
+		} else {
+			$("#bodyTabelaClientes").empty();
+		}
 	}
-}
 
-function excluirCliente(id) {
 
-	if (confirm("Deseja realmente excluir este registro?")) {
-		var json = {"idCliente": id};
+	function excluirCliente(id) {
+		if (confirm("Deseja realmente excluir este registro?")) {
+			var json = {"idCliente": id};
 
-		$.get('/excluirCliente', json, function(data) {
-			//refresh na tabela
-			alert("Registro excluído com sucesso!");
-			$("#btnFiltrarCliente").click();
-		});
-	} 
-}
+			$.get('/excluirCliente', json, function(data) {
+				//refresh na tabela
+				alert("Registro excluído com sucesso!");
+				$("#btnFiltrarCliente").click();
+			});
+		} 
+	}
 
-function abrirModalCadastrarClientes() {
-	//transmite o valor do telefone digitado na primeira tela para o modal
-	$("#novoTelefone").val($("#telefone").val());
-	//zera os demais campos
-	$("#novoNome").val("");
-	$("#novoCep").val("");
-	$("#novoEndereco").val("");
-	//foca o campo nome
-	$("#novoNome").focus();
-	//abre o modal
-	$("#modalNovoCliente").modal('toggle');
-}
 
-function abrirModalListarClientes() {
-	$("#modalListarClientes").modal('toggle');
-}
+	function abrirModalCadastrarClientes() {
+		//transmite o valor do telefone digitado na primeira tela para o modal
+		$("#novoTelefone").val($("#telefone").val());
+		//zera os demais campos
+		$("#novoNome").val("");
+		$("#novoCep").val("");
+		$("#novoEndereco").val("");
+		//foca o campo nome
+		$("#novoNome").focus();
+		//abre o modal
+		$("#modalNovoCliente").modal('toggle');
+	}
 
-function selecionarCliente(item) {
-	var item = JSON.parse(decodeURIComponent(item));
-	
-	//seleciona o novo cliente cadastrado
-	$("#idCliente").val(item.id);
-	$("#telefone").val(item.telefone);
-	$("#endereco").val(item.endereco);
-	$("#nome").val(item.nome);
-	$("#cep").val(item.cep);
-	$("#modalListarClientes").modal('toggle');
-}
 
-function cadastrarNovoCliente() {
-	console.log(document.forms);
-	var telefone = (document.forms[2].novoTelefone.value);
-	var nome = document.forms[2].novoNome.value;
-	var endereco = document.forms[2].novoEndereco.value;
-	var cep = document.forms[2].novoCep.value;
+	function abrirModalListarClientes() {
+		$("#modalListarClientes").modal('toggle');
+	}
 
-	var json = {
-		'telefone': telefone,
-		'nome': nome,
-		'endereco': endereco,
-		'cep': cep
-	};
 
-	$.get('/cadastrarNovoCliente', json, function(id) {
-		console.log(id);
-		//imprime msg ok ou erro ao cadastrar cliente
-		alert("Cadastrado com sucesso!");
+	function selecionarCliente(item) {
+		var item = JSON.parse(decodeURIComponent(item));
 		
 		//seleciona o novo cliente cadastrado
-		$("#idCliente").val(id);
-		$("#endereco").val($("#novoEndereco").val());
-		$("#nome").val($("#novoNome").val());
-		$("#cep").val($("#novoCep").val());
-
-		//fecha o modal
-		$("#modalNovoCliente").modal('toggle');
-	});
-}
+		$("#idCliente").val(item.id);
+		$("#telefone").val(item.telefone);
+		$("#endereco").val(item.endereco);
+		$("#nome").val(item.nome);
+		$("#cep").val(item.cep);
+		$("#modalListarClientes").modal('toggle');
+	}
 
 
-function abrirModalEditarCliente(item) {
-	var item = JSON.parse(decodeURIComponent(item));
-	
-	//fecha o modal atual pois não pode ter dois modais juntos
-	$("#modalListarClientes").modal('toggle');
-	$("#modalEditarClientes").modal('toggle');
+	function cadastrarNovoCliente() {
+		console.log(document.forms);
+		var telefone = (document.forms[2].novoTelefone.value);
+		var nome = document.forms[2].novoNome.value;
+		var endereco = document.forms[2].novoEndereco.value;
+		var cep = document.forms[2].novoCep.value;
 
-	//passa os dados da tabela para o form
-	$("#idClienteEdit").val(item.id);
-	$("#telefoneEdit").val(item.telefone);
-	$("#enderecoEdit").val(item.endereco);
-	$("#nomeEdit").val(item.nome);
-	$("#cepEdit").val(item.cep);
-}
+		var json = {
+			'telefone': telefone,
+			'nome': nome,
+			'endereco': endereco,
+			'cep': cep
+		};
 
-function editarCliente() {
-	
-	var telefone = $("#telefoneEdit").val();
-	var endereco = $("#enderecoEdit").val();
-	var nome = $("#nomeEdit").val();
-	var cep = $("#cepEdit").val();
-	var idCliente = $("#idClienteEdit").val();
+		$.get('/cadastrarNovoCliente', json, function(id) {
+			console.log(id);
+			//imprime msg ok ou erro ao cadastrar cliente
+			alert("Cadastrado com sucesso!");
+			
+			//seleciona o novo cliente cadastrado
+			$("#idCliente").val(id);
+			$("#endereco").val($("#novoEndereco").val());
+			$("#nome").val($("#novoNome").val());
+			$("#cep").val($("#novoCep").val());
 
-	var json = {
-		'telefone': telefone,
-		'nome': nome,
-		'idCliente': idCliente,
-		'endereco': endereco,
-		'cep': cep
-	};
+			//fecha o modal
+			$("#modalNovoCliente").modal('toggle');
+		});
+	}
 
-	$.get('/editarCliente', json, function(id) {
-		//imprime msg ok ou erro ao cadastrar cliente
-		alert("Alterado com sucesso!");
-		//fecha o modal
-		$("#modalEditarClientes").modal('toggle');
-		abrirModalListarClientes();
-		$("#btnFiltrarCliente").click();
-	});
-}
 
-//pesquisa rapida
-function pesquisarCliente() {
-	var telefone = (document.forms[0].telefone.value);
-	
-	var json = {
-		'telefone': telefone
-	};
-
-	//faz a requisição get e preenche os valores
-	$.get('/pesquisarCliente', json , function(data) {
+	function abrirModalEditarCliente(item) {
+		var item = JSON.parse(decodeURIComponent(item));
 		
-		//verifica se o cliente já foi cadastrado ou não
-		if (data.length == 0) {
-			alert('Cliente não cadastrado.');
-		} else if (data.length == 1) {	
-			data = data[0];
-			//caso só encontre um registro, preencher os dados e escolher o funcionário
-			$("#idCliente").val(data.id);
-			$("#endereco").val(data.endereco);
-			$("#nome").val(data.nome);
-			$("#cep").val(data.cep);
-		} else {
-			abrirModalListarClientes();		//abre o modal
-			$("#txtFiltrar").val(telefone);	//insere o texto de filtro
-			filtrarCliente();				//força uma filtragem
-		}	
-	});
+		//fecha o modal atual pois não pode ter dois modais juntos
+		$("#modalListarClientes").modal('toggle');
+		$("#modalEditarClientes").modal('toggle');
 
-}
+		//passa os dados da tabela para o form
+		$("#idClienteEdit").val(item.id);
+		$("#telefoneEdit").val(item.telefone);
+		$("#enderecoEdit").val(item.endereco);
+		$("#nomeEdit").val(item.nome);
+		$("#cepEdit").val(item.cep);
+	}
 
-//adicionado em: 28/01/2016
+	function editarCliente() {
+		
+		var telefone = $("#telefoneEdit").val();
+		var endereco = $("#enderecoEdit").val();
+		var nome = $("#nomeEdit").val();
+		var cep = $("#cepEdit").val();
+		var idCliente = $("#idClienteEdit").val();
+
+		var json = {
+			'telefone': telefone,
+			'nome': nome,
+			'idCliente': idCliente,
+			'endereco': endereco,
+			'cep': cep
+		};
+
+		$.get('/editarCliente', json, function(id) {
+			//imprime msg ok ou erro ao cadastrar cliente
+			alert("Alterado com sucesso!");
+			//fecha o modal
+			$("#modalEditarClientes").modal('toggle');
+			abrirModalListarClientes();
+			$("#btnFiltrarCliente").click();
+		});
+	}
+
+	//pesquisa rapida
+	function pesquisarCliente() {
+		var telefone = (document.forms[0].telefone.value);
+		
+		var json = {
+			'telefone': telefone
+		};
+
+		//faz a requisição get e preenche os valores
+		$.get('/pesquisarCliente', json , function(data) {
+			
+			//verifica se o cliente já foi cadastrado ou não
+			if (data.length == 0) {
+				alert('Cliente não cadastrado.');
+			} else if (data.length == 1) {	
+				data = data[0];
+				//caso só encontre um registro, preencher os dados e escolher o funcionário
+				$("#idCliente").val(data.id);
+				$("#endereco").val(data.endereco);
+				$("#nome").val(data.nome);
+				$("#cep").val(data.cep);
+			} else {
+				abrirModalListarClientes();		//abre o modal
+				$("#txtFiltrar").val(telefone);	//insere o texto de filtro
+				filtrarCliente();				//força uma filtragem
+			}	
+		});
+
+	}
+
+	//adicionado em: 28/01/2016
 	//assim que clicar em um ítem, altera a sua borda e coloca em um array o id do item 
 	$('.divCadaItem').click(
 		function() {
@@ -380,170 +389,54 @@ function pesquisarCliente() {
 		}
 	);
 
-/* adicionado em 13/1/2017
-Este JS está relacionado apenas ao modal de adicionar detalhes aos pedidos (é apenas a funcionalidade de + e -)
-Creditos: http://bootsnipp.com/snippets/featured/buttons-minus-and-plus-in-input
-*/
+	//utilizada em .numeros.click
+	function atualizarTabela() { //data = vetor que vem do banco de dados, com todos os produtos relacionados a esta conta
+		
+		var idConta = $("#idConta").val();
+		var json = {
+			'idConta': idConta
+		};
 
- $('.btn-number').click(function(e) {
-    e.preventDefault();
-    
-    fieldName = $(this).attr('data-field');
-	type      = $(this).attr('data-type');
-    var input = $("input[name='"+fieldName+"']");
-    var currentVal = parseInt(input.val());
+		$.get('/buscarProdutos', json, function(data) {
+			var totalConta = 0;	//contador para verificar quanto é o total da conta
+			var contadorQuantidade = 0;	//conta quantos produtos existem no total
 
-    //busca o preço total atual do produto + adicionais (será atualizado a cada + ou - pressionado)
-    var precoAtual = $(".preco").html();
-    //retira desse preço atual o R$
-    precoAtual = parseFloat(precoAtual.substr(2, precoAtual.length));
-    
-    if (!isNaN(currentVal)) {
-        //botão menos
-        if(type == 'minus') {
-            
-            //caso o valor seja diferente de zero
-            if(currentVal >= input.attr('min')) {
-                input.val(currentVal - 1).change();
-            	var precoVenda = parseFloat($(this).parents().eq(4).attr('data-valor'));
-            	var precoAdicional = ((currentVal - 1) * precoVenda).toFixed(2);
-            	
-            	//altera o preço adicional na página html
-            	$(this).parents().eq(4).find('.precoTotal').children().html("R$ " + precoAdicional);
-            	//atualiza o preço total
-            	precoAtual -= parseFloat(precoVenda);
-            	//altera o preço total
-            	$(".preco").html("R$" + precoAtual.toFixed(2));
-            } 
+			console.log(data);
 
-            //caso atinja o valor zero
-            if(parseInt(input.val()) == input.attr('min')) {
-                $(this).attr('disabled', true);
-                //desabilita o icone check
-                $(this).parents().eq(5).find("[name='ok']").css('visibility', 'hidden');
-            }
+			//remove as linhas da tabela 
+			$("#tabela tr").remove();		//evita que os produtos de uma mesa sejam colocados na mesma tabela que outra
 
-        //botão mais
-        } else if(type == 'plus') {
-        	
-            if(currentVal < input.attr('max')) {
-            	input.val(currentVal + 1).change();
-                // var id = $(this).parents().eq(4).attr('data-id');
-                var precoVenda = parseFloat($(this).parents().eq(4).attr('data-valor'));
-                var precoAdicional = ((currentVal+1) * precoVenda).toFixed(2);
-                //altera o preço adicional na página html
-                $(this).parents().eq(4).find('.precoTotal').children().html("R$ " + precoAdicional);
-                //atualiza o preço total
-            	precoAtual += parseFloat(precoVenda);
-            	//altera o preço total
-            	$(".preco").html("R$" + precoAtual.toFixed(2));
+			data.forEach(function(entry) {		//percorre cada produto
+				var idContaProdutos = entry['id'];
+				var idConta = entry['conta_id'];
+				var nomeProduto = entry['nome'];
+				var idProduto = entry['produto_id'];
+				var preco = entry['precoFinal'];
+				var quantidade = parseInt(entry['quantidade']);
+				contadorQuantidade += quantidade;
+				var totalProduto = preco * quantidade;
+				$("#tabela").append(					//adiciona uma linha na tabela para cada produto
+					"<tr><td width = '40%' style = 'text-align: center'>" 
+					+ nomeProduto 
+					+ "</td><td width = '15%' style = 'text-align: center'>R$ " 
+					+ preco.toFixed(2) 
+					+ "</td><td width = '15%' style = 'text-align: center'>"
+				    + quantidade 
+				    + "</td><td width = '20%' style = 'text-align: center; font-weight: bold;'> R$ " 
+				    + totalProduto.toFixed(2) 
+				    +"</td><td width = '30%' style = 'text-align: center'><button class = 'btn btn-danger' data-idConta = '" 
+				    + idConta +"' id = '"+ idContaProdutos 
+				    +"' onclick = 'cancelarProduto(this.id, this.getAttribute(\"data-idConta\"))'>Cancelar</button></td></tr>"
+				);
 
-            	//habilita o icone check
-            	$(this).parents().eq(5).find("[name='ok']").css('visibility', 'visible');
-            }
+				totalConta += totalProduto;
+			});
 
-            if(parseInt(input.val()) == input.attr('max')) {
-                $(this).attr('disabled', true);
-            }
-        }
-    } else {
-        input.val(0);
-    }
-});
-
-
-$('.input-number').focusin(function(){
-   $(this).data('oldValue', $(this).val());
-});
-
-$('.input-number').change(function() {
-    
-    minValue =  parseInt($(this).attr('min'));
-    maxValue =  parseInt($(this).attr('max'));
-    valueCurrent = parseInt($(this).val());
-    
-    name = $(this).attr('name');
-    if(valueCurrent >= minValue) {
-        $(".btn-number[data-type='minus'][data-field='"+name+"']").removeAttr('disabled')
-    } else {
-        alert('Sorry, the minimum value was reached');
-        $(this).val($(this).data('oldValue'));
-    }
-
-    if(valueCurrent <= maxValue) {
-        $(".btn-number[data-type='plus'][data-field='"+name+"']").removeAttr('disabled')
-    } else {
-        alert('Sorry, the maximum value was reached');
-        $(this).val($(this).data('oldValue'));
-    }    
-});
-
-$(".input-number").keydown(function (e) {
-    // Allow: backspace, delete, tab, escape, enter and .
-    if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 190]) !== -1 ||
-         // Allow: Ctrl+A
-        (e.keyCode == 65 && e.ctrlKey === true) || 
-         // Allow: home, end, left, right
-        (e.keyCode >= 35 && e.keyCode <= 39)) {
-             // let it happen, don't do anything
-             return;
-    }
-    // Ensure that it is a number and stop the keypress
-    if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
-        e.preventDefault();
-    }
-});
-/* fim do js e fim dos créditos */
-
-
-//Adicionado em: 26/01/2016
-var numeroMesa = null;	//variável que armazenará a mesa selecionada (para adicionar um pedido)
-var produtos = [];		//array que armazenará os ids dos produtos 
-var idConta = null;	//variável que armazenará o número da conta relacionado ao número da mesa
-var nomeFuncionario = null;	
-var idCliente = null;
-var arrayProdutosAlterados = [];		//variável que contém objetos de produtos que tiveram seus itens modificados
-
-
-//utilizada em .numeros.click
-	function atualizarTabela(data) { //data = vetor que vem do banco de dados, com todos os produtos relacionados a esta conta
-		var totalConta = 0;	//contador para verificar quanto é o total da conta
-		var contadorQuantidade = 0;	//conta quantos produtos existem no total
-
-		//remove as linhas da tabela 
-		$("#tabela tr").remove();		//evita que os produtos de uma mesa sejam colocados na mesma tabela que outra
-
-		data.forEach(function(entry) {		//percorre cada produto
-			var idContaProdutos = entry['id'];
-			var idConta = entry['conta_id'];
-			var nomeProduto = entry['nome'];
-			var idProduto = entry['produto_id'];
-			var preco = entry['precoFinal'];
-			var quantidade = parseInt(entry['quantidade']);
-			contadorQuantidade += quantidade;
-			var totalProduto = preco * quantidade;
-			$("#tabela").append(					//adiciona uma linha na tabela para cada produto
-				"<tr><td width = '40%' style = 'text-align: center'>" 
-				+ nomeProduto 
-				+ "</td><td width = '15%' style = 'text-align: center'>R$ " 
-				+ preco.toFixed(2) 
-				+ "</td><td width = '15%' style = 'text-align: center'>"
-			    + quantidade 
-			    + "</td><td width = '20%' style = 'text-align: center; font-weight: bold;'> R$ " 
-			    + totalProduto.toFixed(2) 
-			    +"</td><td width = '30%' style = 'text-align: center'><button class = 'btn btn-danger' data-idConta = '" 
-			    + idConta +"' id = '"+ idContaProdutos 
-			    +"' onclick = 'cancelarProduto(this.id, this.getAttribute(\"data-idConta\"))'>Cancelar</button></td></tr>"
-			);
-
-			totalConta += totalProduto;
+			//adiciona a linha 'total'
+			$("#tabela").append("<tr><td style = 'text-align: center; font-weight: bold; font-size: 20px'>Total</td><td></td><td style = 'text-align: center; font-weight: bold;'>" + contadorQuantidade +"</td><td style = 'text-align: center; font-weight: bold; font-size: 20px'> R$ " + totalConta.toFixed(2) + "</td></tr>");
 		});
-
-
-		//adiciona a linha 'total'
-		$("#tabela").append("<tr><td style = 'text-align: center; font-weight: bold; font-size: 20px'>Total</td><td></td><td style = 'text-align: center; font-weight: bold;'>" + contadorQuantidade +"</td><td style = 'text-align: center; font-weight: bold; font-size: 20px'> R$ " + totalConta.toFixed(2) + "</td></tr>");
-
 	}
+
 
 	//qual funcao usa essa funcao? .numeros.click
 	function atualizarTabelaComDetalhes(data) { 
@@ -585,7 +478,7 @@ var arrayProdutosAlterados = [];		//variável que contém objetos de produtos qu
 				};
 
 				$.get('cancelarProduto', json, function() {
-					atualizar();
+					atualizarTabela();
 				});
 
 			} else if (senha != null) {
@@ -618,7 +511,7 @@ var arrayProdutosAlterados = [];		//variável que contém objetos de produtos qu
 	
 	});
 
-	var contadorProdutosSelecionados = 0;
+	
 
 	//ao clicar em 'detalhes', e após decidir a quantidade de cada produto, o usuário clica em adicionar
 	function adicionarItensAoPedido(obj) {
@@ -657,6 +550,7 @@ var arrayProdutosAlterados = [];		//variável que contém objetos de produtos qu
 			//verifica se pelo menos um produto foi escolhido
 			if (produtos.length == 0) {
 				alert("Escolha pelo menos um produto antes de adicionar um pedido!");
+
 			} else {
 
 				//verifica se foi adicionado algum item a algum produto. Em caso positivo, devemos alterar o valor do preço do item
@@ -671,10 +565,12 @@ var arrayProdutosAlterados = [];		//variável que contém objetos de produtos qu
 					//e sim o preço alterado conforme os itens adicionados
 					//este preço está na arrayProdutosAlterados
 					$.get('addPedidoComItens/', json, function(data) {
-						atualizar();		//forca um trigger no botao da mesa atual para atualizar a tabela
+						atualizarTabela();
 						desselecionarProdutos();
 					});
+
 				} else {
+					
 					//criar um objeto json com o id da conta e os ids dos produtos 
 					var json = {
 						"idConta": idConta,
@@ -684,12 +580,11 @@ var arrayProdutosAlterados = [];		//variável que contém objetos de produtos qu
 					//tudo certo, podemos adicionar os pedidos no banco
 					//realiza uma requisição ajax para que a rota trate de adicionar os pedidos
 					$.get('addPedido/', json, function(data) {
-						atualizar();		//força o clique no número da mesa para atualizar a tabela
+						atualizarTabela();
 						//remove as bordas dos itens selecionados (é uma forma de confirmação que o produto foi adicionado)
 						desselecionarProdutos();
 					});	
 				}
-
 			}
 	}
 
@@ -790,4 +685,118 @@ var arrayProdutosAlterados = [];		//variável que contém objetos de produtos qu
 		console.log(nome + precoVenda);
 	}
 
+
+	/* adicionado em 13/1/2017
+	Este JS está relacionado apenas ao modal de adicionar detalhes aos pedidos (é apenas a funcionalidade de + e -)
+	Creditos: http://bootsnipp.com/snippets/featured/buttons-minus-and-plus-in-input
+	*/
+	 $('.btn-number').click(function(e) {
+	    e.preventDefault();
+	    
+	    fieldName = $(this).attr('data-field');
+		type      = $(this).attr('data-type');
+	    var input = $("input[name='"+fieldName+"']");
+	    var currentVal = parseInt(input.val());
+
+	    //busca o preço total atual do produto + adicionais (será atualizado a cada + ou - pressionado)
+	    var precoAtual = $(".preco").html();
+	    //retira desse preço atual o R$
+	    precoAtual = parseFloat(precoAtual.substr(2, precoAtual.length));
+	    
+	    if (!isNaN(currentVal)) {
+	        //botão menos
+	        if(type == 'minus') {
+	            
+	            //caso o valor seja diferente de zero
+	            if(currentVal >= input.attr('min')) {
+	                input.val(currentVal - 1).change();
+	            	var precoVenda = parseFloat($(this).parents().eq(4).attr('data-valor'));
+	            	var precoAdicional = ((currentVal - 1) * precoVenda).toFixed(2);
+	            	
+	            	//altera o preço adicional na página html
+	            	$(this).parents().eq(4).find('.precoTotal').children().html("R$ " + precoAdicional);
+	            	//atualiza o preço total
+	            	precoAtual -= parseFloat(precoVenda);
+	            	//altera o preço total
+	            	$(".preco").html("R$" + precoAtual.toFixed(2));
+	            } 
+
+	            //caso atinja o valor zero
+	            if(parseInt(input.val()) == input.attr('min')) {
+	                $(this).attr('disabled', true);
+	                //desabilita o icone check
+	                $(this).parents().eq(5).find("[name='ok']").css('visibility', 'hidden');
+	            }
+
+	        //botão mais
+	        } else if(type == 'plus') {
+	        	
+	            if(currentVal < input.attr('max')) {
+	            	input.val(currentVal + 1).change();
+	                // var id = $(this).parents().eq(4).attr('data-id');
+	                var precoVenda = parseFloat($(this).parents().eq(4).attr('data-valor'));
+	                var precoAdicional = ((currentVal+1) * precoVenda).toFixed(2);
+	                //altera o preço adicional na página html
+	                $(this).parents().eq(4).find('.precoTotal').children().html("R$ " + precoAdicional);
+	                //atualiza o preço total
+	            	precoAtual += parseFloat(precoVenda);
+	            	//altera o preço total
+	            	$(".preco").html("R$" + precoAtual.toFixed(2));
+
+	            	//habilita o icone check
+	            	$(this).parents().eq(5).find("[name='ok']").css('visibility', 'visible');
+	            }
+
+	            if(parseInt(input.val()) == input.attr('max')) {
+	                $(this).attr('disabled', true);
+	            }
+	        }
+	    } else {
+	        input.val(0);
+	    }
+	});
+
+
+	$('.input-number').focusin(function(){
+	   $(this).data('oldValue', $(this).val());
+	});
+
+	$('.input-number').change(function() {
+	    
+	    minValue =  parseInt($(this).attr('min'));
+	    maxValue =  parseInt($(this).attr('max'));
+	    valueCurrent = parseInt($(this).val());
+	    
+	    name = $(this).attr('name');
+	    if(valueCurrent >= minValue) {
+	        $(".btn-number[data-type='minus'][data-field='"+name+"']").removeAttr('disabled')
+	    } else {
+	        alert('Sorry, the minimum value was reached');
+	        $(this).val($(this).data('oldValue'));
+	    }
+
+	    if(valueCurrent <= maxValue) {
+	        $(".btn-number[data-type='plus'][data-field='"+name+"']").removeAttr('disabled')
+	    } else {
+	        alert('Sorry, the maximum value was reached');
+	        $(this).val($(this).data('oldValue'));
+	    }    
+	});
+
+	$(".input-number").keydown(function (e) {
+	    // Allow: backspace, delete, tab, escape, enter and .
+	    if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 190]) !== -1 ||
+	         // Allow: Ctrl+A
+	        (e.keyCode == 65 && e.ctrlKey === true) || 
+	         // Allow: home, end, left, right
+	        (e.keyCode >= 35 && e.keyCode <= 39)) {
+	             // let it happen, don't do anything
+	             return;
+	    }
+	    // Ensure that it is a number and stop the keypress
+	    if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+	        e.preventDefault();
+	    }
+	});
+	/* fim do js e fim dos créditos */
 

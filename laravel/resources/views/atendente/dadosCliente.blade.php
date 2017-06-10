@@ -21,7 +21,7 @@
 				<br>
 
 				{!! Form::label('nome', 'Nome: ') !!}
-				{!! Form::text('nome', '', array('id'=>'nome', 'class' => 'form-control', 'style' => 'width: 1000px', 'readonly' => 'readonly')) !!}
+				{!! Form::text('nome', '', array('id'=>'nome', 'class' => 'form-control', 'style' => 'width: 500px', 'readonly' => 'readonly')) !!}
 				<br>
 
 				{!! Form::label('cep', 'CEP: ') !!}
@@ -29,7 +29,7 @@
 				<br>
 
 				{!! Form::label('endereco', 'Endereço: ') !!}
-				{!! Form::textarea('endereco', '', array('id'=>'endereco', 'class' => 'form-control', 'style' => 'width: 1000px; height: 100px', 'readonly' => 'readonly')) !!}
+				{!! Form::textarea('endereco', '', array('id'=>'endereco', 'class' => 'form-control', 'style' => 'width: 500px; height: 100px', 'readonly' => 'readonly')) !!}
 
 				<br>
 			</div>
@@ -42,14 +42,14 @@
 <br><br>
 {{-- Quando já selecionamos um cliente --}}
 <div id = "dadosClienteSelecionado" style = "display: none;">
-	<h3>Cliente Selecionado</h4>
-	<h4 id = "idClienteSelecionado" style = "display: none"></h4>
-	<h4 id = "nomeClienteSelecionado" style = "display: inline-block"></h4> 
+	<h4>Cliente Selecionado</h4>
+	<h5 id = "idClienteSelecionado" style = "display: none"></h5>
+	<h5 id = "nomeClienteSelecionado" style = "display: inline-block"></h5> 
 	&nbsp;&nbsp;&nbsp;
-	<h4 id = "telClienteSelecionado" style = "display: inline-block"></h4> 
+	<h5 id = "telClienteSelecionado" style = "display: inline-block"></h5> 
 	<br>
-	<button class = "btn btn-primary" style = "width: 100px;" onclick="escolherOutroCliente()"><span class = "glyphicon glyphicon-chevron-left">&nbsp;Alterar&nbsp;</button>
+	<button class = "btn btn-primary" style = "width: 100px; height: 30px; display: inline-block" onclick="escolherOutroCliente()"><span class = "glyphicon glyphicon-chevron-left">&nbsp;Alterar&nbsp;</button>
 </div>
 
 {{-- Botão de adicionar produtos --}}
-<button style = "width: 400px; height: 80px; border: 1px solid black; margin-left: 250px; font-size: 20px" class = "btn btn-success" id = "btnAdicionarCliente" onclick="abrirConta()" ><span class = "glyphicon glyphicon-thumbs-up"></span>&nbsp;&nbsp;Escolher Cliente</button>
+<button style = "width: 400px; height: 80px; border: 1px solid black; margin-left: 50px; font-size: 20px" class = "btn btn-success" id = "btnAdicionarCliente" onclick="abrirConta()" ><span class = "glyphicon glyphicon-thumbs-up"></span>&nbsp;&nbsp;Escolher Cliente</button>

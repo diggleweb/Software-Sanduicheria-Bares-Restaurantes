@@ -134,7 +134,7 @@ Route::get('/addPedidoComItens', function() {
 
 	//busca os dados da view
 	$input = Input::only('idConta', 'produtos', 'produtosAlterados');
-	$idConta = $input['idConta'];
+	$idConta = trim($input['idConta']);
 	$produtosAlterados = $input['produtosAlterados'];	//produtos para o qual foram adicionados itens, portanto seu valor final sera alterado
 	$produtosNaoAlterados = $input['produtos'];	
 	//$idCliente = $input['idCliente'];
@@ -197,7 +197,7 @@ Route::get('/addPedido', function() {
 
 	//busca os dados da view
 	$input = Input::only('idConta', 'produtos');
-	$idConta = $input['idConta'];
+	$idConta = trim($input['idConta']);
 	
 	//percorre o array de produtos e insere no banco (tabela: contasProdutos)
 	foreach($input['produtos'] as $idProduto) {
@@ -228,7 +228,6 @@ Route::get('/addPedido', function() {
 
 //helper function apenas para não repetir código (utilizado nas rotas /addPedido e /addPedidoComItens)
 function atualizarProdutosDoGarcom($idConta, $contadorProdutos) {
-
 
 /* apenas atualiza o número de vendas do garçom */
 	//busca qual funcionário é o responsável por esses produtos
@@ -281,15 +280,7 @@ Route::get('/buscarContaRelacionada', function() {
 //dado o número da conta, busca o nome e o preço de  todos os produtos relacionados a esta conta
 Route::get('/buscarProdutos', function() {
 	$input = Input::only('idConta');
-	$idConta = $input['idConta'];
-
-	// $contaProdutos = new App\ContasProdutos();
-	// $dados = $contaProdutos
-	// ->where('conta_produtos.conta_id', '=', $idConta)
-	// ->join('produtos', 'conta_produtos.produto_id', '=', 'produtos.id')
-	// ->select('conta_produtos.conta_id', 'produtos.nome', 'conta_produtos.precoFinal', DB::raw('count(*) as quantidade'))		//DB::RAW faz uma query SQL normal
-	// ->groupBy('produtos.id')
-	// ->get();
+	$idConta = trim($input['idConta']);
 
 	$contaProdutos = new App\ContasProdutos();
 	$dados = $contaProdutos
@@ -303,7 +294,6 @@ Route::get('/buscarProdutos', function() {
 	return $dados;
 
 	/* obs: sql alterado em 13/02/2017: trocado 'select(produtos.precoVenda) por select(conta_produtos.precoVenda) porque o preco de venda pode ser alterado conforme adiciona-se ou retira-se itens do produto */
-
 });
 
 

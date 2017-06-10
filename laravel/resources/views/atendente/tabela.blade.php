@@ -21,7 +21,7 @@
 	<h4 id = "tituloConta" style = "font-weight: bold; float: left">Conta Aberta</h4> 
 	
 	{{-- Botao detalhes --}}
-	<button class = "btn btn-primary" style = "float: left; margin-left: 15px" name = "btnDetalhes" data-toggle = "modal" data-target = "#myModal">Detalhes</button>
+	{{-- <button class = "btn btn-primary" style = "float: left; margin-left: 15px" name = "btnDetalhes" data-toggle = "modal" data-target = "#myModal">Detalhes</button> --}}
 
 	<br><br>
 
