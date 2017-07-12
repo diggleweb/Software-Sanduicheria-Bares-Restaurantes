@@ -1,12 +1,12 @@
 <div class = "row">
 <!-- Ítens -->		
 
-	<div class="col-md-7" id = "div1">
+	<div class="col-md-7 col-sm-7" id = "div1">
 		@include('componentes.itens')
 	</div>
 
 	{{-- Número de mesas --}}
-	<div class="col-md-5" id = "div2">
+	<div class="col-md-5 col-sm-5" id = "div2">
 		<div class="row">
 			<h1>Mesas</h1>
 			<!-- Adiciona todas as imagens dos números das mesas -->

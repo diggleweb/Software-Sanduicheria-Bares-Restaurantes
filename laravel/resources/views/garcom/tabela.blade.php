@@ -49,6 +49,6 @@
 	<!-- Armazena sempre o ID da conta da última mesa que foi clicada -->
 	<input type = "hidden" id = "idConta"> 
 
-	<button style = "width: 300px; margin-left: 285px; height: 50px; font-size: 20px" class = "btn btn-danger" id = "btnEncerrar">Encerrar Conta</button>
+	<button style = "width: 300px; margin-left: 285px; height: 50px; font-size: 20px" class = "btn btn-danger" id = "btnEncerrar"><span class = "glyphicon glyphicon-pencil"></span> &nbsp;&nbsp; Encerrar Conta</button>
 
 </div>

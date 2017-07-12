@@ -25,6 +25,7 @@
 		$(".divCadaItem").addClass('disabledbutton');
 		$(".tituloCategoria").removeClass('enabledbutton');
 		$(".tituloCategoria").addClass('disabledbutton');
+		$("#mensagemAlerta").css('display', 'initial');
 	}
 
 	function habilitarItens() {
@@ -32,6 +33,7 @@
 		$(".divCadaItem").addClass('enabledbutton');
 		$(".tituloCategoria").removeClass('disabledbutton');
 		$(".tituloCategoria").addClass('enabledbutton');
+		$("#mensagemAlerta").css('display', 'none');
 	}
 
 	//caso o usuario aperte ESC, cancelar todos os produtos selecionados
@@ -174,14 +176,14 @@
 
 	function abrirModalCadastrarClientes() {
 		//transmite o valor do telefone digitado na primeira tela para o modal
-		$("#novoTelefone").val($("#telefone").val());
-		//zera os demais campos
-		$("#novoNome").val("");
-		$("#novoCep").val("");
-		$("#novoEndereco").val("");
-		//foca o campo nome
-		$("#novoNome").focus();
-		//abre o modal
+		// $("#novoTelefone").val($("#telefone").val());
+		// //zera os demais campos
+		// $("#novoNome").val("");
+		// $("#novoCep").val("");
+		// $("#novoEndereco").val("");
+		// //foca o campo nome
+		// $("#novoNome").focus();
+		// //abre o modal
 		$("#modalNovoCliente").modal('toggle');
 	}
 
@@ -203,6 +205,10 @@
 		$("#modalListarClientes").modal('toggle');
 	}
 
+
+	function abrirNovoCliente() {
+		
+	}
 
 	function cadastrarNovoCliente() {
 		console.log(document.forms);
@@ -628,7 +634,11 @@
 		    $(e.currentTarget).find('input[name="id"]').text(id);
 	})
 
-	
+	/*  */
+	function visualizarHistoricoCliente() {
+
+	}
+
 
 	//adicionbado em 12/1/2017
 	/* abre o modal de detalhes para pedidos relacionados a sanduiches */

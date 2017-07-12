@@ -1,3 +1,7 @@
+<div id = "mensagemAlerta" class = "alert alert-info" role = "alert" >
+	<h1 style = "font-color: red">Você deve escolher um cliente para poder adicionar os itens <span style = "float: right" class = "glyphicon glyphicon-arrow-right"></span></h1>
+</div>
+
 {{-- Sanduíches --}}
 	<h4 class = "tituloCategoria">Sanduíches</h4>
 		<div>
@@ -17,6 +21,7 @@
 {{-- Bebidas --}}
 	<h4 class = "tituloCategoria">Bebidas</h4>
 		<div>
+
 			@foreach($bebidas as $bebida) 
 				<div class = "divCadaItem" val = "{{$bebida->id}}" data-clicked = "0">
 					<img src="{{$bebida->urlImagem}}" class = "imagemItem">
@@ -39,8 +44,6 @@
 					<img src="{{$porcao->urlImagem}}" class = "imagemItem">
 					<h5 class = "nomeItem">{{$porcao->nome}}</h5>
 					<h4 style = "color: red; text-align: center">R$ {{number_format($porcao->precoVenda, 2, ".", "")}}</h4>
-					{{-- <button name="btnAbrirDetalhes" onclick = "abrirModalDetalhes({{$porcao->id}})" data-toggle = "modal" data-target = "#modalDetalhesPedido" class = "btn btn-primary">Detalhes</button> --}}
-					{{-- <button name="btnAbrirDetalhes" data-toggle = "modal" data-target = "#modalDetalhesPedido" class = "btn btn-primary">Detalhes</button> --}}
 				</div>
 			@endforeach
 		</div>

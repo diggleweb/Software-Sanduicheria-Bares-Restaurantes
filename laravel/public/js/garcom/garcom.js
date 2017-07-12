@@ -2,6 +2,7 @@
 $(document).ready(
 	function() {
 		$("#1").click();
+		$("#mensagemAlerta").css('display', 'none');
 	}
 );
 

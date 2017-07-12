@@ -3,6 +3,15 @@
 		height: 20px;
 	}
 
+	#mensagemAlerta {
+		position: absolute;
+		top: 400px;
+		left: 400px;
+		width: 500px;
+		height: 200px;
+		z-index: 10;
+	}
+
 	.wrapper {
 		overflow: scroll;
 		height: 600px;

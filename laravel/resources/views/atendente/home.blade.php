@@ -24,41 +24,46 @@ pela view:
 
 @section('corpo')
 
+	<style type="text/css">
+		body {
+			background-color: #EEE;
+		}
+
+		.titulo {
+			text-align: center;
+		}
+
+		.container {
+			margin: auto;
+
+		}
+
+		.container2 {
+			margin-left: 100px;
+			margin-right: 100px;
+		}
+	</style>
+
 	<link rel="stylesheet" type="text/css" href="css/atendente.css">
 
-	<div class = "row">
-
-	<!-- Ítens -->		
-		<div class="col-md-7" id = "div1">
-			@include('componentes.itens')
+	<div class="container">
+		<div class = "titulo">
+		<br>
+			<h1>Entrega de Pedidos</h1>
+			
+			<h3>Etapa 1/4</h3>
+			
+			<h2>Escolher cliente</h2>
 		</div>
-
-		
-		<div class="col-md-4" id = "div2">
-			@include('atendente.dadosCliente')
-		
-
-		<!-- TABELA  -->
-		<div class="row" id = "dadosDaConta">
-			@include('atendente.tabela')
-		</div>
-		<!-- FIM DA TABELA -->	
-
 	</div>
 
+	<div class="container2">
+		@include('atendente.listarClientes')
+	</div>
 
-	@include('componentes.modalDetalhesContas')
+		@include('atendente.modalNovoCliente');
+		@include('atendente.modalEditarCliente');
+		@include('atendente.modalExcluirCliente');
 
-	@include('atendente.modalListarClientes')
-
-	@include('componentes.modalDetalhesPedidos')
-
-	@include('atendente.modalEditarCliente')
-	
-	@include('atendente.modalNovoCliente')
-
-	@include('atendente.modalExcluirCliente')
-
-	
 	<script src = "{{ asset('js/atendente/atendente.js') }}" type="text/javascript"></script>
 @endsection

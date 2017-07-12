@@ -49,6 +49,7 @@
 	<h5 id = "telClienteSelecionado" style = "display: inline-block"></h5> 
 	<br>
 	<button class = "btn btn-primary" style = "width: 100px; height: 30px; display: inline-block" onclick="escolherOutroCliente()"><span class = "glyphicon glyphicon-chevron-left">&nbsp;Alterar&nbsp;</button>
+	<button class = "btn btn-default" type = "button" style = " height: 30px; display: inline-block" onclick="visualizarHistoricoCliente()"><span class = "glyphicon glyphicon-th-list">&nbsp;Ver Histórico&nbsp;</button>
 </div>
 
 {{-- Botão de adicionar produtos --}}
