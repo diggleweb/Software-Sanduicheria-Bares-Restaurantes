@@ -56,6 +56,7 @@
         <input id="address" type="textbox" value="" style = "height: 20px; width: 400px" autofocus>
         <input id="submit" type="button" value="Buscar Endereço">
       </form>
+      <button type = "button" onclick="mostrarEndereco()">Imprimir endereço</button>
     </div>
 
     <div id="map"></div>
@@ -73,11 +74,17 @@
       var map;
       var markers = [];
 
+      function mostrarEndereco() {
+        var lat = markers[0].getPosition().lat();
+        var long = markers[0].getPosition().long();
+        //utiliza o geocode inverso pra obter o endereço
+      }
+
       function initMap() {
         var haightAshbury = {lat: -16.686882, lng: -49.264789};
 
         map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 12,
+          zoom: 17,
           center: haightAshbury,
         });
 
@@ -115,7 +122,6 @@
           if (status === 'OK') {
             resultsMap.setCenter(results[0].geometry.location);
             var location = results[0].geometry.location;
-            console.log(location);
             addMarker(location);
 
           } else {
@@ -127,7 +133,6 @@
       // Adds a marker to the map and push to the array.
       function addMarker(location) {
         clearMarkers();
-        map.setZoom(17);
         var marker = new google.maps.Marker({
           position: location,
           map: map,
