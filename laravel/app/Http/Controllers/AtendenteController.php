@@ -55,6 +55,10 @@ class AtendenteController extends Controller {
 		
 	}
 
+	public function maps() {
+		return view('atendente.deleting-markers');
+	}
+
 	public function login() {
 		return view('atendente.login');
 	}

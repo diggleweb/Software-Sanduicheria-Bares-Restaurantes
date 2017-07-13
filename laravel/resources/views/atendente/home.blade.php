@@ -53,7 +53,7 @@ pela view:
 			
 			<h3>Etapa 1/4</h3>
 			
-			<h2>Escolher cliente</h2>
+			<h2>SELECIONE UM CLIENTE</h2>
 		</div>
 	</div>
 

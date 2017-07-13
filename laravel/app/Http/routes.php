@@ -86,6 +86,9 @@ Route::group(['prefix' => 'atendente'], function() {
 	// Route::get('/', 'AtendenteController@login');
 	// Route::post('/postLogin', 'AtendenteController@postLogin');
 	Route::get('/', 'AtendenteController@index');
+	Route::get('/googlemaps', ['as' => 'googlemaps', 'uses' => 'AtendenteController@maps']
+	);
+	
 });
 
 
