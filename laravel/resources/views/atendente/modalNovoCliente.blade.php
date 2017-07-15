@@ -23,8 +23,23 @@
 
 	      		{!! Form::label('nome', 'Nome: ') !!}
 	      		{!! Form::text('nome', '', array('id'=>'novoNome', 'class' => 'form-control', 'style' => 'width: 1000px')) !!}
-	      		
+
 	      		<br>
+
+	      		<div>
+		      		{!! Form::label('cep', 'CEP: ') !!}
+		      		
+	      			{!! Form::text('CEP', '', array('id'=>'novoCEP', 'class' => 'form-control', 'style' => 'width: 350px; margin-right: 0', 'maxlength' => '8', 'onkeypress' => 'return event.charCode >= 48 && event.charCode <= 57')) !!}
+		      		<button class = "btn btn-primary" style = "margin: 0" onclick="pesquisarCEP()">Pesquisar</button>
+      			</div>
+
+
+	      		<br>
+
+	      		{!! Form::label('bairro', 'Bairro: ') !!}
+	      		
+      			{!! Form::text('bairro', '', array('id'=>'bairro', 'class' => 'form-control', 'style' => 'width: 350px; margin: 0')) !!}
+
 
 	      		<a href="atendente/googlemaps" target = "_blank"> Abrir Google Maps </a>
 		      		
@@ -40,4 +55,20 @@
     </div>
   </div>
 </div>
+
+<script type="text/javascript">
+	function pesquisarCEP() {
+		var cep = $("#novoCEP").val();
+		
+		if (cep) {
+			$.get('https://viacep.com.br/ws/' + cep + '/json/', {}, function(data) {
+				console.log(data);
+			});	
+		} else {
+			alert('Digite um CEP para buscar o endereço.');
+		}
+		
+	}
+
+</script>
 
