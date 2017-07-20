@@ -175,15 +175,6 @@
 
 
 	function abrirModalCadastrarClientes() {
-		//transmite o valor do telefone digitado na primeira tela para o modal
-		// $("#novoTelefone").val($("#telefone").val());
-		// //zera os demais campos
-		// $("#novoNome").val("");
-		// $("#novoCep").val("");
-		// $("#novoEndereco").val("");
-		// //foca o campo nome
-		// $("#novoNome").focus();
-		// //abre o modal
 		$("#modalNovoCliente").modal('toggle');
 	}
 
@@ -193,22 +184,16 @@
 	}
 
 
-	function selecionarCliente(item) {
-		var item = JSON.parse(decodeURIComponent(item));
+	function selecionarCliente(cliente) {
+		var json = JSON.parse(decodeURIComponent(cliente));
 		
-		//seleciona o novo cliente cadastrado
-		$("#idCliente").val(item.id);
-		$("#telefone").val(item.telefone);
-		$("#endereco").val(item.endereco);
-		$("#nome").val(item.nome);
-		$("#cep").val(item.cep);
-		$("#modalListarClientes").modal('toggle');
+
+		$.get('/atendente/etapa2', json, function(data) {
+			console.log(data);
+		});
+
 	}
 
-
-	function abrirNovoCliente() {
-		
-	}
 
 	function cadastrarNovoCliente() {
 		console.log(document.forms);
@@ -225,7 +210,6 @@
 		};
 
 		$.get('/cadastrarNovoCliente', json, function(id) {
-			console.log(id);
 			//imprime msg ok ou erro ao cadastrar cliente
 			alert("Cadastrado com sucesso!");
 			

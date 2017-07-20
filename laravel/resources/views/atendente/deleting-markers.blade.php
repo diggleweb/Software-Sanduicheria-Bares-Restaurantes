@@ -62,6 +62,10 @@
     <div id="map"></div>
     <p>Click on the map to add markers.</p>
 
+    <script type="text/javascript" src = "/js/jquery-2.2.0.min.js">
+      
+    </script>
+
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZlhUSjqeKmEXWMqpOV1sNKIs18dKfPgc&callback=initMap">
     </script>
@@ -76,7 +80,13 @@
 
       function mostrarEndereco() {
         var lat = markers[0].getPosition().lat();
-        var long = markers[0].getPosition().long();
+        var long = markers[0].getPosition().lng();
+
+        var latlng = lat + ',' + long;
+
+        $.get('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + latlng +'&key=AIzaSyCZlhUSjqeKmEXWMqpOV1sNKIs18dKfPgc', {}, function(data) {
+          console.log(data);
+        }); 
         //utiliza o geocode inverso pra obter o endereço
       }
 

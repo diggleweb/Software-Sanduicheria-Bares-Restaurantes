@@ -83,9 +83,18 @@ Route::get('/editarCliente', function() {
 
 
 Route::group(['prefix' => 'atendente'], function() {
-	// Route::get('/', 'AtendenteController@login');
-	// Route::post('/postLogin', 'AtendenteController@postLogin');
-	Route::get('/', 'AtendenteController@index');
+	Route::get('/', function() {
+		return Redirect::to('/atendente/etapa1');
+	});
+	
+	Route::get('/etapa1', 'AtendenteController@index');
+	
+	Route::get('/etapa2', function() {
+		$input = Input::only('id','nome', 'telefone', 'endereco', 'cep');
+		
+		
+	});
+
 	Route::get('/googlemaps', ['as' => 'googlemaps', 'uses' => 'AtendenteController@maps']
 	);
 	
