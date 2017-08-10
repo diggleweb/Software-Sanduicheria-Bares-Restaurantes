@@ -56,7 +56,10 @@ class AtendenteController extends Controller {
 	}
 
 	public function maps() {
-		return view('atendente.deleting-markers');
+	    $input = Input::only('id', 'cep');
+	    $cep = $input['cep'];
+	    $id = $input['id'];
+		return view('atendente.deleting-markers')->with('cep', $cep)->with('id', $id);
 	}
 
 	public function login() {

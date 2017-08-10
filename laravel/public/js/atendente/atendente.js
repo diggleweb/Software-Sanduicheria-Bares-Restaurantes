@@ -6,7 +6,10 @@
 	var idCliente = null;
 	var arrayProdutosAlterados = [];		//variável que contém objetos de produtos que tiveram seus itens modificados
 	var contadorProdutosSelecionados = 0;
-	
+	//variáveis que representam jquery
+	var divCadaItem = $(".divCadaItem");
+	var tituloCategoria = $(".tituloCategoria");
+
 	//clicar automaticamente na primeira mesa ao inicializar a página
 	$(document).ready(
 		function() {
@@ -21,37 +24,37 @@
 
 	/* desabilita todos os itens (o usuário não consegue clicar em nenhum) */
 	function desabilitarItens() {
-		$(".divCadaItem").removeClass('enabledbutton');
-		$(".divCadaItem").addClass('disabledbutton');
-		$(".tituloCategoria").removeClass('enabledbutton');
-		$(".tituloCategoria").addClass('disabledbutton');
+		divCadaItem.removeClass('enabledbutton');
+		divCadaItem.addClass('disabledbutton');
+		tituloCategoria.removeClass('enabledbutton');
+		tituloCategoria.addClass('disabledbutton');
 		$("#mensagemAlerta").css('display', 'initial');
 	}
 
 	function habilitarItens() {
-		$(".divCadaItem").removeClass('disabledButton');
-		$(".divCadaItem").addClass('enabledbutton');
-		$(".tituloCategoria").removeClass('disabledbutton');
-		$(".tituloCategoria").addClass('enabledbutton');
+		divCadaItem.removeClass('disabledButton');
+		divCadaItem.addClass('enabledbutton');
+		tituloCategoria.removeClass('disabledbutton');
+		tituloCategoria.addClass('enabledbutton');
 		$("#mensagemAlerta").css('display', 'none');
 	}
 
 	//caso o usuario aperte ESC, cancelar todos os produtos selecionados
 	$(document).keyup(function(e) {
-		if (e.keyCode == 27) {
+		if (e.keyCode === 27) {
 			desselecionarProdutos();
 		}
 	});
 
 	//caso o usuario aperte ENTER, adicionar todos os produtos selecionados
 	$("#telefone").keypress(function(e) {
-		if (e.keyCode == 13) {
+		if (e.keyCode === 13) {
 			pesquisarCliente();
 		}
 	});
 
 	$("#txtFiltrar").keypress(function(e) {
-		if (e.keyCode == 13) {
+		if (e.keyCode === 13) {
 			filtrarCliente();
 		}
 	});
@@ -175,15 +178,6 @@
 
 
 	function abrirModalCadastrarClientes() {
-		//transmite o valor do telefone digitado na primeira tela para o modal
-		// $("#novoTelefone").val($("#telefone").val());
-		// //zera os demais campos
-		// $("#novoNome").val("");
-		// $("#novoCep").val("");
-		// $("#novoEndereco").val("");
-		// //foca o campo nome
-		// $("#novoNome").focus();
-		// //abre o modal
 		$("#modalNovoCliente").modal('toggle');
 	}
 
@@ -202,13 +196,10 @@
 		$("#endereco").val(item.endereco);
 		$("#nome").val(item.nome);
 		$("#cep").val(item.cep);
-		$("#modalListarClientes").modal('toggle');
+		window.location = ("atendente/googlemaps?id=" + item.id + "&cep=" + item.cep);
 	}
 
 
-	function abrirNovoCliente() {
-		
-	}
 
 	function cadastrarNovoCliente() {
 		console.log(document.forms);
@@ -257,7 +248,6 @@
 	}
 
 	function editarCliente() {
-		
 		var telefone = $("#telefoneEdit").val();
 		var endereco = $("#enderecoEdit").val();
 		var nome = $("#nomeEdit").val();
@@ -608,9 +598,9 @@
 
 	//apaga as bordas dos produtos e zera o array de produtos
 	function apagarBordasProdutos() {
-		$(".divCadaItem").css("border", "0px none rgb(51, 51, 51)");
-		$(".divCadaItem").css("box-shadow", "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)");
-		$(".divCadaItem").attr("data-clicked", 0);
+		divCadaItem.css("border", "0px none rgb(51, 51, 51)");
+		divCadaItem.css("box-shadow", "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)");
+		divCadaItem.attr("data-clicked", 0);
 		produtos = [];
 		arrayProdutosAlterados = [];
 	}

@@ -66,6 +66,10 @@
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZlhUSjqeKmEXWMqpOV1sNKIs18dKfPgc&callback=initMap">
     </script>
 
+    <input type = "hidden" id = "idCliente" value = "{{$id}}"></input>
+    <input type = "hidden" id = "cepCliente" value = "{{$cep}}"></input>
+
+
     <script>
 
       // In the following example, markers appear when the user clicks on the map.
@@ -73,6 +77,10 @@
       // The user can then click an option to hide, show or delete the markers.
       var map;
       var markers = [];
+      var idCliente = document.getElementById("idCliente").value;
+      var cepCliente = document.getElementById("cepCliente").value;
+      console.log(idCliente);
+      console.log(cepCliente);
 
       function mostrarEndereco() {
         var lat = markers[0].getPosition().lat();
@@ -161,5 +169,6 @@
         markers = [];
       }
     </script>
+
   </body>
 </html>
