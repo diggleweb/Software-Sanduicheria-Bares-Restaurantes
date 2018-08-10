@@ -18,6 +18,10 @@ Route::get('auth/logout', 'Auth\AuthController@getLogout');
 // Route::post('auth/register', 'Auth\AuthController@postRegister');
 Route::get('/excluirUsuario/', ['as' => 'excluirUsuario', 'uses' => 'UsersController@destroy']);
 
+Route::get('/buscarProdutos', function() {
+	return Produto::all();
+});
+
 
 Route::get('/garcom', 'GarcomController@index');
 

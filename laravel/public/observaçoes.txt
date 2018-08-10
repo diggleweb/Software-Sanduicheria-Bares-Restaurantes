@@ -98,3 +98,5 @@ dependendo da quantidade de itens que este produto tiver - ok
 Corrigido isso.
 
 
+O que ainda falta?
+=> Login para todos os módulos ou talvez um login só e já encaminhar diretamente para o módulo

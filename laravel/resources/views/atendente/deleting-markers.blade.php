@@ -16,8 +16,8 @@
       }
       #floating-panel {
         position: absolute;
-        top: 10px;
-        left: 25%;
+        top: 150px;
+        left: 1%;
         z-index: 5;
         background-color: #fff;
         padding: 5px;
@@ -28,36 +28,37 @@
         padding-left: 10px;
       }
       #floating-panel2 {
-        position: absolute;
-        height: 80px;
-        width: 500px;
-        top: 50px;
-        left: 25%;
-        z-index: 5;
-        background-color: #fff;
-        padding: 5px;
-        border: 1px solid #999;
-        text-align: center;
-        font-family: 'Roboto','sans-serif';
-        line-height: 30px;
-        padding-left: 10px;
-      }
+         position: absolute;
+         height: 80px;
+         width: 500px;
+         top: 150px;
+         left: 1%;
+         z-index: 5;
+         background-color: #fff;
+         padding: 5px;
+         border: 1px solid #999;
+         text-align: center;
+         font-family: 'Roboto','sans-serif';
+         line-height: 30px;
+         padding-left: 10px;
+       }
+
     </style>
   </head>
   <body>
-    <div id="floating-panel">
-      <!-- <input onclick="clearMarkers();" type=button value="Hide Markers">
-      <input onclick="showMarkers();" type=button value="Show All Markers"> -->
-      <input onclick="deleteMarkers();" type=button value="Remover">
-    </div>
+
 
     <div id="floating-panel2">
       <form id = "formBuscarEndereco" action = "">
-        <input id="address" type="textbox" value="" style = "height: 20px; width: 400px" autofocus>
+        <input id="address" type="textbox" value="<?=isset($cep) ? $cep : '' ?>" style = "height: 20px; width: 400px" autofocus>
         <input id="submit" type="button" value="Buscar Endereço">
       </form>
-      <button type = "button" onclick="mostrarEndereco()">Imprimir endereço</button>
+      <button id = "continuar">Continuar >></button>
     </div>
+
+
+
+      <h1 >Verifique se o endereço está marcado corretamente. Caso contrário, escolha um novo endereço e clique em Continuar</h1>
 
     <div id="map"></div>
     <p>Click on the map to add markers.</p>
@@ -66,10 +67,6 @@
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZlhUSjqeKmEXWMqpOV1sNKIs18dKfPgc&callback=initMap">
     </script>
 
-    <input type = "hidden" id = "idCliente" value = "{{$id}}"></input>
-    <input type = "hidden" id = "cepCliente" value = "{{$cep}}"></input>
-
-
     <script>
 
       // In the following example, markers appear when the user clicks on the map.
@@ -77,10 +74,10 @@
       // The user can then click an option to hide, show or delete the markers.
       var map;
       var markers = [];
-      var idCliente = document.getElementById("idCliente").value;
-      var cepCliente = document.getElementById("cepCliente").value;
-      console.log(idCliente);
-      console.log(cepCliente);
+
+      window.onload = function() {
+        document.getElementById("submit").click();
+      }
 
       function mostrarEndereco() {
         var lat = markers[0].getPosition().lat();
@@ -89,9 +86,9 @@
       }
 
       function initMap() {
-        var haightAshbury = {lat: -16.686882, lng: -49.264789};
-
-        map = new google.maps.Map(document.getElementById('map'), {
+          var haightAshbury;
+          haightAshbury = {lat: -16.686882, lng: -49.264789};
+          map = new google.maps.Map(document.getElementById('map'), {
           zoom: 17,
           center: haightAshbury,
         });

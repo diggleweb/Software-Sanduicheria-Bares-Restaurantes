@@ -149,7 +149,7 @@
 					$("#bodyTabelaClientes").append(
 						"<tr><td style = 'text-align: center'>" + item.nome 
 						+ "</td> <td style = 'text-align: center'> " + item.telefone 
-						+ "</td> <td style = 'text-align: center'> " + item.cep 
+						+ "</td> <td style = 'text-align: center'> " + item.cep
 						+ "</td> <td style = 'text-align: center'>" + item.endereco 
 						+ "</td> <td style = 'text-align: center'>"
 						+"<button class = 'btn btn-default glyphicon glyphicon-edit' style = 'width: 50px; display: inline-block' onclick='abrirModalEditarCliente(\"" + encodeURIComponent(JSON.stringify(item)) + "\")'></button>"

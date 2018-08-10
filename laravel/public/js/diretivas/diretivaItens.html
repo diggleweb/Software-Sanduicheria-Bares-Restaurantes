@@ -1,0 +1,13 @@
+<h4 class = "tituloCategoria">Sanduíches</h4>
+	<div>
+		<!-- percorre cada sanduíche no array 'sanduiches' p/ preencher os valores -->
+		@foreach($sanduiches as $sanduiche)
+			<div class = "divCadaItem"  val = "{{$sanduiche->id}}" data-categoria = "sanduiche" data-clicked = "0">
+				<img src="{{$sanduiche->urlImagem}}" class = "imagemItem">
+				<h5 class = "nomeItem">{{$sanduiche->nome}}</h5>
+				<h4 style = "color: red; text-align: center;">R$ {{number_format($sanduiche->precoVenda, 2, ".", "")}}</h4>
+				<button name = "btnAbrirDetalhes" class = "btn btn-primary" onclick = "abrirModalSanduiches('{{$sanduiche->id}}', '{{$sanduiche->nome}}', {{$sanduiche->precoVenda}}, '{{$sanduiche->urlImagem}}')">Detalhes</button>
+			</div>
+		@endforeach
+	</div>
+<hr>

@@ -14,7 +14,7 @@
 	
 </head>
 
-<body>
+<body ng-app="app">
 	
 	<style type="text/css">
 		.disabledbutton {
@@ -38,7 +38,11 @@
 	<script src="{{ asset('js/jquery-ui-1.12.0.custom/jquery-ui.min.js') }}"></script>
 	<script src = "{{ asset('js/maskmoney/maskmoney.min.js') }}"></script>
 	<script src = "{{ asset('js/bootstrap/bootstrap.min.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('js/angular.min.js') }}"></script>
 	<script type="text/javascript" src = "{{ asset('js/jquery.mask.min.js') }}"></script>
+	<script type="text/javascript" src="{{ asset('js/diretivas.js') }}"></script>
+	{{-- Módulo do angularJs --}}
+	<script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
 </body>
 
 
