@@ -44,7 +44,7 @@ pela view:
 		}
 	</style>
 
-	<link rel="stylesheet" type="text/css" href="css/atendente.css">
+	<link rel="stylesheet" type="text/css" href=" {{ asset('css/atendente.css') }}">
 
 	<div class="container">
 		<div class = "titulo">

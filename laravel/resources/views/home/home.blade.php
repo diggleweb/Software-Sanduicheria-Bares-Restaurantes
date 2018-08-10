@@ -75,7 +75,7 @@
             <p class="card-text">Garçom</p>
           </div>
           {{-- Ir para: atendente --}}
-          <div class="card" onclick="location.href='/atendente';">
+          <div class="card" onclick="location.href='/atendente/etapa1';">
             <img class = "img-circle" src="/imagens/icones/atendente.jpg" alt="Card image cap">
             <p class="card-text">Atendente</p>
           </div>

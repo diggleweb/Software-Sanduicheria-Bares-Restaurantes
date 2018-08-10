@@ -187,9 +187,10 @@
 	}
 
 
-	function selecionarCliente(item) {
-		var item = JSON.parse(decodeURIComponent(item));
+	function selecionarCliente(cliente) {
+		var json = JSON.parse(decodeURIComponent(cliente));
 		
+<<<<<<< HEAD
 		//seleciona o novo cliente cadastrado
 		$("#idCliente").val(item.id);
 		$("#telefone").val(item.telefone);
@@ -198,7 +199,17 @@
 		$("#cep").val(item.cep);
 		window.location = ("atendente/googlemaps?id=" + item.id + "&cep=" + item.cep);
 	}
+=======
+>>>>>>> 1a35c433e46a2aed0e60a25c63ac20b057216d6a
 
+		$.get('/atendente/etapa2', json, function(data) {
+			console.log(data);
+		});
+
+<<<<<<< HEAD
+=======
+	}
+>>>>>>> 1a35c433e46a2aed0e60a25c63ac20b057216d6a
 
 
 	function cadastrarNovoCliente() {
@@ -216,7 +227,6 @@
 		};
 
 		$.get('/cadastrarNovoCliente', json, function(id) {
-			console.log(id);
 			//imprime msg ok ou erro ao cadastrar cliente
 			alert("Cadastrado com sucesso!");
 			
